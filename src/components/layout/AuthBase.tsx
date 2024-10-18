@@ -1,3 +1,6 @@
+import PresentationAnimation from "../PresentationAnimation"
+import Logo from "../ui/Logo"
+
 type AuthBaseLayoutProps = {
   title: string
   children: React.ReactNode
@@ -5,12 +8,20 @@ type AuthBaseLayoutProps = {
 
 const AuthBaseLayout = ({ title, children }: AuthBaseLayoutProps) => {
   return (
-    <div className="w-full h-full flex bg-gray-100">
-      <div className="flex-1 bg-primary hidden md:flex">
-
+    <div className="w-full h-full flex bg-white">
+      <div className="flex-1 hidden md:flex flex-col items-center justify-center">
+        <div className="w-1/2">
+          <Logo />
+        </div>
+        <div className="w-[40%]">
+          <PresentationAnimation />
+        </div>
+        <strong className="mx-10 text-center text-gray-700 text-[90%]">
+          Organize suas finanças de forma simples e eficiente. Gerencie seus gastos, saldos e renda em um só lugar.
+        </strong>
       </div>
 
-      <div className="flex-1 flex flex-col gap-6 items-center py-6 px-10 bg-white overflow-auto">
+      <div className="flex-1 flex flex-col gap-6 items-center py-6 px-10 overflow-auto">
         <h1>{title}</h1>
 
         {children}
