@@ -10,7 +10,7 @@ const AuthBaseLayout = ({ title, children }: AuthBaseLayoutProps) => {
 
       </div>
 
-      <div className="flex-1 flex flex-col items-center py-8 bg-white">
+      <div className="flex-1 flex flex-col gap-8 items-center py-8 px-10 bg-white">
         <h1>{title}</h1>
 
         {children}
