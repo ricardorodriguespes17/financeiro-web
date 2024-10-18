@@ -7,13 +7,13 @@ type FormProps = {
   email: string
   password: string
   confirmPassword: string
-  birthdate: Date | null
+  birthdate: string
 }
 
 const initialValues: FormProps = {
   name: "",
   email: "",
-  birthdate: null,
+  birthdate: "",
   password: "",
   confirmPassword: "",
 }
@@ -43,6 +43,14 @@ const RegisterForm = () => {
             autoComplete="off"
             value={values.email}
             onChange={(event) => setFieldValue("email", event.target.value)}
+          />
+
+          <TextInput
+            label="Data de nascimento"
+            type="date"
+            autoComplete="off"
+            value={values.birthdate}
+            onChange={(event) => setFieldValue("birthdate", event.target.value)}
           />
 
           <TextInput
