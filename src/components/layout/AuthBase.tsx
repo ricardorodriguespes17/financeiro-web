@@ -6,11 +6,11 @@ type AuthBaseLayoutProps = {
 const AuthBaseLayout = ({ title, children }: AuthBaseLayoutProps) => {
   return (
     <div className="w-full h-full flex bg-gray-100">
-      <div className="flex-1 bg-primary">
+      <div className="flex-1 bg-primary hidden md:flex">
 
       </div>
 
-      <div className="flex-1 flex flex-col gap-8 items-center py-8 px-10 bg-white">
+      <div className="flex-1 flex flex-col gap-6 items-center py-6 px-10 bg-white overflow-auto">
         <h1>{title}</h1>
 
         {children}

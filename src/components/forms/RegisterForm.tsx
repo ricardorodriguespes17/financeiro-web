@@ -29,7 +29,7 @@ const RegisterForm = () => {
       onSubmit={onSubmit}
     >
       {({ values, setFieldValue }) => (
-        <Form className="w-full flex flex-col gap-4">
+        <Form className="w-full flex flex-col gap-3">
           <TextInput
             label="Nome"
             autoComplete="off"
