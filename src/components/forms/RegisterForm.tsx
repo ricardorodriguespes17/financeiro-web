@@ -1,5 +1,6 @@
 import { Form, Formik } from "formik"
 import TextInput from "../ui/TextInput"
+import Button from "../ui/Button"
 
 type FormProps = {
   name: string
@@ -59,6 +60,10 @@ const RegisterForm = () => {
             value={values.confirmPassword}
             onChange={(event) => setFieldValue("confirmPassword", event.target.value)}
           />
+
+          <Button type="submit">
+            Salvar
+          </Button>
         </Form>
       )}
     </Formik>
