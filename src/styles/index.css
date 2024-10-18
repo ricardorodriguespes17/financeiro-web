@@ -16,7 +16,7 @@ html, body, :root {
   }
 
   body {
-    @apply bg-gray-100 text-gray-900 font-sans leading-relaxed antialiased;
+    @apply bg-gray-100 text-gray-900 antialiased;
   }
 
   a {
