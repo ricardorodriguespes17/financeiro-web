@@ -11,7 +11,7 @@ const Header = ({ children }: HeaderProps) => {
         <Logo />
       </div>
 
-      <div className="flex gap-4 w-[300px] h-full items-center">
+      <div>
         {children}
       </div>
     </header>
