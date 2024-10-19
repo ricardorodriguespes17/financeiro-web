@@ -18,6 +18,7 @@ const LoginForm = () => {
 
   const onSubmit = (values: FormProps) => {
     console.log(values)
+    navigate("/dashboard")
   }
 
   const goToRegister = () => {
@@ -48,7 +49,7 @@ const LoginForm = () => {
           />
 
           <Button type="submit">
-            Salvar
+            Entrar
           </Button>
 
           <Button
