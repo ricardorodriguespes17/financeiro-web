@@ -22,8 +22,8 @@ const AuthBaseLayout = ({ title, children }: AuthBaseLayoutProps) => {
         </strong>
       </div>
 
-      <div className="flex-1 flex flex-col gap-6 justify-center items-center">
-        <div className="flex flex-col w-full py-6 px-10 overflow-auto">
+      <div className="flex-1 flex flex-col justify-center items-center">
+        <div className="flex flex-col w-full py-6 gap-6 items-center px-10 overflow-auto">
           <h1>{title}</h1>
 
           {children}
