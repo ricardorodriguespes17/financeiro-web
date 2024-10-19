@@ -17,7 +17,7 @@ const Button = ({ variant = "solid", className, ...rest }: ButtonProps) => {
   return (
     <button
       className={twMerge(
-        "w-full h-10 rounded-md",
+        "w-full min-w-32 h-12 rounded-md flex items-center justify-center",
         "transition-all",
         variants[variant],
         className,
