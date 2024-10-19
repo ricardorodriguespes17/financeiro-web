@@ -1,6 +1,7 @@
 import { Form, Formik } from "formik"
 import TextInput from "../ui/TextInput"
 import Button from "../ui/Button"
+import { useNavigate } from "react-router-dom"
 
 type FormProps = {
   name: string
@@ -19,8 +20,14 @@ const initialValues: FormProps = {
 }
 
 const RegisterForm = () => {
+  const navigate = useNavigate()
+
   const onSubmit = (values: FormProps) => {
     console.log(values)
+  }
+
+  const goToLogin = () => {
+    navigate("/login")
   }
 
   return (
@@ -53,24 +60,34 @@ const RegisterForm = () => {
             onChange={(event) => setFieldValue("birthdate", event.target.value)}
           />
 
-          <TextInput
-            label="Senha"
-            type="password"
-            autoComplete="new-password"
-            value={values.password}
-            onChange={(event) => setFieldValue("password", event.target.value)}
-          />
+          <div className="flex flex-col md:flex-row gap-2">
+            <TextInput
+              label="Senha"
+              type="password"
+              autoComplete="new-password"
+              value={values.password}
+              onChange={(event) => setFieldValue("password", event.target.value)}
+            />
 
-          <TextInput
-            label="Confirmação da senha"
-            type="password"
-            autoComplete="new-password"
-            value={values.confirmPassword}
-            onChange={(event) => setFieldValue("confirmPassword", event.target.value)}
-          />
+            <TextInput
+              label="Confirmação da senha"
+              type="password"
+              autoComplete="new-password"
+              value={values.confirmPassword}
+              onChange={(event) => setFieldValue("confirmPassword", event.target.value)}
+            />
+          </div>
 
           <Button type="submit">
             Salvar
+          </Button>
+
+          <Button
+            type="button"
+            variant="plain"
+            onClick={goToLogin}
+          >
+            Já tem conta? Faça login
           </Button>
         </Form>
       )}
