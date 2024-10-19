@@ -11,12 +11,14 @@ const DashboardPage = () => {
 
   return (
     <div>
-      <Header>
-        <Button onClick={handleLogout}>Sair</Button>
+      <Header showMenuButton>
+        <Button onClick={handleLogout}>
+          Sair
+        </Button>
       </Header>
 
       <main className="flex-1 flex flex-col items-center pt-8">
-        
+
       </main>
     </div>
   )
