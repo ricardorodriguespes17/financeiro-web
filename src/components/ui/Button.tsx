@@ -2,10 +2,10 @@ import { ButtonHTMLAttributes } from "react"
 import { twMerge } from "tailwind-merge"
 
 type ButtonProps = {
-  variant?: "solid" | "plain" | "outlined" | "mono"
+  variant?: "solid" | "plain" | "outlined" | "mono",
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button = ({ variant = "solid", ...rest }: ButtonProps) => {
+const Button = ({ variant = "solid", className, ...rest }: ButtonProps) => {
 
   const variants = {
     solid: "bg-primary text-white drop-shadow-md hover:bg-primary-700",
@@ -19,7 +19,8 @@ const Button = ({ variant = "solid", ...rest }: ButtonProps) => {
       className={twMerge(
         "w-full h-10 rounded-md",
         "transition-all",
-        variants[variant]
+        variants[variant],
+        className,
       )}
       {...rest}
     />
