@@ -5,7 +5,14 @@ import LinkComponent from "../components/ui/Link"
 const HomePage = () => {
   return (
     <div className="w-full h-full overflow-auto flex flex-col">
-      <Header />
+      <Header>
+        <LinkComponent variant="plain" to="/register">
+          Criar conta
+        </LinkComponent>
+        <LinkComponent to="/login">
+          Entre
+        </LinkComponent>
+      </Header>
 
       <main className="flex-1 w-full flex flex-col lg:flex-row bg-gradient-to-t from-primary-200 to-white">
         <div className="flex flex-col flex-1 justify-center pl-10">
