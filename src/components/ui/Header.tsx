@@ -9,7 +9,7 @@ type HeaderProps = {
 
 const Header = ({ children, showMenuButton }: HeaderProps) => {
   return (
-    <header className="w-full h-20 flex items-center px-8 py-[14px] justify-between shadow-lg bg-white">
+    <header className="w-full h-20 flex items-center px-8 py-[14px] justify-between bg-white">
       <div className="flex items-center gap-6">
         {showMenuButton && (
           <Button

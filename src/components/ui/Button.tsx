@@ -32,8 +32,8 @@ const Button = (props: ButtonProps) => {
   }
 
   const mergedClassNames = twMerge(
-    "w-full h-12 rounded-md flex justify-center items-center no-underline",
-    "transition-all",
+    "w-full h-12 rounded-md flex gap-2 justify-center items-center no-underline",
+    "transition-all *:cursor-pointer",
     sizes[size],
     variants[variant],
     className
