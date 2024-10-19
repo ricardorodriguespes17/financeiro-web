@@ -5,7 +5,7 @@ const HomeAnimation = () => {
   return (
     <Lottie
       animationData={homeLottie}
-      className="w-3/4"
+      className="w-3/ max-h-full"
       loop
     />
   )
