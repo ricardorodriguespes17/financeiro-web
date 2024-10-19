@@ -17,14 +17,17 @@ const AuthBaseLayout = ({ title, children }: AuthBaseLayoutProps) => {
           <PresentationAnimation />
         </div>
         <strong className="mx-10 text-center text-gray-700 text-[90%]">
-          Organize suas finanças de forma simples e eficiente. Gerencie seus gastos, saldos e renda em um só lugar.
+          Organize suas finanças de forma simples e eficiente. Gerencie seus
+          gastos, saldos e renda em um só lugar.
         </strong>
       </div>
 
-      <div className="flex-1 flex flex-col gap-6 items-center py-6 px-10 overflow-auto">
-        <h1>{title}</h1>
+      <div className="flex-1 flex flex-col gap-6 justify-center items-center">
+        <div className="flex flex-col w-full py-6 px-10 overflow-auto">
+          <h1>{title}</h1>
 
-        {children}
+          {children}
+        </div>
       </div>
     </div>
   )
