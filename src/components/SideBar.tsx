@@ -3,13 +3,15 @@ import Button from "./ui/Button"
 import { IoMdCalendar } from "react-icons/io"
 import { IoPower } from "react-icons/io5"
 import { twMerge } from "tailwind-merge"
-import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import useMenuStore from "../store/menuStore"
 
 const SideBar = () => {
-  const [isOpened] = useState(true)
+  const { isOpened } = useMenuStore()
+  const navigate = useNavigate()
 
   const handleLogout = () => {
-    
+    navigate("/login")
   }
 
   const menu = [
