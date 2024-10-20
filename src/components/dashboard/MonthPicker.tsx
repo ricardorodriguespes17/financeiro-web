@@ -1,15 +1,15 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import Button from "../ui/Button"
-import { useState } from "react"
 import { changeMonthDate, getMonthLabel } from "../../utils/getCurrentDate"
+import useMonth from "../../store/monthStore"
 
 const MonthPicker = () => {
-  const [month, setMonth] = useState("2024-11")
+  const { monthDate, setMonthDate } = useMonth()
 
   const navigateMonth = (position: number) => {
-    const newMonth = changeMonthDate(month, position)
+    const newMonth = changeMonthDate(monthDate, position)
 
-    setMonth(newMonth)
+    setMonthDate(newMonth)
   }
 
   return (
@@ -21,7 +21,7 @@ const MonthPicker = () => {
       >
         <IoIosArrowBack size={28} />
       </Button>
-      <h2>{getMonthLabel(month)}</h2>
+      <h2>{getMonthLabel(monthDate)}</h2>
       <Button
         size="normal"
         variant="plain"
