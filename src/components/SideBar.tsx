@@ -23,9 +23,11 @@ const SideBar = () => {
   return (
     <div className={twMerge(
       isOpened ? "w-[270px]" : "w-[90px]",
-      "h-screen bg-white flex flex-col gap-3 pt-24 px-4",
+      "h-screen bg-white flex flex-col gap-3 pt-4 px-4",
       "transition-all duration-500 ease-in-out",
     )}>
+      <h2 className="mb-4 text-primary-700">Menu</h2>
+
       {menu.map(item => {
         if (typeof item === "string") {
           return (
