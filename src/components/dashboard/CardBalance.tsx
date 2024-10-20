@@ -2,6 +2,7 @@ import { MdAccountBalanceWallet } from "react-icons/md"
 import Card from "../Card"
 import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
+import { useEffect, useState } from "react"
 
 type CardBalanceProps = {
   name: string
@@ -9,28 +10,38 @@ type CardBalanceProps = {
   color: "red" | "green" | "yellow"
 }
 
-const CardBalance = ({ name, value, color }: CardBalanceProps) => {
-  const colorClasses = {
-    red: {
-      background: "bg-red-200",
-      text: "text-red-800",
-    },
-    green: {
-      background: "bg-green-200",
-      text: "text-green-800",
-    },
-    yellow: {
-      background: "bg-yellow-200",
-      text: "text-yellow-800",
-    },
-  }
+const colorClasses = {
+  red: {
+    background: "bg-red-200",
+    text: "text-red-800",
+  },
+  green: {
+    background: "bg-green-200",
+    text: "text-green-800",
+  },
+  yellow: {
+    background: "bg-yellow-200",
+    text: "text-yellow-800",
+  },
+}
+
+const CardBalance = ({ name, value: finalValue, color }: CardBalanceProps) => {
+  const [percent, setPercent] = useState(0)
+
+  useEffect(() => {
+    if(percent < 1) {
+      setTimeout(() => {
+        setPercent(percent + 0.1)
+      }, 50)
+    }
+  }, [finalValue, percent])
 
   return (
     <Card className="min-w-[280px]">
       <div className="flex gap-8">
         <div className="flex flex-col flex-1">
           <label>{name}</label>
-          <h2>{formatCurrency(value)}</h2>
+          <h2>{formatCurrency(finalValue * percent)}</h2>
         </div>
         <MdAccountBalanceWallet
           className={
