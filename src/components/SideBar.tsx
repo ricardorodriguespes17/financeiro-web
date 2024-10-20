@@ -9,7 +9,7 @@ const SideBar = () => {
   const [isOpened] = useState(true)
 
   const handleLogout = () => {
-
+    
   }
 
   const menu = [
@@ -26,7 +26,12 @@ const SideBar = () => {
       "h-screen bg-white flex flex-col gap-3 pt-4 px-4",
       "transition-all duration-500 ease-in-out",
     )}>
-      <h2 className="mb-4 text-primary-700">Menu</h2>
+      <h2 className={twMerge(
+        "mb-4 text-primary-700",
+        isOpened ? "block" : "hidden"
+      )}>
+        Menu
+      </h2>
 
       {menu.map(item => {
         if (typeof item === "string") {
