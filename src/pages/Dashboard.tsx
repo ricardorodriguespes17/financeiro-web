@@ -3,6 +3,7 @@ import SideBar from "../components/SideBar"
 import BalancesBox from "../components/dashboard/BalancesBox"
 import ExpensesBox from "../components/dashboard/ExpensesBox"
 import IncomesBox from "../components/dashboard/IncomesBox"
+import MonthPicker from "../components/dashboard/MonthPicker"
 
 const DashboardPage = () => {
   return (
@@ -15,6 +16,7 @@ const DashboardPage = () => {
         <Header showMenuButton />
 
         <main className="w-full h-full flex-col gap-8 flex p-8 shadow-inner overflow-auto">
+          <MonthPicker />
           <BalancesBox />
           <ExpensesBox />
           <IncomesBox />
