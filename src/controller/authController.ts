@@ -2,15 +2,22 @@ import { ControllerResponseType } from "../@types/ControllerResponseType"
 import { CreateUserAccount, LoginType } from "../@types/UserType"
 import api from "../services/api"
 
+type LoginResponse = ControllerResponseType & {
+  accessToken?: string
+  refreshToken?: string
+}
+
 class AuthController {
-  async login(data: LoginType): Promise<ControllerResponseType> {
+  async login(data: LoginType): Promise<LoginResponse> {
     try {
-      await api.post("/login", data)
+      const response = await api.post("/login", data)
 
       return {
         title: "Sucesso",
         content: "Login realizado com sucesso!",
-        type: "success"
+        type: "success",
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken
       }
     } catch (err) {
       const error = err as { response: { data: { message: string } } }
@@ -18,7 +25,7 @@ class AuthController {
       return {
         title: "Erro ao fazer login",
         content: error.response.data.message,
-        type: "error"
+        type: "error",
       }
     }
   }
