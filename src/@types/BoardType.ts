@@ -9,7 +9,6 @@ export type BoardType = {
 
 export type BoardCreateType = {
   id: string
-  userId: string
 }
 
 export type BoardUpdateType = {
