@@ -29,7 +29,7 @@ class TransferenceController {
 
   async updateTransference(transferenceId: string, data: TransferenceCreateType): Promise<ControllerResponseType> {
     try {
-      const response = await ApiService.post(`/transferences/${transferenceId}`, data)
+      const response = await ApiService.put(`/transferences/${transferenceId}`, data)
 
       return {
         title: "Sucesso",

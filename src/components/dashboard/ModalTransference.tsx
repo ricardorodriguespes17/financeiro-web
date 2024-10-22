@@ -3,18 +3,22 @@ import TransferenceForm from "../forms/TransferenceForm"
 import Modal from "../ui/Modal"
 
 const ModalTransference = () => {
-  const { currentTransference, isShowing, toggleShowing } = useTransferenceModal()
+  const { currentTransference, isOpen, setIsOpen } = useTransferenceModal()
 
   const onClose = () => {
-    toggleShowing()
+    setIsOpen(false)
   }
 
   return (
     <Modal
-      isOpen={isShowing}
+      isOpen={isOpen}
       onClose={onClose}
-      title="Dados da transferência"
-      subtitle="Visualize ou edite os dados"
+      title={
+        currentTransference ? "Dados da transferência" : "Nova transferência"
+      }
+      subtitle={
+        currentTransference ? "Visualize ou edite os dados" : "Preencha os dados"
+      }
     >
       <TransferenceForm
         transference={currentTransference}

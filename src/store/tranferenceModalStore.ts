@@ -3,21 +3,21 @@ import { TransferenceType } from '../@types/TransferenceType'
 
 type State = {
   currentTransference: TransferenceType | null,
-  isShowing: boolean
+  isOpen: boolean
 }
 
 type Action = {
   setCurrentTransference: (data: TransferenceType) => void
-  toggleShowing: () => void
+  setIsOpen: (value: boolean) => void
 }
 
-const useTransferenceModal = create<State & Action>((set, get) => ({
+const useTransferenceModal = create<State & Action>((set) => ({
   currentTransference: null,
-  isShowing: false,
+  isOpen: false,
   setCurrentTransference: (data: TransferenceType) => set(() => ({
-    currentTransference: data, isShowing: true
+    currentTransference: data, isOpen: true
   })),
-  toggleShowing: () => set(() => ({ isShowing: !get().isShowing }))
+  setIsOpen: (value) => set(() => ({ isOpen: value }))
 }))
 
 export default useTransferenceModal

@@ -8,14 +8,18 @@ import useMonth from "../store/monthStore"
 import useBoard from "../store/boardStore"
 import { useEffect } from "react"
 import ModalTransference from "../components/dashboard/ModalTransference"
+import useTransferenceModal from "../store/tranferenceModalStore"
 
 const DashboardPage = () => {
   const { monthDate } = useMonth()
   const { loadTransferences } = useBoard()
+  const { isOpen } = useTransferenceModal()
 
   useEffect(() => {
-    loadTransferences(monthDate)
-  }, [loadTransferences, monthDate])
+    if (!isOpen) {
+      loadTransferences(monthDate)
+    }
+  }, [loadTransferences, monthDate, isOpen])
 
   return (
     <div className="flex h-full">
@@ -33,7 +37,7 @@ const DashboardPage = () => {
           <IncomesBox />
         </main>
       </div>
-      
+
       <ModalTransference />
     </div>
   )

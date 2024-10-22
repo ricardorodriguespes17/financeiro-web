@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import { TransferenceCreateType, TransferenceType } from "../../@types/TransferenceType"
 import transferenceController from "../../controller/transferenceController"
 import { useEffect, useState } from "react"
+import { ControllerResponseType } from "../../@types/ControllerResponseType"
 
 export type TranferenceValuesProps = {
   name: string,
@@ -18,20 +19,16 @@ export type TranferenceValuesProps = {
 
 const valdationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(6, 'O nome deve ter pelo menos 3 caracteres')
     .required('Nome é obrigatório'),
-  email: Yup.string()
-    .email('O email inválido')
-    .required('O email é obrigatório'),
-  birthdate: Yup.date()
-    .max(new Date(), 'A data de nascimento não pode ser maior do que a data atual')
-    .required('A data de nascimento é obrigatória'),
-  password: Yup.string()
-    .min(6, 'A senha deve ter pelo menos 6 caracteres')
-    .required('A senha é obrigatória'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'As senhas precisam ser iguais')
-    .required('A confirmação de senha é obrigatória'),
+  description: Yup.string(),
+  value: Yup.number()
+    .required('O valor é obrigatório'),
+  expireDay: Yup.number()
+    .min(1, 'O vencimento deve ser entre 1 e 31')
+    .max(31, 'O vencimento deve ser entre 1 e 31')
+    .required('O vencimento é obrigatório'),
+  boardId: Yup.string()
+    .required('O quadro é obrigatório'),
 })
 
 type TransferenceFormProps = {
@@ -77,7 +74,15 @@ const TransferenceForm = (props: TransferenceFormProps) => {
 
     setSubmitting(true)
 
-    const response = await transferenceController.createTransference(transferenceData)
+    let response: ControllerResponseType
+
+    if (props.transference) {
+      response = await transferenceController.updateTransference(
+        props.transference.id, transferenceData
+      )
+    } else {
+      response = await transferenceController.createTransference(transferenceData)
+    }
 
     setSubmitting(true)
 
@@ -87,20 +92,20 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       type: response.type
     })
 
-    if (response.type === "success") onReset()
+    if (response.type === "success") onClose()
   }
 
-  const onReset = () => {
+  const onClose = () => {
     props.onClose()
   }
 
   return (
     <Formik<TranferenceValuesProps>
+      enableReinitialize
       initialValues={initialValues}
       validationSchema={valdationSchema}
       validateOnChange={false}
       onSubmit={onSubmit}
-      onReset={onReset}
     >
       {({ values, setFieldValue, isSubmitting, errors }) => (
         <Form className="w-full flex flex-col gap-3">
@@ -150,7 +155,12 @@ const TransferenceForm = (props: TransferenceFormProps) => {
           />
 
           <div className="flex w-full gap-4">
-            <Button type="reset" variant="plain" disabled={isSubmitting}>
+            <Button
+              type="button"
+              variant="plain"
+              disabled={isSubmitting}
+              onClick={onClose}
+            >
               Cancelar
             </Button>
 
