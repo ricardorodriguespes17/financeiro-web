@@ -18,8 +18,6 @@ const BalancesBox = () => {
     const totalIncomesValue = incomes.reduce((p, c) => p + c.value, 0)
     const finalBalance = initialValue + totalIncomesValue - totalExpensesValue
 
-    console.log(initialValue, totalIncomesValue, totalExpensesValue)
-
     setBalances(
       [
         { name: "Saldo inicial", value: initialValue, color: "yellow" },
