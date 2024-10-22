@@ -2,19 +2,24 @@ import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
 import DataTable, { ColumnType } from "../ui/DataTable"
 import useBoard from "../../store/boardStore"
-
-type IncomeType = {
-  name: string, value: number, expireDay: number
-}
+import Button from "../ui/Button"
+import { IoMdEye } from "react-icons/io"
+import { FaTrashAlt } from "react-icons/fa"
+import useTransferenceModal from "../../store/tranferenceModalStore"
+import { TransferenceType } from "../../@types/TransferenceType"
 
 const IncomesBox = () => {
   const { incomes } = useBoard()
+  const { setCurrentTransference } = useTransferenceModal()
   const total = incomes.reduce((p, c) => p + c.value, 0)
 
-  const columns: ColumnType<IncomeType>[] = [
+  const openTransference = (transference: TransferenceType) => {
+    setCurrentTransference(transference)
+  }
+
+  const columns: ColumnType<TransferenceType>[] = [
     {
       title: "Nome",
-      param: "name",
       render: (row) => {
         return (
           <label>{row.name}</label>
@@ -23,7 +28,6 @@ const IncomesBox = () => {
     },
     {
       title: "Valor",
-      param: "value",
       render: (row) => {
         return (
           <label>{formatCurrency(row.value)}</label>
@@ -32,10 +36,29 @@ const IncomesBox = () => {
     },
     {
       title: "Vencimento",
-      param: "expireDay",
       render: (row) => {
         return (
           <label>Dia {row.expireDay}</label>
+        )
+      }
+    },
+    {
+      title: "",
+      render: (row) => {
+        return (
+          <div className="flex items-center gap-8">
+            <Button
+              size="fit"
+              className="h-fit text-2xl rounded-full hover:text-warning"
+              variant="plain"
+              onClick={() => openTransference(row)}
+            >
+              <IoMdEye />
+            </Button>
+            <Button size="fit" className="h-fit text-xl rounded-full hover:text-danger" variant="plain">
+              <FaTrashAlt />
+            </Button>
+          </div>
         )
       }
     }
@@ -46,7 +69,7 @@ const IncomesBox = () => {
       <h2>Receitas</h2>
 
       <div className="flex flex-col flex-1">
-        <DataTable<IncomeType>
+        <DataTable<TransferenceType>
           data={incomes}
           columns={columns}
         />
