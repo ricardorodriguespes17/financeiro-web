@@ -7,3 +7,5 @@ export type TransferenceType = {
   type: "expense" | "income"
   boardId: string
 }
+
+export type TransferenceCreateType = Omit<TransferenceType, "id">
