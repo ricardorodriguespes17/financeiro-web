@@ -1,21 +1,24 @@
 import { ButtonHTMLAttributes } from "react"
 import { Link } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
+import Spinner from "./Spinner"
 
 type ButtonProps = {
   variant?: "solid" | "plain" | "outlined" | "mono",
   size?: "fit" | "normal" | "full",
-  href?: string
+  href?: string,
+  loading?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button = (props: ButtonProps) => {
-  const { 
-    variant = "solid", 
-    size = "full", 
-    href, 
+  const {
+    variant = "solid",
+    size = "full",
+    href,
     className,
     children,
-    ...rest 
+    loading,
+    ...rest
   } = props
 
   const variants = {
@@ -55,7 +58,7 @@ const Button = (props: ButtonProps) => {
       className={mergedClassNames}
       {...rest}
     >
-      {children}
+      {loading ? <Spinner /> : children}
     </button>
   )
 }
