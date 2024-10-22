@@ -3,8 +3,6 @@ import AuthController from '../../src/controller/authController'
 import { CreateUserAccount } from '../../src/@types/UserType'
 
 describe('API', () => {
-  const authController = new AuthController()
-
   test('create user account corrrectly', async () => {
     const userData: CreateUserAccount = {
       name: "Daniel Murilo Novaes",
@@ -13,7 +11,7 @@ describe('API', () => {
       password: "uoDx3nTofk"
     }
 
-    const response = await authController.createAccount(userData)
+    const response = await AuthController.createAccount(userData)
 
     expect(response.type).toBe("success")
   })
@@ -26,7 +24,7 @@ describe('API', () => {
       password: "uoDx3nTofk"
     }
 
-    const response = await authController.createAccount(userData)
+    const response = await AuthController.createAccount(userData)
 
     expect(response.type).toBe("error")
   })
@@ -39,7 +37,7 @@ describe('API', () => {
       password: "uoDx3nTofk"
     }
 
-    const response = await authController.createAccount(userData)
+    const response = await AuthController.createAccount(userData)
 
     expect(response.type).toBe("error")
   })
@@ -52,7 +50,7 @@ describe('API', () => {
       password: "uoDx3nTofk"
     }
 
-    const response = await authController.createAccount(userData)
+    const response = await AuthController.createAccount(userData)
 
     expect(response.type).toBe("error")
   })
@@ -65,7 +63,7 @@ describe('API', () => {
       password: "123"
     }
 
-    const response = await authController.createAccount(userData)
+    const response = await AuthController.createAccount(userData)
 
     expect(response.type).toBe("error")
   })
