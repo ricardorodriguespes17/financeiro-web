@@ -3,11 +3,11 @@ import ApiService from "../services/ApiService"
 
 class UserController {
   async getUserById(userId: string) {
-    return await ApiService.get<UserType | null>(`/users/${userId}`)
+    return await  ApiService.api.get<UserType | null>(`/users/${userId}`)
   }
 
   async updateUser(userId: string, data: UpdateUserType) {
-    return await ApiService.post(`/users/${userId}`, data)
+    return await  ApiService.api.post(`/users/${userId}`, data)
   }
 }
 

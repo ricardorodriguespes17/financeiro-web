@@ -8,7 +8,7 @@ class AuthController {
     const { setTokens } = useAuthStore.getState()
 
     try {
-      const response = await ApiService.post("/login", data)
+      const response = await ApiService.api.post("/login", data)
 
       setTokens({
         accessToken: response.data.accessToken || null,
@@ -33,7 +33,7 @@ class AuthController {
 
   async createAccount(data: CreateUserAccount): Promise<ControllerResponseType> {
     try {
-      const response = await ApiService.post("/users", data)
+      const response = await  ApiService.api.post("/users", data)
 
       return {
         title: "Sucesso",

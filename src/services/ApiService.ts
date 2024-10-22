@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios"
-import useAuthStore from "../store/authStore"
 
 const baseURL = import.meta.env.VITE_API_URL
 
@@ -8,17 +7,15 @@ class ApiService {
 
   constructor() {
     this.api = axios.create({ baseURL })
-
-    this.setAuthHaader()
   }
 
-  private setAuthHaader() {
-    const { accessToken } = useAuthStore.getState()
-
+  public setAuthHaader(accessToken: string | null) {
     if (accessToken) {
       this.api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
+    } else {
+      delete this.api.defaults.headers.common["Authorization"]
     }
   }
 }
 
-export default new ApiService().api
+export default new ApiService()

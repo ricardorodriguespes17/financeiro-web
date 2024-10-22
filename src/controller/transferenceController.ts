@@ -4,12 +4,12 @@ import ApiService from "../services/ApiService"
 
 class TransferenceController {
   async getTransferences(boardId: string) {
-    return await ApiService.get<TransferenceType[]>(`/transferences/${boardId}`)
+    return await  ApiService.api.get<TransferenceType[]>(`/transferences/${boardId}`)
   }
 
   async createTransference(data: TransferenceCreateType): Promise<ControllerResponseType> {
     try {
-      const response = await ApiService.post("/transferences", data)
+      const response = await  ApiService.api.post("/transferences", data)
 
       return {
         title: "Sucesso",
@@ -29,7 +29,7 @@ class TransferenceController {
 
   async updateTransference(transferenceId: string, data: TransferenceCreateType): Promise<ControllerResponseType> {
     try {
-      const response = await ApiService.put(`/transferences/${transferenceId}`, data)
+      const response = await  ApiService.api.put(`/transferences/${transferenceId}`, data)
 
       return {
         title: "Sucesso",
@@ -50,7 +50,7 @@ class TransferenceController {
   async deleteTransference(transferenceId: string): Promise<ControllerResponseType> {
 
     try {
-      const response = await ApiService.post(`/transferences/${transferenceId}`)
+      const response = await  ApiService.api.post(`/transferences/${transferenceId}`)
 
       return {
         title: "Sucesso",

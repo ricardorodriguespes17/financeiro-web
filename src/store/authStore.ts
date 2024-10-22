@@ -1,5 +1,6 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
+import ApiService from "../services/ApiService"
 
 type State = {
   accessToken: string | null
@@ -16,8 +17,14 @@ const useAuthStore = create<State & Actions>()(
     (set) => ({
       accessToken: null,
       refreshToken: null,
-      setTokens: (tokens) => set(tokens),
-      clearToken: () => set({ accessToken: null, refreshToken: null }),
+      setTokens: (tokens) => {
+        set(tokens)
+        ApiService.setAuthHaader(tokens.accessToken)
+      },
+      clearToken: () => {
+        set({ accessToken: null, refreshToken: null })
+        ApiService.setAuthHaader(null)
+      },
     }),
     {
       name: 'auth-storage',
