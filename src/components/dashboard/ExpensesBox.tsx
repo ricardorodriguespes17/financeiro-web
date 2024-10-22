@@ -1,21 +1,15 @@
 import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
 import DataTable, { ColumnType } from "../ui/DataTable"
+import useBoard from "../../store/boardStore"
 
 type ExpensesType = {
   name: string, value: number, expireDay: number
 }
 
 const ExpensesBox = () => {
-  const expenses: ExpensesType[] = [
-    { name: "Aluguel", value: 800, expireDay: 7 },
-    { name: "Conta de luz", value: 100, expireDay: 20 },
-    { name: "Conta de água", value: 100, expireDay: 20 },
-    { name: "Internet", value: 100, expireDay: 21 },
-    { name: "Fatura do cartão", value: 1800.90, expireDay: 21 },
-  ]
-
-  const total = expenses.reduce((p, c) => p + c.value,0)
+  const { expenses } = useBoard()
+  const total = expenses.reduce((p, c) => p + c.value, 0)
 
   const columns: ColumnType<ExpensesType>[] = [
     {

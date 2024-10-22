@@ -1,17 +1,14 @@
 import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
 import DataTable, { ColumnType } from "../ui/DataTable"
+import useBoard from "../../store/boardStore"
 
 type IncomeType = {
   name: string, value: number, expireDay: number
 }
 
 const IncomesBox = () => {
-  const incomes: IncomeType[] = [
-    { name: "Salário", value: 3000, expireDay: 7 },
-    { name: "Fulano", value: 10, expireDay: 10 },
-  ]
-
+  const { incomes } = useBoard()
   const total = incomes.reduce((p, c) => p + c.value, 0)
 
   const columns: ColumnType<IncomeType>[] = [

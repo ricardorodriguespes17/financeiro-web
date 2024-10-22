@@ -4,8 +4,18 @@ import BalancesBox from "../components/dashboard/BalancesBox"
 import ExpensesBox from "../components/dashboard/ExpensesBox"
 import IncomesBox from "../components/dashboard/IncomesBox"
 import MonthPicker from "../components/dashboard/MonthPicker"
+import useMonth from "../store/monthStore"
+import useBoard from "../store/boardStore"
+import { useEffect } from "react"
 
 const DashboardPage = () => {
+  const { monthDate } = useMonth()
+  const { loadTransferences } = useBoard()
+
+  useEffect(() => {
+    loadTransferences(monthDate)
+  }, [loadTransferences, monthDate])
+
   return (
     <div className="flex h-full">
       <aside>

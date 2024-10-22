@@ -29,9 +29,9 @@ const CardBalance = ({ name, value: finalValue, color }: CardBalanceProps) => {
   const [percent, setPercent] = useState(0)
 
   useEffect(() => {
-    if(percent < 1) {
+    if(percent < 100) {
       setTimeout(() => {
-        setPercent(percent + 0.1)
+        setPercent(percent + 10)
       }, 50)
     }
   }, [finalValue, percent])
@@ -41,7 +41,7 @@ const CardBalance = ({ name, value: finalValue, color }: CardBalanceProps) => {
       <div className="flex gap-8">
         <div className="flex flex-col flex-1">
           <label>{name}</label>
-          <h2>{formatCurrency(finalValue * percent)}</h2>
+          <h2>{formatCurrency(finalValue * percent / 100)}</h2>
         </div>
         <MdAccountBalanceWallet
           className={

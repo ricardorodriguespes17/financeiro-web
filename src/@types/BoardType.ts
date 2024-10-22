@@ -8,7 +8,7 @@ export type BoardType = {
 }
 
 export type BoardCreateType = {
-  initialValue: number
+  id: string
   userId: string
 }
 

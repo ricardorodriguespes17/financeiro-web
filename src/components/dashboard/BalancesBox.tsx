@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+import useBoard from "../../store/boardStore"
 import CardBalance from "./CardBalance"
 
 type BalanceType = {
@@ -7,13 +9,26 @@ type BalanceType = {
 }
 
 const BalancesBox = () => {
-  const balances: BalanceType[] = [
-    { name: "Saldo inicial", value: 0, color: "yellow" },
-    { name: "Saldo atual", value: 2800, color: "yellow" },
-    { name: "Despesas totais", value: 1100, color: "red" },
-    { name: "Receitas totais", value: 3010, color: "green" },
-    { name: "Saldo final", value: 1910, color: "green" },
-  ]
+  const { expenses, initialValue, incomes } = useBoard()
+
+  const [balances, setBalances] = useState<BalanceType[]>([])
+
+  useEffect(() => {
+    const totalExpensesValue = expenses.reduce((p, c) => p + c.value, 0)
+    const totalIncomesValue = incomes.reduce((p, c) => p + c.value, 0)
+    const finalBalance = initialValue + totalIncomesValue - totalExpensesValue
+
+    console.log(initialValue, totalIncomesValue, totalExpensesValue)
+
+    setBalances(
+      [
+        { name: "Saldo inicial", value: initialValue, color: "yellow" },
+        { name: "Despesas totais", value: totalExpensesValue, color: "red" },
+        { name: "Receitas totais", value: totalIncomesValue, color: "green" },
+        { name: "Saldo final", value: finalBalance, color: finalBalance >= 0 ? "green" : "red" },
+      ]
+    )
+  }, [expenses, incomes, initialValue])
 
   return (
     <div className="flex flex-col gap-2">
