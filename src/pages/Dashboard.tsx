@@ -7,6 +7,7 @@ import MonthPicker from "../components/dashboard/MonthPicker"
 import useMonth from "../store/monthStore"
 import useBoard from "../store/boardStore"
 import { useEffect } from "react"
+import ModalTransference from "../components/dashboard/ModalTransference"
 
 const DashboardPage = () => {
   const { monthDate } = useMonth()
@@ -32,6 +33,8 @@ const DashboardPage = () => {
           <IncomesBox />
         </main>
       </div>
+      
+      <ModalTransference />
     </div>
   )
 }
