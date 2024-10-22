@@ -7,14 +7,14 @@ type State = {
 }
 
 type Action = {
-  setCurrentTransference: (data: TransferenceType) => void
+  setCurrentTransference: (data: TransferenceType | null) => void
   setIsOpen: (value: boolean) => void
 }
 
 const useTransferenceModal = create<State & Action>((set) => ({
   currentTransference: null,
   isOpen: false,
-  setCurrentTransference: (data: TransferenceType) => set(() => ({
+  setCurrentTransference: (data: TransferenceType | null) => set(() => ({
     currentTransference: data, isOpen: true
   })),
   setIsOpen: (value) => set(() => ({ isOpen: value }))

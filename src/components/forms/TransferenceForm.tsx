@@ -7,6 +7,7 @@ import { TransferenceCreateType, TransferenceType } from "../../@types/Transfere
 import transferenceController from "../../controller/transferenceController"
 import { useEffect, useState } from "react"
 import { ControllerResponseType } from "../../@types/ControllerResponseType"
+import Select from "../ui/Select"
 
 export type TranferenceValuesProps = {
   name: string,
@@ -27,9 +28,21 @@ const valdationSchema = Yup.object().shape({
     .min(1, 'O vencimento deve ser entre 1 e 31')
     .max(31, 'O vencimento deve ser entre 1 e 31')
     .required('O vencimento é obrigatório'),
+  type: Yup.string()
+    .oneOf(['income', 'expense'], 'O tipo inválido')
+    .required('Tipo é obrigatório'),
   boardId: Yup.string()
     .required('O quadro é obrigatório'),
 })
+
+const defautlValues: TranferenceValuesProps = {
+  name: "",
+  boardId: "2024-10",
+  expireDay: "",
+  type: "expense",
+  value: "",
+  description: ""
+}
 
 type TransferenceFormProps = {
   transference?: TransferenceType | null
@@ -38,14 +51,7 @@ type TransferenceFormProps = {
 
 const TransferenceForm = (props: TransferenceFormProps) => {
   const { setNotification } = useNotificationStore()
-  const [initialValues, setInitialValues] = useState<TranferenceValuesProps>({
-    name: "",
-    boardId: "",
-    expireDay: "",
-    type: "",
-    value: "",
-    description: ""
-  })
+  const [initialValues, setInitialValues] = useState<TranferenceValuesProps>(defautlValues)
 
   useEffect(() => {
     const data = props.transference
@@ -59,10 +65,12 @@ const TransferenceForm = (props: TransferenceFormProps) => {
         type: data.type,
         value: String(data.value)
       })
+    } else {
+      setInitialValues(defautlValues)
     }
   }, [props.transference])
 
-  const onSubmit = async (values: TranferenceValuesProps, { setSubmitting }: FormikHelpers<TranferenceValuesProps>) => {
+  const onSubmit = async (values: TranferenceValuesProps, helpers: FormikHelpers<TranferenceValuesProps>) => {
     const transferenceData: TransferenceCreateType = {
       name: values.name.trim(),
       description: values.description.trim(),
@@ -72,7 +80,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       boardId: values.boardId
     }
 
-    setSubmitting(true)
+    helpers.setSubmitting(true)
 
     let response: ControllerResponseType
 
@@ -84,7 +92,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       response = await transferenceController.createTransference(transferenceData)
     }
 
-    setSubmitting(true)
+    helpers.setSubmitting(true)
 
     setNotification({
       title: response.title,
@@ -92,7 +100,14 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       type: response.type
     })
 
-    if (response.type === "success") onClose()
+    if (response.type === "success") {
+      onClose()
+      onReset(values, helpers)
+    }
+  }
+
+  const onReset = (_values: TranferenceValuesProps, { setValues }: FormikHelpers<TranferenceValuesProps>) => {
+    setValues(defautlValues)
   }
 
   const onClose = () => {
@@ -106,6 +121,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       validationSchema={valdationSchema}
       validateOnChange={false}
       onSubmit={onSubmit}
+      onReset={onReset}
     >
       {({ values, setFieldValue, isSubmitting, errors }) => (
         <Form className="w-full flex flex-col gap-3">
@@ -145,18 +161,32 @@ const TransferenceForm = (props: TransferenceFormProps) => {
             />
           </div>
 
-          <TextInput
-            label="Quadro"
-            autoComplete="off"
-            value="2024-10"
-            disabled
-            error={errors.description}
-            onChange={(event) => setFieldValue("description", event.target.value)}
-          />
+          <div className="flex w-full gap-4">
+            <TextInput
+              label="Quadro"
+              autoComplete="off"
+              value="2024-10"
+              disabled
+              error={errors.boardId}
+              onChange={(event) => setFieldValue("boardId", event.target.value)}
+            />
+
+            <Select
+              label="Tipo"
+              autoComplete="off"
+              value={values.type}
+              error={errors.type}
+              options={[
+                {label: "Despesa", value: "expense"},
+                {label: "Receita", value: "income"},
+              ]}
+              onChange={(event) => setFieldValue("type", event.target.value)}
+            />
+          </div>
 
           <div className="flex w-full gap-4">
             <Button
-              type="button"
+              type="reset"
               variant="plain"
               disabled={isSubmitting}
               onClick={onClose}

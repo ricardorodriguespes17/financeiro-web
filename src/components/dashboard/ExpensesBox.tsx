@@ -7,13 +7,14 @@ import { IoMdEye } from "react-icons/io"
 import { FaTrashAlt } from "react-icons/fa"
 import { TransferenceType } from "../../@types/TransferenceType"
 import useTransferenceModal from "../../store/tranferenceModalStore"
+import { BiPlus } from "react-icons/bi"
 
 const ExpensesBox = () => {
   const { expenses } = useBoard()
   const { setCurrentTransference } = useTransferenceModal()
   const total = expenses.reduce((p, c) => p + c.value, 0)
 
-  const openTransference = (transference: TransferenceType) => {
+  const openTransference = (transference: TransferenceType | null) => {
     setCurrentTransference(transference)
   }
 
@@ -66,7 +67,17 @@ const ExpensesBox = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <h2>Despesas</h2>
+      <div className="flex items-center gap-2">
+        <h2>Despesas</h2>
+        <Button
+          size="fit"
+          variant="plain"
+          className="text-3xl aspect-square rounded-full"
+          onClick={() => openTransference(null)}
+        >
+          <BiPlus />
+        </Button>
+      </div>
 
       <div className="flex flex-col flex-1">
         <DataTable<TransferenceType>
