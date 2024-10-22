@@ -4,3 +4,8 @@ export type CreateUserAccount = {
   password: string
   birthdate: string
 }
+
+export type LoginType = {
+  email: string
+  password: string
+}
