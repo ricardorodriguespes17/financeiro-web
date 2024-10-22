@@ -1,3 +1,4 @@
+import { ControllerResponseType } from "../@types/ControllerResponseType"
 import { CreateUserAccount } from "../@types/UserType"
 import api from "../services/api"
 
@@ -10,7 +11,7 @@ class AuthController {
 
   }
 
-  async createAccount(data: CreateUserAccount) {
+  async createAccount(data: CreateUserAccount): Promise<ControllerResponseType> {
     try {
       const response = await api.post("/users", data)
 

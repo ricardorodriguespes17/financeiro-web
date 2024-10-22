@@ -2,8 +2,11 @@ import { Form, Formik } from "formik"
 import TextInput from "../ui/TextInput"
 import Button from "../ui/Button"
 import { useNavigate } from "react-router-dom"
+import { CreateUserAccount } from "../../@types/UserType"
+import authController from "../../controller/authController"
+import useNotificationStore from "../../store/notificationStore"
 
-type FormProps = {
+export type RegisterFormProps = {
   name: string
   email: string
   password: string
@@ -11,7 +14,7 @@ type FormProps = {
   birthdate: string
 }
 
-const initialValues: FormProps = {
+const initialValues: RegisterFormProps = {
   name: "",
   email: "",
   birthdate: "",
@@ -21,9 +24,29 @@ const initialValues: FormProps = {
 
 const RegisterForm = () => {
   const navigate = useNavigate()
+  const { setNotification } = useNotificationStore()
 
-  const onSubmit = (values: FormProps) => {
-    console.log(values)
+  const onSubmit = async (values: RegisterFormProps) => {
+    if (values.confirmPassword !== values.password) {
+      return
+    }
+
+    const userData: CreateUserAccount = {
+      name: values.name.trim(),
+      email: values.email.trim(),
+      birthdate: values.birthdate,
+      password: values.password.trim()
+    }
+
+    const response = await authController.createAccount(userData)
+
+    setNotification({
+      title: response.title,
+      content: response.content,
+      type: response.type
+    })
+
+    if(response.type === "success") goToLogin()
   }
 
   const goToLogin = () => {
@@ -31,7 +54,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <Formik<FormProps>
+    <Formik<RegisterFormProps>
       initialValues={initialValues}
       onSubmit={onSubmit}
     >
