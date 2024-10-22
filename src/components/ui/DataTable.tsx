@@ -8,7 +8,6 @@ type DataTableProps<T> = {
 
 export type ColumnType<T> = {
   title: string
-  param: keyof T
   render: (row: T) => React.ReactNode
 }
 
@@ -38,8 +37,8 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
             key={index}
             className={twMerge(rowClassName, "odd:bg-gray-50")}
           >
-            {columns.map(({ render, param }) => (
-              <div key={String(param)} className="flex-1">
+            {columns.map(({ render }, index) => (
+              <div key={index} className="flex-1">
                 {render(row)}
               </div>
             ))}
