@@ -2,19 +2,24 @@ import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
 import DataTable, { ColumnType } from "../ui/DataTable"
 import useBoard from "../../store/boardStore"
-
-type ExpensesType = {
-  name: string, value: number, expireDay: number
-}
+import Button from "../ui/Button"
+import { IoMdEye } from "react-icons/io"
+import { FaTrashAlt } from "react-icons/fa"
+import { TransferenceType } from "../../@types/TransferenceType"
+import useTransferenceModal from "../../store/tranferenceModalStore"
 
 const ExpensesBox = () => {
   const { expenses } = useBoard()
+  const { setCurrentTransference } = useTransferenceModal()
   const total = expenses.reduce((p, c) => p + c.value, 0)
 
-  const columns: ColumnType<ExpensesType>[] = [
+  const openTransference = (transference: TransferenceType) => {
+    setCurrentTransference(transference)
+  }
+
+  const columns: ColumnType<TransferenceType>[] = [
     {
       title: "Nome",
-      param: "name",
       render: (row) => {
         return (
           <label>{row.name}</label>
@@ -23,7 +28,6 @@ const ExpensesBox = () => {
     },
     {
       title: "Valor",
-      param: "value",
       render: (row) => {
         return (
           <label>{formatCurrency(row.value)}</label>
@@ -32,10 +36,29 @@ const ExpensesBox = () => {
     },
     {
       title: "Vencimento",
-      param: "expireDay",
       render: (row) => {
         return (
           <label>Dia {row.expireDay}</label>
+        )
+      }
+    },
+    {
+      title: "",
+      render: (row) => {
+        return (
+          <div className="flex items-center gap-8">
+            <Button
+              size="fit"
+              className="h-fit text-2xl rounded-full hover:text-warning"
+              variant="plain"
+              onClick={() => openTransference(row)}
+            >
+              <IoMdEye />
+            </Button>
+            <Button size="fit" className="h-fit text-xl rounded-full hover:text-danger" variant="plain">
+              <FaTrashAlt />
+            </Button>
+          </div>
         )
       }
     }
@@ -46,7 +69,7 @@ const ExpensesBox = () => {
       <h2>Despesas</h2>
 
       <div className="flex flex-col flex-1">
-        <DataTable<ExpensesType>
+        <DataTable<TransferenceType>
           data={expenses}
           columns={columns}
         />
