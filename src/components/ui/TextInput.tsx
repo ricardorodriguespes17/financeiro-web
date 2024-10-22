@@ -18,7 +18,7 @@ const TextInput = ({ label, error, ...rest }: TextInputProps) => {
         )}
         {...rest}
       />
-      <label>{error}</label>
+      <label className="text-danger text-sm">{error}</label>
     </div>
   )
 }
