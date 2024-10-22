@@ -5,6 +5,7 @@ const notificationTime = 3000
 
 type State = {
   notification: NotificationType | null,
+  isShowing: boolean
 }
 
 type Action = {
@@ -14,11 +15,14 @@ type Action = {
 
 const useNotificationStore = create<State & Action>((set, get) => ({
   notification: null,
+  isShowing: false,
   setNotification: (notification) => {
-    set(() => ({ notification }))
-    setTimeout(get().clearNotification, notificationTime)
+    if (!get().isShowing) {
+      set(() => ({ notification, isShowing: true }))
+      setTimeout(get().clearNotification, notificationTime)
+    }
   },
-  clearNotification: () => get().setNotification(null)
+  clearNotification: () => set(() => ({ notification: null, isShowing: false }))
 }))
 
 export default useNotificationStore
