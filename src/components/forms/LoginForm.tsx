@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom"
 import * as Yup from 'yup'
 import authController from "../../controller/authController"
 import useNotificationStore from "../../store/notificationStore"
-import useAuthStore from "../../store/authStore"
 
 type FormProps = {
   email: string
@@ -27,7 +26,6 @@ const initialValues: FormProps = {
 const LoginForm = () => {
   const navigate = useNavigate()
   const { setNotification } = useNotificationStore()
-  const { setTokens } = useAuthStore()
 
   const onSubmit = async (values: FormProps, { setSubmitting }: FormikHelpers<FormProps>) => {
     setSubmitting(true)
@@ -38,11 +36,6 @@ const LoginForm = () => {
     })
 
     setSubmitting(false)
-
-    setTokens({
-      accessToken: response.accessToken || null,
-      refreshToken: response.refreshToken || null
-    })
 
     setNotification({
       title: response.title,

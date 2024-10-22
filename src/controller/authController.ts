@@ -1,23 +1,24 @@
 import { ControllerResponseType } from "../@types/ControllerResponseType"
 import { CreateUserAccount, LoginType } from "../@types/UserType"
-import api from "../services/api"
-
-type LoginResponse = ControllerResponseType & {
-  accessToken?: string
-  refreshToken?: string
-}
+import ApiService from "../services/ApiService"
+import useAuthStore from "../store/authStore"
 
 class AuthController {
-  async login(data: LoginType): Promise<LoginResponse> {
+  async login(data: LoginType): Promise<ControllerResponseType> {
+    const { setTokens } = useAuthStore.getState()
+
     try {
-      const response = await api.post("/login", data)
+      const response = await ApiService.post("/login", data)
+
+      setTokens({
+        accessToken: response.data.accessToken || null,
+        refreshToken: response.data.refreshToken || null
+      })
 
       return {
         title: "Sucesso",
         content: "Login realizado com sucesso!",
         type: "success",
-        accessToken: response.data.accessToken,
-        refreshToken: response.data.refreshToken
       }
     } catch (err) {
       const error = err as { response: { data: { message: string } } }
@@ -30,13 +31,9 @@ class AuthController {
     }
   }
 
-  async logout() {
-
-  }
-
   async createAccount(data: CreateUserAccount): Promise<ControllerResponseType> {
     try {
-      const response = await api.post("/users", data)
+      const response = await ApiService.post("/users", data)
 
       return {
         title: "Sucesso",
