@@ -1,4 +1,4 @@
-import api from '../../src/services/api'
+import ApiService from '../../src/services/ApiService'
 import { describe, test, expect } from 'vitest'
 
 describe('API', () => {
@@ -9,11 +9,11 @@ describe('API', () => {
   })
 
   test('should create an axios instance with the correct baseURL', () => {
-    expect(api.defaults.baseURL).toBe(API_URL)
+    expect(ApiService.defaults.baseURL).toBe(API_URL)
   })
 
   test('should make a GET request to the correct URL', async () => {
-    const response = await api.get('/')
+    const response = await ApiService.get('/')
 
     expect(response.status).toBe(200)
   })
