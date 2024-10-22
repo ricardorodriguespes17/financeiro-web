@@ -3,19 +3,33 @@ import formatCurrency from "../../utils/formatCurrency"
 import DataTable, { ColumnType } from "../ui/DataTable"
 import useBoard from "../../store/boardStore"
 import Button from "../ui/Button"
-import { IoMdEye } from "react-icons/io"
-import { FaTrashAlt } from "react-icons/fa"
 import { TransferenceType } from "../../@types/TransferenceType"
 import useTransferenceModal from "../../store/tranferenceModalStore"
 import { BiPlus } from "react-icons/bi"
+import ActionsColumnTransferences from "./ActionsColumnTransferences"
+import transferenceController from "../../controller/transferenceController"
+import useNotificationStore from "../../store/notificationStore"
+import useMonth from "../../store/monthStore"
 
 const ExpensesBox = () => {
-  const { expenses } = useBoard()
+  const { monthDate } = useMonth()
+  const { expenses, loadTransferences } = useBoard()
   const { setCurrentTransference } = useTransferenceModal()
+  const { setNotification } = useNotificationStore()
   const total = expenses.reduce((p, c) => p + c.value, 0)
 
   const openTransference = (transference: TransferenceType | null) => {
     setCurrentTransference(transference)
+  }
+
+  const deleteTransference = async (transferenceId: string) => {
+    const notification = await transferenceController.deleteTransference(transferenceId)
+
+    if (notification.type === "success") {
+      loadTransferences(monthDate)
+    }
+
+    setNotification(notification)
   }
 
   const columns: ColumnType<TransferenceType>[] = [
@@ -47,19 +61,10 @@ const ExpensesBox = () => {
       title: "",
       render: (row) => {
         return (
-          <div className="flex items-center gap-8">
-            <Button
-              size="fit"
-              className="h-fit text-2xl rounded-full hover:text-warning"
-              variant="plain"
-              onClick={() => openTransference(row)}
-            >
-              <IoMdEye />
-            </Button>
-            <Button size="fit" className="h-fit text-xl rounded-full hover:text-danger" variant="plain">
-              <FaTrashAlt />
-            </Button>
-          </div>
+          <ActionsColumnTransferences
+            handleOpen={() => openTransference(row)}
+            handleDelete={() => deleteTransference(row.id)}
+          />
         )
       }
     }

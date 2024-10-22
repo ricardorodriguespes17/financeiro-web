@@ -50,7 +50,7 @@ class TransferenceController {
   async deleteTransference(transferenceId: string): Promise<ControllerResponseType> {
 
     try {
-      const response = await  ApiService.api.post(`/transferences/${transferenceId}`)
+      const response = await  ApiService.api.delete(`/transferences/${transferenceId}`)
 
       return {
         title: "Sucesso",
