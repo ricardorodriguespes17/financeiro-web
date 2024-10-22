@@ -5,12 +5,15 @@ import { IoPower } from "react-icons/io5"
 import { twMerge } from "tailwind-merge"
 import { useNavigate } from "react-router-dom"
 import useMenuStore from "../store/menuStore"
+import useAuthStore from "../store/authStore"
 
 const SideBar = () => {
-  const { isOpened } = useMenuStore()
   const navigate = useNavigate()
+  const { isOpened } = useMenuStore()
+  const { clearToken } = useAuthStore()
 
   const handleLogout = () => {
+    clearToken()
     navigate("/login")
   }
 
