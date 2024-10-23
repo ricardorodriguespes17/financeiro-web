@@ -41,7 +41,7 @@ class ApiService {
               this.failedRequestsQueue.forEach((req) => req.reject(refreshError as AxiosError))
               this.failedRequestsQueue = []
 
-              //logout
+              authController.logout()
             } finally {
               this.isRefreshing = false
             }
@@ -60,7 +60,7 @@ class ApiService {
             })
           })
         } else {
-          //logout
+          authController.logout()
         }
       }
 

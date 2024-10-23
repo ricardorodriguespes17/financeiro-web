@@ -8,7 +8,7 @@ class AuthController {
     const { setTokens } = useAuthStore.getState()
 
     try {
-      const response = await ApiService.api.post("/login", data)
+      const response = await ApiService.api.post("/auth/login", data)
 
       setTokens({
         accessToken: response.data.accessToken || null,
@@ -25,6 +25,27 @@ class AuthController {
 
       return {
         title: "Erro ao fazer login",
+        content: error.response.data.message,
+        type: "error",
+      }
+    }
+  }
+
+  async logout() {
+    const { setTokens, refreshToken } = useAuthStore.getState()
+
+    try {
+      await ApiService.api.post("/auth/logout", { refreshToken })
+
+      setTokens({
+        accessToken: null,
+        refreshToken: null
+      })
+    } catch (err) {
+      const error = err as { response: { data: { message: string } } }
+
+      return {
+        title: "Erro ao fazer logout",
         content: error.response.data.message,
         type: "error",
       }
@@ -64,7 +85,7 @@ class AuthController {
       })
 
       return { accessToken }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       return { accessToken: null }
     }
