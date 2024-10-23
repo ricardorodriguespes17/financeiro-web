@@ -58,7 +58,16 @@ const ExpensesBox = () => {
       }
     },
     {
+      title: "Descrição",
+      render: (row) => {
+        return (
+          <label>{row.description}</label>
+        )
+      }
+    },
+    {
       title: "",
+      position: "right",
       render: (row) => {
         return (
           <ActionsColumnTransferences
