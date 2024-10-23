@@ -20,6 +20,9 @@ const useAuthStore = create<State & Actions>()(
       setTokens: (tokens) => {
         set(tokens)
         ApiService.setAuthHaader(tokens.accessToken)
+        if(tokens.refreshToken) {
+          ApiService.configInterceptor(tokens.refreshToken)
+        }
       },
       clearToken: () => {
         set({ accessToken: null, refreshToken: null })
