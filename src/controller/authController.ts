@@ -52,23 +52,21 @@ class AuthController {
   }
 
   async refreshToken(data: { refreshToken: string }) {
+    const { setTokens, refreshToken } = useAuthStore.getState()
 
     try {
       const response = await ApiService.api.post("/auth/refresh", data)
+      const accessToken = response.data.accessToken as string
 
-      return {
-        title: "Sucesso",
-        content: response.data.message,
-        type: "success"
-      }
+      setTokens({
+        accessToken,
+        refreshToken
+      })
+
+      return { accessToken }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      const error = err as { response: { data: { message: string } } }
-
-      return {
-        title: "Erro ao criar conta",
-        content: error.response.data.message,
-        type: "error"
-      }
+      return { accessToken: null }
     }
   }
 }

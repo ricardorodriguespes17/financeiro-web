@@ -8,7 +8,7 @@ const PrivateRoute = () => {
   const isAuthenticated = !!accessToken
 
   useEffect(() => {
-    ApiService.setAuthHaader(accessToken)
+    ApiService.setAuthHeader(accessToken)
     if (refreshToken) {
       ApiService.configInterceptor(refreshToken)
     }

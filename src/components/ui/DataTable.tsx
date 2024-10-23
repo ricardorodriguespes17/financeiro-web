@@ -15,9 +15,8 @@ export type ColumnType<T> = {
 const DataTable = <T,>(props: DataTableProps<T>) => {
   const {
     data,
-    columns
+    columns,
   } = props
-
 
   const rowClassName = "w-full py-2 px-4 flex items-center gap-4"
 
@@ -47,7 +46,7 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
         {data.map((row, index) => (
           <div
             key={index}
-            className={twMerge(rowClassName, "odd:bg-gray-50")}
+            className={twMerge(rowClassName, "odd:bg-gray-50 hover:bg-primary-100 duration-200")}
           >
             {columns.map(({ render, position = "left" }, index) => {
               const className = twMerge(
