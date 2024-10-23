@@ -62,7 +62,7 @@ const LoginForm = () => {
           <TextInput
             label="Email"
             type="email"
-            autoComplete="off"
+            autoComplete="email"
             value={values.email}
             error={errors.email}
             onChange={(event) => setFieldValue("email", event.target.value)}
@@ -71,7 +71,7 @@ const LoginForm = () => {
           <TextInput
             label="Senha"
             type="password"
-            autoComplete="new-password"
+            autoComplete="password"
             value={values.password}
             error={errors.password}
             onChange={(event) => setFieldValue("password", event.target.value)}
