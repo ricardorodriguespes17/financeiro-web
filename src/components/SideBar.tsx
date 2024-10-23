@@ -38,15 +38,16 @@ const SideBar = () => {
         Menu
       </h2>
 
-      {menu.map(item => {
+      {menu.map((item, index) => {
         if (typeof item === "string") {
           return (
-            <hr className="border-separate" />
+            <hr key={index} className="border-separate" />
           )
         }
 
         return (
           <Button
+            key={index}
             href={item.href}
             onClick={item.onClick}
             variant={item.selected ? "solid" : "plain"}
