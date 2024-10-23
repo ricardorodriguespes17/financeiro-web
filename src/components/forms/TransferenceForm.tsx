@@ -8,6 +8,7 @@ import transferenceController from "../../controller/transferenceController"
 import { useEffect, useState } from "react"
 import { ControllerResponseType } from "../../@types/ControllerResponseType"
 import Select from "../ui/Select"
+import useBoard from "../../store/boardStore"
 
 export type TranferenceValuesProps = {
   name: string,
@@ -35,15 +36,6 @@ const valdationSchema = Yup.object().shape({
     .required('O quadro é obrigatório'),
 })
 
-const defautlValues: TranferenceValuesProps = {
-  name: "",
-  boardId: "2024-10",
-  expireDay: "",
-  type: "expense",
-  value: "",
-  description: ""
-}
-
 type TransferenceFormProps = {
   transference?: TransferenceType | null
   onClose: () => void
@@ -51,6 +43,17 @@ type TransferenceFormProps = {
 
 const TransferenceForm = (props: TransferenceFormProps) => {
   const { setNotification } = useNotificationStore()
+  const { boardId } = useBoard()
+
+  const defautlValues: TranferenceValuesProps = {
+    name: "",
+    boardId: boardId || "",
+    expireDay: "",
+    type: "expense",
+    value: "",
+    description: ""
+  }
+
   const [initialValues, setInitialValues] = useState<TranferenceValuesProps>(defautlValues)
 
   useEffect(() => {
@@ -68,6 +71,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     } else {
       setInitialValues(defautlValues)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.transference])
 
   const onSubmit = async (values: TranferenceValuesProps, helpers: FormikHelpers<TranferenceValuesProps>) => {
@@ -165,7 +169,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
             <TextInput
               label="Quadro"
               autoComplete="off"
-              value="2024-10"
+              value={values.boardId}
               disabled
               error={errors.boardId}
               onChange={(event) => setFieldValue("boardId", event.target.value)}
@@ -177,8 +181,8 @@ const TransferenceForm = (props: TransferenceFormProps) => {
               value={values.type}
               error={errors.type}
               options={[
-                {label: "Despesa", value: "expense"},
-                {label: "Receita", value: "income"},
+                { label: "Despesa", value: "expense" },
+                { label: "Receita", value: "income" },
               ]}
               onChange={(event) => setFieldValue("type", event.target.value)}
             />
