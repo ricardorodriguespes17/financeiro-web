@@ -2,19 +2,32 @@ import { useEffect, useState } from "react"
 import CalendarRow from "./CalendarRow"
 import useMonth from "../../store/monthStore"
 import getDaysOfMonth from "../../utils/getDaysOfMonth"
+import { useMediaQuery } from "react-responsive"
 
 const Calendar = () => {
   const { monthDate } = useMonth()
-  const [week] = useState([
-    "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"
-  ])
   const [monthDays, setMonthDays] = useState<number[]>([])
+  const [week, setWeek] = useState<string[]>([])
+  const isDesktopOrLaptop = useMediaQuery({
+    query: '(min-width: 768px)'
+  })
 
   useEffect(() => {
     const monthDays = getDaysOfMonth(monthDate)
-
     setMonthDays(monthDays || [])
   }, [monthDate])
+
+  useEffect(() => {
+    if(isDesktopOrLaptop) {
+      setWeek([
+        "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"
+      ])
+    } else {
+      setWeek([
+        "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"
+      ])
+    }
+  }, [isDesktopOrLaptop])
 
   return (
     <div className="w-full flex flex-col">
@@ -32,8 +45,8 @@ const Calendar = () => {
         {new Array(6).fill(0).map((_item, index) => {
           const range = monthDays.slice(index * 7, index * 7 + 7)
 
-          if(range.length > 0) {
-            while(range.length < 7) {
+          if (range.length > 0) {
+            while (range.length < 7) {
               range.push(-1)
             }
           }
