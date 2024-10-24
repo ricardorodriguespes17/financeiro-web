@@ -9,7 +9,7 @@ type CalendarTagProps = {
 
 const CalendarTag = ({ data }: CalendarTagProps) => {
   const { setCurrentTransference } = useTransferenceModal()
-  const [isDragging, setIsDragging] = useState(false) 
+  const [isDragging, setIsDragging] = useState(false)
 
   const typesClassName = {
     expense: "bg-danger/15 text-danger",
@@ -44,7 +44,9 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <label className="text-xs md:text-sm lg:text-base">{data.name}</label>
+      <label className="text-xs md:text-sm lg:text-base cursor-pointer">
+        {data.name}
+      </label>
     </div>
   )
 }
