@@ -26,26 +26,31 @@ const SideBar = () => {
     { label: "Sair", onClick: handleLogout, Icon: IoPower }
   ]
 
+  const className = twMerge(
+    "h-full bg-white flex flex-col items-center gap-3 pt-4 overflow-hidden",
+    "transition-all duration-500 ease-in-out fixed md:static top-[76px]",
+    isOpened ? "w-[270px] px-4" : "md:w-[90px] w-0 px-0",
+  )
+
+  const titleClassName = twMerge(
+    "mb-4 text-primary-700 w-full",
+    isOpened ? "block" : "hidden"
+  )
+
+  const labelClassName = twMerge(
+    isOpened ? "w-fit ml-3" : "w-0",
+    "overflow-hidden transition-all duration-300 text-nowrap ease-in-out"
+  )
 
   return (
-    <div className={twMerge(
-      isOpened ? "w-[270px]" : "w-[90px]",
-      "h-screen bg-white flex flex-col gap-3 pt-4 px-4",
-      "transition-all duration-500 ease-in-out",
-    )}>
-      <h2 className={twMerge(
-        "mb-4 text-primary-700",
-        isOpened ? "block" : "hidden"
-      )}>
+    <div className={className}>
+      <h2 className={titleClassName}>
         Menu
       </h2>
 
       {menu.map((item, index) => {
-        if (typeof item === "string") {
-          return (
-            <hr key={index} className="border-separate" />
-          )
-        }
+        if (typeof item === "string")
+          return <hr key={index} className="border-separate" />
 
         return (
           <Button
@@ -57,10 +62,7 @@ const SideBar = () => {
             className="justify-start px-4 gap-0"
           >
             <item.Icon size={24} className="min-w-6" />
-            <label className={twMerge(
-              isOpened ? "w-fit ml-3" : "w-0",
-              "overflow-hidden transition-all duration-300 text-nowrap ease-in-out"
-            )}>
+            <label className={labelClassName}>
               {item.label}
             </label>
           </Button>
