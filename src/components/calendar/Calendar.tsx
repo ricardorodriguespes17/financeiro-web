@@ -22,7 +22,7 @@ const Calendar = () => {
 
       <header className="w-full flex bg-primary rounded-md">
         {week.map(item => (
-          <div className="flex flex-1 justify-center items-center h-10">
+          <div key={item} className="flex flex-1 justify-center items-center h-10">
             <label className="text-white font-bold">{item}</label>
           </div>
         ))}
@@ -39,7 +39,7 @@ const Calendar = () => {
           }
 
           return (
-            <CalendarRow rangeDays={range} />
+            <CalendarRow key={index} rangeDays={range} />
           )
         })}
       </main>

@@ -19,6 +19,7 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
 
   const className = twMerge(
     "flex flex-col items-end flex-1 min-h-24 border border-gray-200 p-1 gap-1",
+    "overflow-hidden",
     day < 1 && "bg-gray-200 *:hidden"
   )
 
@@ -63,7 +64,7 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
       <label className="mb-1">{day}</label>
 
       {transferences.map(item => (
-        <CalendarTag data={item} />
+        <CalendarTag key={item.id} data={item} />
       ))}
     </div>
   )

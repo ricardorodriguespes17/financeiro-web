@@ -18,7 +18,7 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
 
   const className = twMerge(
     "w-full flex itens-center rounded-md px-1 py-[1px] cursor-pointer",
-    "hover:opacity-80 transition-all shadow",
+    "hover:opacity-80 transition-all shadow overflow-hidden",
     typesClassName[data.type],
     isDragging ? "invisible" : "visible",
   )
@@ -44,7 +44,7 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      {data.name}
+      <label className="text-xs md:text-sm lg:text-base">{data.name}</label>
     </div>
   )
 }

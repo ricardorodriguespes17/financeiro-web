@@ -11,8 +11,8 @@ const CalendarRow = ({ rangeDays }: CalendarRowProps) => {
 
   return (
     <div className="flex w-full bg-gray-50">
-      {rangeDays.map(day => (
-        <CalendarCell day={day} />
+      {rangeDays.map((day, index) => (
+        <CalendarCell key={index} day={day} />
       ))}
     </div>
   )
