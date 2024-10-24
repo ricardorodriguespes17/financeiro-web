@@ -1,5 +1,5 @@
 const getFirstDayOfMonth = (year: number, month: number) => {
-  const firstDay = new Date(year, month, 1)
+  const firstDay = new Date(year, month - 1, 1)
   
   return firstDay.getDay()
 }

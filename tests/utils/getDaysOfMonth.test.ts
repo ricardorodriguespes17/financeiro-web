@@ -18,7 +18,7 @@ describe('getDaysOfMonth', () => {
   })
 
   it('should return the correct array of days for a given month', () => {
-    const mockMonthYearResult = { year: 2024, month: 9 }
+    const mockMonthYearResult = { year: 2024, month: 10 }
     const mockFirstDayOfMonth = 2
     const mockLastDayOfMonth = 31
 
@@ -34,7 +34,7 @@ describe('getDaysOfMonth', () => {
   })
 
   it('should correctly handle months with fewer than 31 days', () => {
-    const mockMonthYearResult = { year: 2024, month: 10 }
+    const mockMonthYearResult = { year: 2024, month: 11 }
     const mockFirstDayOfMonth = 5
     const mockLastDayOfMonth = 30
 
