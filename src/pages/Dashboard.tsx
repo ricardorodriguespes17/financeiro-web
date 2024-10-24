@@ -1,22 +1,25 @@
 import Header from "../components/ui/Header"
 import SideBar from "../components/SideBar"
 import BalancesBox from "../components/dashboard/BalancesBox"
-import ExpensesBox from "../components/dashboard/ExpensesBox"
-import IncomesBox from "../components/dashboard/IncomesBox"
 import MonthPicker from "../components/dashboard/MonthPicker"
 import useMonth from "../store/monthStore"
 import useBoard from "../store/boardStore"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import ModalTransference from "../components/dashboard/ModalTransference"
 import useTransferenceModal from "../store/tranferenceModalStore"
 import Button from "../components/ui/Button"
 import { BiPlus } from "react-icons/bi"
 import boardController from "../controller/boardController"
+import Calendar from "../components/calendar/Calendar"
+import ExpensesBox from "../components/dashboard/ExpensesBox"
+import IncomesBox from "../components/dashboard/IncomesBox"
+import ButtonChangeMode from "../components/dashboard/ButtonChangeMode"
 
 const DashboardPage = () => {
   const { monthDate } = useMonth()
   const { loadBoard, boardId } = useBoard()
   const { isOpen } = useTransferenceModal()
+  const [mode, setMode] = useState<"calendar" | "table">("table")
 
   useEffect(() => {
     if (!isOpen) {
@@ -27,6 +30,14 @@ const DashboardPage = () => {
   const handleCreateBoard = () => {
     boardController.createBoard({ id: monthDate })
     loadBoard(monthDate)
+  }
+
+  const toggleMode = () => {
+    if (mode === "table") {
+      setMode("calendar")
+    } else {
+      setMode("table")
+    }
   }
 
   return (
@@ -42,9 +53,22 @@ const DashboardPage = () => {
           <MonthPicker />
           {boardId ? (
             <>
+              <ButtonChangeMode
+                mode={mode}
+                toggleMode={toggleMode}
+              />
+
               <BalancesBox />
-              <ExpensesBox />
-              <IncomesBox />
+
+              {mode === "calendar" && <Calendar />}
+              {
+                mode === "table" && (
+                  <>
+                    <ExpensesBox />
+                    <IncomesBox />
+                  </>
+                )
+              }
             </>
           ) : (
             <div className="flex flex-col gap-2 w-full items-center grow justify-center">
