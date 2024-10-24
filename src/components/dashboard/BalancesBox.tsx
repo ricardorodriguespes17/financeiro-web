@@ -16,11 +16,11 @@ const BalancesBox = () => {
   useEffect(() => {
     const totalExpensesValue = expenses.reduce((p, c) => p + c.value, 0)
     const totalIncomesValue = incomes.reduce((p, c) => p + c.value, 0)
-    const finalBalance = initialValue + totalIncomesValue - totalExpensesValue
+    const finalBalance = initialValue || 0 + totalIncomesValue - totalExpensesValue
 
     setBalances(
       [
-        { name: "Saldo inicial", value: initialValue, color: "yellow" },
+        { name: "Saldo inicial", value: initialValue || 0, color: "yellow" },
         { name: "Despesas totais", value: totalExpensesValue, color: "red" },
         { name: "Receitas totais", value: totalIncomesValue, color: "green" },
         { name: "Saldo final", value: finalBalance, color: finalBalance >= 0 ? "green" : "red" },

@@ -37,11 +37,11 @@ const CardBalance = ({ name, value: finalValue, color }: CardBalanceProps) => {
   }, [finalValue, percent])
 
   return (
-    <Card className="min-w-[280px]">
+    <Card className="min-w-[250px] w-full md:w-fit">
       <div className="flex gap-8">
         <div className="flex flex-col flex-1">
-          <label>{name}</label>
-          <h2>{formatCurrency(finalValue * percent / 100)}</h2>
+          <label className="text-sm text-gray-500">{name}</label>
+          <h3>{formatCurrency(finalValue * percent / 100)}</h3>
         </div>
         <MdAccountBalanceWallet
           className={
