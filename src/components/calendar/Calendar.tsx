@@ -17,7 +17,9 @@ const Calendar = () => {
   }, [monthDate])
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col">
+      <h2 className="mb-2">Calendário</h2>
+
       <header className="w-full flex bg-primary rounded-md">
         {week.map(item => (
           <div className="flex flex-1 justify-center items-center h-10">
