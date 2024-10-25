@@ -6,11 +6,14 @@ import { twMerge } from "tailwind-merge"
 import { useNavigate } from "react-router-dom"
 import useMenuStore from "../store/menuStore"
 import useAuthStore from "../store/authStore"
+import useTheme from "../store/themeStore"
+import { FaMoon, FaRegSun } from "react-icons/fa"
 
 const SideBar = () => {
   const navigate = useNavigate()
   const { isOpened } = useMenuStore()
   const { onLogout } = useAuthStore()
+  const { toggleTheme, themeMode } = useTheme()
 
   const handleLogout = async () => {
     onLogout()
@@ -21,12 +24,13 @@ const SideBar = () => {
     { label: "Dashboard", href: "/dashboard", Icon: LuLayoutDashboard, selected: true },
     { label: "Quadros", href: "/dashboard", Icon: IoMdCalendar },
     "separator",
+    { label: "Tema", onClick: toggleTheme, Icon: themeMode === "dark" ? FaRegSun : FaMoon },
     { label: "Sair", onClick: handleLogout, Icon: IoPower }
   ]
 
   const className = twMerge(
     "h-full bg-white dark:bg-black flex flex-col items-center gap-3 pt-4 overflow-hidden",
-    "transition-all duration-500 ease-in-out fixed md:static top-[76px]",
+    "transition-[width] duration-500 ease-in-out fixed md:static top-[76px]",
     isOpened ? "w-[270px] px-4" : "md:w-[90px] w-0 px-0",
   )
 
