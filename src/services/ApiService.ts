@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance } from "axios"
 import authController from "../controller/authController"
+import useAuthStore from "../store/authStore"
 
 const baseURL = import.meta.env.VITE_API_URL
 
@@ -17,31 +18,31 @@ class ApiService {
     this.api = axios.create({ baseURL })
   }
 
-  public configInterceptor(refreshToken: string) {
+  public configInterceptor() {
     this.api.interceptors.response.use((response) => {
       return response
     }, async (error) => {
       const originalRequest = error.config
-      
+
       if (error.response.status === 401 && !originalRequest._retry) {
         if (error.response.data.message) {
-          if (!this.isRefreshing) {
+          const { refreshToken } = useAuthStore.getState()
+          if (!this.isRefreshing && refreshToken) {
             originalRequest._retry = true
             this.isRefreshing = true
-            
+
             try {
               const { accessToken } = await authController.refreshToken({ refreshToken })
-              
+
               this.setAuthHeader(accessToken)
 
               this.failedRequestsQueue.forEach((req) => req.resolve(accessToken))
               this.failedRequestsQueue = []
             } catch (refreshError) {
-              console.log("error")
               this.failedRequestsQueue.forEach((req) => req.reject(refreshError as AxiosError))
               this.failedRequestsQueue = []
 
-              authController.logout()
+              await authController.logout()
             } finally {
               this.isRefreshing = false
             }
@@ -51,7 +52,6 @@ class ApiService {
             this.failedRequestsQueue.push({
               resolve: (accessToken: string | null) => {
                 originalRequest.headers["Authorization"] = accessToken
-                console.log(originalRequest)
                 resolve(this.api(originalRequest))
               },
               reject: (err: AxiosError) => {
@@ -60,7 +60,7 @@ class ApiService {
             })
           })
         } else {
-          authController.logout()
+          await authController.logout()
         }
       }
 

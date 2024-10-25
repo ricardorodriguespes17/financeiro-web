@@ -36,11 +36,6 @@ class AuthController {
 
     try {
       await ApiService.api.post("/auth/logout", { refreshToken })
-
-      setTokens({
-        accessToken: null,
-        refreshToken: null
-      })
     } catch (err) {
       const error = err as { response: { data: { message: string } } }
 
@@ -49,6 +44,11 @@ class AuthController {
         content: error.response.data.message,
         type: "error",
       }
+    } finally {
+      setTokens({
+        accessToken: null,
+        refreshToken: null
+      })
     }
   }
 

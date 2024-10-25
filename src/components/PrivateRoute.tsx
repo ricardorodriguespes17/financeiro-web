@@ -4,15 +4,12 @@ import { useEffect } from 'react'
 import ApiService from '../services/ApiService'
 
 const PrivateRoute = () => {
-  const { accessToken, refreshToken } = useAuthStore()
+  const { accessToken } = useAuthStore()
   const isAuthenticated = !!accessToken
 
   useEffect(() => {
     ApiService.setAuthHeader(accessToken)
-    if (refreshToken) {
-      ApiService.configInterceptor(refreshToken)
-    }
-  }, [accessToken, refreshToken])
+  }, [accessToken])
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

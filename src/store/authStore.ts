@@ -19,7 +19,6 @@ const useAuthStore = create<State & Actions>()(
       refreshToken: null,
       onLogout: async () => {
         await authController.logout()
-        set({ accessToken: null, refreshToken: null })
       },
       setTokens: (tokens) => {
         set(tokens)
