@@ -2,6 +2,7 @@ import { twMerge } from "tailwind-merge"
 import { TransferenceType } from "../../@types/TransferenceType"
 import useTransferenceModal from "../../store/tranferenceModalStore"
 import { useState } from "react"
+import { useMediaQuery } from "react-responsive"
 
 type CalendarTagProps = {
   data: TransferenceType
@@ -10,6 +11,9 @@ type CalendarTagProps = {
 const CalendarTag = ({ data }: CalendarTagProps) => {
   const { setCurrentTransference } = useTransferenceModal()
   const [isDragging, setIsDragging] = useState(false)
+  const isDesktop = useMediaQuery({
+    query: '(min-width: 1000px)'
+  })
 
   const typesClassName = {
     expense: "bg-danger/15 text-danger",
@@ -39,7 +43,7 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
   return (
     <div
       className={className}
-      draggable
+      draggable={isDesktop}
       onClick={handleOpen}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}

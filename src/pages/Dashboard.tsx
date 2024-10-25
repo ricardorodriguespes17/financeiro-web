@@ -25,7 +25,7 @@ const DashboardPage = () => {
       <div className="flex flex-col flex-1 h-full">
         <Header showMenuButton />
 
-        <main className="w-full h-full flex-col gap-8 flex p-8 shadow-inner overflow-auto">
+        <main className="w-full h-full flex-col gap-8 flex px-4 py-8 md:px-8 shadow-inner overflow-auto">
           <MonthPicker />
           <BoardContainer />
           <CreateBoardButton />

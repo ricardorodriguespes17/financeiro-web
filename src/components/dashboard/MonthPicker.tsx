@@ -15,16 +15,18 @@ const MonthPicker = () => {
   return (
     <div className="w-full flex items-center justify-between">
       <Button
-        size="normal"
+        size="fit"
         variant="plain"
+        className="md:px-4"
         onClick={() => navigateMonth(-1)}
       >
         <IoIosArrowBack size={28} />
       </Button>
-      <h2>{getMonthLabel(monthDate)}</h2>
+      <h2 className="text-center">{getMonthLabel(monthDate)}</h2>
       <Button
-        size="normal"
+        size="fit"
         variant="plain"
+        className="md:px-4"
         onClick={() => navigateMonth(1)}
       >
         <IoIosArrowForward size={28} />
