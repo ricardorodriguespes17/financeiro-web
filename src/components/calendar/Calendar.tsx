@@ -36,8 +36,8 @@ const Calendar = () => {
   if (isLoading) {
     return (
       <div className="w-full flex flex-col">
-        <Skeleton className="w-[200px] h-10 mb-2" />
-        <Skeleton className="w-full h-10 bg-primary-300" />
+        <Skeleton className="w-[150px] h-[40px] mb-2 bg-primary-300 dark:bg-primary-700" />
+        <Skeleton className="w-full h-10 bg-primary-300 dark:bg-primary-700" />
         <Skeleton className="w-full h-20" />
         <Skeleton className="w-full h-20" />
         <Skeleton className="w-full h-20" />
@@ -54,10 +54,10 @@ const Calendar = () => {
         <ButtonChangeMode />
       </div>
 
-      <header className="w-full flex bg-primary rounded-md">
+      <header className="w-full flex bg-primary dark:bg-primary-800 rounded-md">
         {week.map(item => (
           <div key={item} className="flex flex-1 justify-center items-center h-10">
-            <label className="text-white font-bold">{item}</label>
+            <label className="font-bold">{item}</label>
           </div>
         ))}
       </header>

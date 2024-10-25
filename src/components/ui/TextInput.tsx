@@ -12,9 +12,9 @@ const TextInput = ({ label, error, ...rest }: TextInputProps) => {
       <label>{label}</label>
       <input
         className={twMerge(
-          "w-full h-10 px-4",
-          "border border-gray-300 rounded-md focus:border-primary",
-          "drop-shadow-sm focus:drop-shadow-md"
+          "w-full h-10 px-4 dark:bg-gray-900",
+          "border border-gray-300 dark:border-gray-700 rounded-md",
+          "drop-shadow-sm focus:drop-shadow-md focus:border-primary"
         )}
         {...rest}
       />

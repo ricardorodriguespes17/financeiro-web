@@ -29,7 +29,9 @@ const Modal = (props: ModalProps) => {
         <header className="flex mb-4">
           <div className="flex flex-col flex-1">
             <h3>{title}</h3>
-            <p className="text-gray-500">{subtitle}</p>
+            <p className="text-gray-500 dark:text-gray-400">
+              {subtitle}
+              </p>
           </div>
 
           <Button

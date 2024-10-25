@@ -23,8 +23,8 @@ const Button = (props: ButtonProps) => {
   } = props
 
   const variants = {
-    solid: "bg-primary text-white drop-shadow-md hover:bg-primary-700",
-    plain: "bg-transparent text-primary hover:font-bold hover:bg-primary-100",
+    solid: "bg-primary dark:bg-primary-700 text-white drop-shadow-md hover:bg-primary-700",
+    plain: "bg-transparent text-primary dark:text-primary-400 hover:font-bold hover:bg-primary-100 dark:hover:bg-primary-100/10",
     outlined: "bg-transparent text-primary border border-primary hover:bg-primary-200",
     mono: "bg-primary-200 text-primary-700 drop-shadow-sm hover:bg-primary-300"
   }

@@ -2,6 +2,7 @@ import { IoIosMenu } from "react-icons/io"
 import Button from "./Button"
 import Logo from "./Logo"
 import useMenuStore from "../../store/menuStore"
+import { twMerge } from "tailwind-merge"
 
 type HeaderProps = {
   children?: React.ReactNode
@@ -19,8 +20,13 @@ const Header = ({ children, showMenuButton }: HeaderProps) => {
     }
   }
 
+  const className=twMerge(
+    "w-full h-20 flex items-center px-8 py-[14px] justify-between",
+    "bg-white dark:bg-black"
+  )
+
   return (
-    <header className="w-full h-20 flex items-center px-8 py-[14px] justify-between bg-white">
+    <header className={className}>
       <div className="flex items-center gap-6">
         {showMenuButton && (
           <Button

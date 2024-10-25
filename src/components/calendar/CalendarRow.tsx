@@ -10,7 +10,7 @@ const CalendarRow = ({ rangeDays }: CalendarRowProps) => {
   }
 
   return (
-    <div className="flex w-full bg-gray-50">
+    <div className="flex w-full bg-gray-50 dark:bg-gray-900">
       {rangeDays.map((day, index) => (
         <CalendarCell key={index} day={day} />
       ))}

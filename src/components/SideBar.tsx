@@ -25,7 +25,7 @@ const SideBar = () => {
   ]
 
   const className = twMerge(
-    "h-full bg-white flex flex-col items-center gap-3 pt-4 overflow-hidden",
+    "h-full bg-white dark:bg-black flex flex-col items-center gap-3 pt-4 overflow-hidden",
     "transition-all duration-500 ease-in-out fixed md:static top-[76px]",
     isOpened ? "w-[270px] px-4" : "md:w-[90px] w-0 px-0",
   )

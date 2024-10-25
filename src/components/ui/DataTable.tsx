@@ -28,10 +28,10 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
       <div className="w-full flex flex-col p-0">
         <Skeleton className="w-full h-10 bg-primary-300" />
         <div>
-          <Skeleton className="w-full h-10 odd:bg-gray-200" />
-          <Skeleton className="w-full h-10 odd:bg-gray-200" />
-          <Skeleton className="w-full h-10 odd:bg-gray-200" />
-          <Skeleton className="w-full h-10 odd:bg-gray-200" />
+          <Skeleton className="w-full h-10 odd:bg-gray-200 dark:odd:bg-gray-800" />
+          <Skeleton className="w-full h-10 odd:bg-gray-200 dark:odd:bg-gray-800" />
+          <Skeleton className="w-full h-10 odd:bg-gray-200 dark:odd:bg-gray-800" />
+          <Skeleton className="w-full h-10 odd:bg-gray-200 dark:odd:bg-gray-800" />
         </div>
       </div>
     )
@@ -41,7 +41,7 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
     <Card className="w-full flex flex-col p-0">
       <header className={twMerge(
         rowClassName,
-        "bg-primary-600 text-white rounded-md"
+        "bg-primary-600 dark:bg-primary-800 text-white rounded-md"
       )}>
         {columns.map(({ title, position = "left" }, index) => {
           const className = twMerge(
@@ -63,7 +63,11 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
         {data.map((row, index) => (
           <div
             key={index}
-            className={twMerge(rowClassName, "odd:bg-gray-50 hover:bg-primary-100 duration-200")}
+            className={twMerge(
+              rowClassName, 
+              "odd:bg-gray-50 dark:odd:bg-gray-900 duration-200",
+              "hover:bg-primary-100 dark:hover:bg-primary-900"
+            )}
           >
             {columns.map(({ render, position = "left" }, index) => {
               const className = twMerge(

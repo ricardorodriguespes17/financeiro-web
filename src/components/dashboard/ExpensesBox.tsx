@@ -77,8 +77,8 @@ const ExpensesBox = () => {
         />
 
         <div className={twMerge(
-          "flex items-center w-full rounded-md text-xl",
-          "bg-white text-primary-800 px-3 py-2 font-bold"
+          "flex items-center w-full rounded-md text-xl px-3 py-2 font-bold",
+          "bg-white dark:bg-gray-900 text-primary-800 dark:text-primary"
         )}>
           Total: {formatCurrency(total)}
         </div>

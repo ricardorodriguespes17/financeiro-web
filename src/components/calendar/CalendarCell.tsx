@@ -18,9 +18,9 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
   const enableDragDrop = day > 0
 
   const className = twMerge(
-    "flex flex-col items-end flex-1 min-h-24 border border-gray-200 p-1 gap-1",
-    "overflow-hidden",
-    day < 1 && "bg-gray-200 *:hidden"
+    "flex flex-col items-end flex-1 min-h-24 border border-gray-200 dark:border-gray-800",
+    "overflow-hidden p-1 gap-1",
+    day < 1 && "bg-gray-200 dark:bg-gray-800  *:hidden"
   )
 
   useEffect(() => {

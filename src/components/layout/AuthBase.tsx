@@ -8,7 +8,7 @@ type AuthBaseLayoutProps = {
 
 const AuthBaseLayout = ({ title, children }: AuthBaseLayoutProps) => {
   return (
-    <div className="w-full h-full flex bg-white">
+    <div className="w-full h-full flex bg-white dark:bg-black">
       <div className="flex-1 hidden md:flex flex-col items-center justify-center">
         <div className="w-1/2">
           <Logo />

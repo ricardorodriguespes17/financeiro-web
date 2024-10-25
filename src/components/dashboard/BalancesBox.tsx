@@ -35,7 +35,7 @@ const BalancesBox = () => {
   if (isLoading) {
     return (
       <div className={className}>
-        <Skeleton className="w-[150px] h-[40px] bg-primary-300" />
+        <Skeleton className="w-[150px] h-[40px] bg-primary-300 dark:bg-primary-700" />
 
         <div className={balancesClassName}>
           <Skeleton className="w-[250px] h-[85px]" />

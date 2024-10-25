@@ -8,7 +8,7 @@ type CardProps = {
 const Card = ({ children, className }: CardProps) => {
   return (
     <div className={twMerge(
-      "bg-white flex flex-col rounded-md p-4",
+      "bg-white dark:bg-gray-800 flex flex-col rounded-md p-4",
       className
     )}>
       {children}
