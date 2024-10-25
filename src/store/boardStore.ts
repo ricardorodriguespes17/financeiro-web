@@ -26,7 +26,7 @@ const useBoard = create<State & Action>((set, get) => ({
     try {
       set(() => ({ isLoading: true }))
       const response = await boardController.getBoardById(boardId)
-      get().loadTransferences(boardId)
+      await get().loadTransferences(boardId)
       set(() => ({ boardId, initialValue: response.data?.initialValue }))
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {

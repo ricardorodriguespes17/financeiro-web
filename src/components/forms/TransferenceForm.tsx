@@ -37,6 +37,7 @@ const valdationSchema = Yup.object().shape({
 
 type TransferenceFormProps = {
   transference?: Partial<TransferenceType> | null
+  onSubmit: () => void
   onClose: () => void
 }
 
@@ -68,7 +69,6 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     } else {
       setInitialValues(defautlValues)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.transference])
 
   const onSubmit = async (values: TranferenceValuesProps, helpers: FormikHelpers<TranferenceValuesProps>) => {
@@ -103,7 +103,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
 
     if (response.type === "success") {
       onReset(values, helpers)
-      onClose()
+      props.onSubmit()
     }
   }
 

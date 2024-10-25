@@ -5,20 +5,16 @@ import MonthPicker from "../components/dashboard/MonthPicker"
 import useMonth from "../store/monthStore"
 import useBoard from "../store/boardStore"
 import ModalTransference from "../components/dashboard/ModalTransference"
-import useTransferenceModal from "../store/tranferenceModalStore"
 import BoardContainer from "../components/dashboard/BoardContainer"
 import CreateBoardButton from "../components/dashboard/CreateBoardButton"
 
 const DashboardPage = () => {
   const { monthDate } = useMonth()
   const { loadBoard } = useBoard()
-  const { currentTransference } = useTransferenceModal()
 
   useEffect(() => {
-    if (!currentTransference) {
-      loadBoard(monthDate)
-    }
-  }, [loadBoard, monthDate, currentTransference])
+    loadBoard(monthDate)
+  }, [loadBoard, monthDate])
 
   return (
     <div className="flex h-full">
