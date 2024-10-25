@@ -6,16 +6,14 @@ import { twMerge } from "tailwind-merge"
 import { useNavigate } from "react-router-dom"
 import useMenuStore from "../store/menuStore"
 import useAuthStore from "../store/authStore"
-import authController from "../controller/authController"
 
 const SideBar = () => {
   const navigate = useNavigate()
   const { isOpened } = useMenuStore()
-  const { clearToken } = useAuthStore()
+  const { onLogout } = useAuthStore()
 
   const handleLogout = async () => {
-    await authController.logout()
-    clearToken()
+    onLogout()
     navigate("/login")
   }
 
