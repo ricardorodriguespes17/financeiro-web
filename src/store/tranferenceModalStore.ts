@@ -2,22 +2,18 @@ import { create } from 'zustand'
 import { TransferenceType } from '../@types/TransferenceType'
 
 type State = {
-  currentTransference: TransferenceType | null,
-  isOpen: boolean
+  currentTransference: Partial<TransferenceType> | null,
 }
 
 type Action = {
-  setCurrentTransference: (data: TransferenceType | null) => void
-  setIsOpen: (value: boolean) => void
+  setCurrentTransference: (data: Partial<TransferenceType> | null) => void
 }
 
 const useTransferenceModal = create<State & Action>((set) => ({
   currentTransference: null,
-  isOpen: false,
-  setCurrentTransference: (data: TransferenceType | null) => set(() => ({
-    currentTransference: data, isOpen: true
+  setCurrentTransference: (data: Partial<TransferenceType> | null) => set(() => ({
+    currentTransference: data
   })),
-  setIsOpen: (value) => set(() => ({ isOpen: value }))
 }))
 
 export default useTransferenceModal

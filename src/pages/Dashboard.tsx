@@ -18,14 +18,14 @@ import ButtonChangeMode from "../components/dashboard/ButtonChangeMode"
 const DashboardPage = () => {
   const { monthDate } = useMonth()
   const { loadBoard, boardId } = useBoard()
-  const { isOpen } = useTransferenceModal()
+  const { currentTransference } = useTransferenceModal()
   const [mode, setMode] = useState<"calendar" | "table">("table")
 
   useEffect(() => {
-    if (!isOpen) {
+    if (!currentTransference) {
       loadBoard(monthDate)
     }
-  }, [loadBoard, monthDate, isOpen])
+  }, [loadBoard, monthDate, currentTransference])
 
   const handleCreateBoard = () => {
     boardController.createBoard({ id: monthDate })

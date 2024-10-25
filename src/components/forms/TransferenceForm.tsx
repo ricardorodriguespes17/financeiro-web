@@ -8,7 +8,6 @@ import transferenceController from "../../controller/transferenceController"
 import { useEffect, useState } from "react"
 import { ControllerResponseType } from "../../@types/ControllerResponseType"
 import Select from "../ui/Select"
-import useBoard from "../../store/boardStore"
 
 export type TranferenceValuesProps = {
   name: string,
@@ -37,23 +36,21 @@ const valdationSchema = Yup.object().shape({
 })
 
 type TransferenceFormProps = {
-  transference?: TransferenceType | null
+  transference?: Partial<TransferenceType> | null
   onClose: () => void
+}
+
+const defautlValues: TranferenceValuesProps = {
+  name: "",
+  boardId: "",
+  expireDay: "",
+  type: "expense",
+  value: "",
+  description: ""
 }
 
 const TransferenceForm = (props: TransferenceFormProps) => {
   const { setNotification } = useNotificationStore()
-  const { boardId } = useBoard()
-
-  const defautlValues: TranferenceValuesProps = {
-    name: "",
-    boardId: boardId || "",
-    expireDay: "",
-    type: "expense",
-    value: "",
-    description: ""
-  }
-
   const [initialValues, setInitialValues] = useState<TranferenceValuesProps>(defautlValues)
 
   useEffect(() => {
@@ -61,12 +58,12 @@ const TransferenceForm = (props: TransferenceFormProps) => {
 
     if (data) {
       setInitialValues({
-        name: data.name,
-        boardId: data.boardId,
+        name: data.name || "",
+        boardId: data.boardId || "",
         description: data.description || "",
-        expireDay: String(data.expireDay),
-        type: data.type,
-        value: String(data.value)
+        expireDay: String(data.expireDay || ""),
+        type: data.type || "",
+        value: String(data.value || "")
       })
     } else {
       setInitialValues(defautlValues)
@@ -88,7 +85,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
 
     let response: ControllerResponseType
 
-    if (props.transference) {
+    if (props.transference?.id) {
       response = await transferenceController.updateTransference(
         props.transference.id, transferenceData
       )
@@ -105,8 +102,8 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     })
 
     if (response.type === "success") {
-      onClose()
       onReset(values, helpers)
+      onClose()
     }
   }
 

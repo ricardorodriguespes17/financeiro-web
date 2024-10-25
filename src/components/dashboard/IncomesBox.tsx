@@ -20,7 +20,7 @@ const IncomesBox = () => {
   const total = incomes.reduce((p, c) => p + c.value, 0)
 
   const openTransference = (transference: TransferenceType | null) => {
-    setCurrentTransference(transference)
+    setCurrentTransference(transference || { type: "income", boardId: monthDate })
   }
 
   const deleteTransference = async (transferenceId: string) => {
