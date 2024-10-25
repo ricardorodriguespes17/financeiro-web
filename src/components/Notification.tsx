@@ -30,7 +30,7 @@ const Notification = () => {
   )
 
   const iconClassName = notification ? twMerge(
-    "h-fit aspect-square rounded-full text-2xl flex justify-center items-center pt-[5px]",
+    "h-fit aspect-square rounded-full text-xl flex justify-center items-center pt-[5px]",
     notificationTypes[notification.type].className
   ) : undefined
 
@@ -42,9 +42,9 @@ const Notification = () => {
         {Icon && <Icon />}
       </div>
 
-      <div className="flex flex-1 flex-col">
-        <h3>{notification?.title}</h3>
-        <p>{notification?.content}</p>
+      <div className="flex flex-1 flex-col gap-2">
+        <h4>{notification?.title}</h4>
+        <p className="text-sm dark:text-white">{notification?.content}</p>
       </div>
     </Card>
   )
