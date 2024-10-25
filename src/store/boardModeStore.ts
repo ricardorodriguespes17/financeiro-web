@@ -22,7 +22,7 @@ const useBoardMode = create<State & Actions>()(
       },
     }),
     {
-      name: 'auth-storage',
+      name: 'board-mode-storage',
     }
   )
 )
