@@ -18,6 +18,7 @@ const Button = (props: ButtonProps) => {
     className,
     children,
     loading,
+    disabled,
     ...rest
   } = props
 
@@ -56,6 +57,7 @@ const Button = (props: ButtonProps) => {
   return (
     <button
       className={mergedClassNames}
+      disabled={disabled || loading}
       {...rest}
     >
       {loading ? <Spinner /> : children}
