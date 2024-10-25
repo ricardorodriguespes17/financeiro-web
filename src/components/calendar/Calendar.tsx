@@ -3,8 +3,11 @@ import CalendarRow from "./CalendarRow"
 import useMonth from "../../store/monthStore"
 import getDaysOfMonth from "../../utils/getDaysOfMonth"
 import { useMediaQuery } from "react-responsive"
+import useBoard from "../../store/boardStore"
+import Skeleton from "../Skeleton"
 
 const Calendar = () => {
+  const { isLoading } = useBoard()
   const { monthDate } = useMonth()
   const [monthDays, setMonthDays] = useState<number[]>([])
   const [week, setWeek] = useState<string[]>([])
@@ -28,6 +31,20 @@ const Calendar = () => {
       ])
     }
   }, [isDesktopOrLaptop])
+
+  if(isLoading) {
+    return (
+      <div className="w-full flex flex-col">
+        <Skeleton className="w-[200px] h-10 mb-2" />
+        <Skeleton className="w-full h-10 bg-primary-300" />
+        <Skeleton className="w-full h-20" />
+        <Skeleton className="w-full h-20" />
+        <Skeleton className="w-full h-20" />
+        <Skeleton className="w-full h-20" />
+        <Skeleton className="w-full h-20" />
+      </div>
+    )
+  }
 
   return (
     <div className="w-full flex flex-col">

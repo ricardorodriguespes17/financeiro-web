@@ -1,9 +1,11 @@
 import { twMerge } from "tailwind-merge"
 import Card from "../Card"
+import Skeleton from "../Skeleton"
 
 type DataTableProps<T> = {
   data: T[]
   columns: ColumnType<T>[]
+  isLoading?: boolean
 }
 
 export type ColumnType<T> = {
@@ -16,9 +18,24 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
   const {
     data,
     columns,
+    isLoading
   } = props
 
   const rowClassName = "w-full py-2 px-4 flex items-center gap-4"
+
+  if (isLoading) {
+    return (
+      <div className="w-full flex flex-col p-0">
+        <Skeleton className="w-full h-10 bg-primary-300" />
+        <div>
+          <Skeleton className="w-full h-10 odd:bg-gray-200" />
+          <Skeleton className="w-full h-10 odd:bg-gray-200" />
+          <Skeleton className="w-full h-10 odd:bg-gray-200" />
+          <Skeleton className="w-full h-10 odd:bg-gray-200" />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <Card className="w-full flex flex-col p-0">

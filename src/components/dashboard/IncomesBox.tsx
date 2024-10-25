@@ -10,9 +10,10 @@ import ActionsColumnTransferences from "./ActionsColumnTransferences"
 import transferenceController from "../../controller/transferenceController"
 import useNotificationStore from "../../store/notificationStore"
 import useMonth from "../../store/monthStore"
+import Skeleton from "../Skeleton"
 
 const IncomesBox = () => {
-  const { incomes, loadTransferences } = useBoard()
+  const { incomes, loadTransferences, isLoading } = useBoard()
   const { monthDate } = useMonth()
   const { setCurrentTransference } = useTransferenceModal()
   const { setNotification } = useNotificationStore()
@@ -80,9 +81,32 @@ const IncomesBox = () => {
     }
   ]
 
+  const className = "flex flex-col gap-2"
+  const titleClassName = "flex items-center gap-2"
+  const dataTableClass = "flex flex-col flex-1"
+
+  if (isLoading) {
+    return (
+      <div className={className}>
+        <div className={titleClassName}>
+          <Skeleton className="w-[150px] h10" />
+          <Skeleton className="w10 h10" />
+        </div>
+
+        <div className={dataTableClass}>
+          <DataTable<TransferenceType>
+            data={incomes}
+            columns={columns}
+            isLoading={isLoading}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-2">
+    <div className={className}>
+      <div className={titleClassName}>
         <h2>Receitas</h2>
         <Button
           size="fit"
@@ -94,10 +118,11 @@ const IncomesBox = () => {
         </Button>
       </div>
 
-      <div className="flex flex-col flex-1">
+      <div className={dataTableClass}>
         <DataTable<TransferenceType>
           data={incomes}
           columns={columns}
+          isLoading={isLoading}
         />
 
         <div className={twMerge(

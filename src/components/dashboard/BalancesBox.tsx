@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import useBoard from "../../store/boardStore"
 import CardBalance from "./CardBalance"
+import Skeleton from "../Skeleton"
 
 type BalanceType = {
   name: string
@@ -9,7 +10,7 @@ type BalanceType = {
 }
 
 const BalancesBox = () => {
-  const { expenses, initialValue, incomes } = useBoard()
+  const { expenses, initialValue, incomes, isLoading } = useBoard()
 
   const [balances, setBalances] = useState<BalanceType[]>([])
 
@@ -28,11 +29,29 @@ const BalancesBox = () => {
     )
   }, [expenses, incomes, initialValue])
 
+  const className = "flex flex-col gap-2"
+  const balancesClassName = "flex flex-1 gap-8 flex-wrap"
+
+  if (isLoading) {
+    return (
+      <div className={className}>
+        <Skeleton className="w-[150px] h-[40px] bg-primary-300" />
+
+        <div className={balancesClassName}>
+          <Skeleton className="w-[250px] h-[85px]" />
+          <Skeleton className="w-[250px] h-[85px]" />
+          <Skeleton className="w-[250px] h-[85px]" />
+          <Skeleton className="w-[250px] h-[85px]" />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className={className}>
       <h2>Saldos</h2>
 
-      <div className="flex flex-1 gap-8 flex-wrap">
+      <div className={balancesClassName}>
         {balances.map((item, index) => (
           <CardBalance
             key={index}

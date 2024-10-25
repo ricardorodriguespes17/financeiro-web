@@ -10,10 +10,11 @@ import ActionsColumnTransferences from "./ActionsColumnTransferences"
 import transferenceController from "../../controller/transferenceController"
 import useNotificationStore from "../../store/notificationStore"
 import useMonth from "../../store/monthStore"
+import Skeleton from "../Skeleton"
 
 const ExpensesBox = () => {
   const { monthDate } = useMonth()
-  const { expenses, loadTransferences } = useBoard()
+  const { expenses, loadTransferences, isLoading } = useBoard()
   const { setCurrentTransference } = useTransferenceModal()
   const { setNotification } = useNotificationStore()
   const total = expenses.reduce((p, c) => p + c.value, 0)
@@ -79,9 +80,32 @@ const ExpensesBox = () => {
     }
   ]
 
+  const className = "flex flex-col gap-2"
+  const titleClassName = "flex items-center gap-2"
+  const dataTableClass = "flex flex-col flex-1"
+
+  if (isLoading) {
+    return (
+      <div className={className}>
+        <div className={titleClassName}>
+          <Skeleton className="w-[150px] h10" />
+          <Skeleton className="w10 h10" />
+        </div>
+
+        <div className={dataTableClass}>
+          <DataTable<TransferenceType>
+            data={expenses}
+            columns={columns}
+            isLoading={isLoading}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-2">
+    <div className={className}>
+      <div className={titleClassName}>
         <h2>Despesas</h2>
         <Button
           size="fit"
@@ -93,10 +117,11 @@ const ExpensesBox = () => {
         </Button>
       </div>
 
-      <div className="flex flex-col flex-1">
+      <div className={dataTableClass}>
         <DataTable<TransferenceType>
           data={expenses}
           columns={columns}
+          isLoading={isLoading}
         />
 
         <div className={twMerge(
