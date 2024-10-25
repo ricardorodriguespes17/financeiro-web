@@ -5,6 +5,7 @@ import getDaysOfMonth from "../../utils/getDaysOfMonth"
 import { useMediaQuery } from "react-responsive"
 import useBoard from "../../store/boardStore"
 import Skeleton from "../Skeleton"
+import ButtonChangeMode from "../dashboard/ButtonChangeMode"
 
 const Calendar = () => {
   const { isLoading } = useBoard()
@@ -21,7 +22,7 @@ const Calendar = () => {
   }, [monthDate])
 
   useEffect(() => {
-    if(isDesktopOrLaptop) {
+    if (isDesktopOrLaptop) {
       setWeek([
         "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"
       ])
@@ -32,7 +33,7 @@ const Calendar = () => {
     }
   }, [isDesktopOrLaptop])
 
-  if(isLoading) {
+  if (isLoading) {
     return (
       <div className="w-full flex flex-col">
         <Skeleton className="w-[200px] h-10 mb-2" />
@@ -48,7 +49,10 @@ const Calendar = () => {
 
   return (
     <div className="w-full flex flex-col">
-      <h2 className="mb-2">Calendário</h2>
+      <div className="flex items-center mb-2">
+        <ButtonChangeMode />
+        <h2>Calendário</h2>
+      </div>
 
       <header className="w-full flex bg-primary rounded-md">
         {week.map(item => (

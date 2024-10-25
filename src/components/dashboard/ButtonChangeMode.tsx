@@ -1,24 +1,22 @@
 import { FaCalendarAlt, FaListAlt } from "react-icons/fa"
 import Button from "../ui/Button"
+import useBoardMode from "../../store/boardModeStore"
 
-type ButtonChangeModeProps = {
-  mode: "calendar" | "table",
-  toggleMode: () => void
-}
+const ButtonChangeMode = () => {
+  const { mode, toggleMode } = useBoardMode()
 
-const ButtonChangeMode = (props: ButtonChangeModeProps) => {
   return (
     <Button
       size="fit"
       className="p-4 text-xl"
       variant="plain"
-      title={props.mode === "calendar"
+      title={mode === "calendar"
         ? "Mudar para o modo tabela"
         : "Mudar para o modo calendário"
       }
-      onClick={props.toggleMode}
+      onClick={toggleMode}
     >
-      {props.mode === "calendar" ? <FaListAlt /> : <FaCalendarAlt />}
+      {mode === "calendar" ? <FaListAlt /> : <FaCalendarAlt />}
     </Button>
   )
 }

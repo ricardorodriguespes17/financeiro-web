@@ -11,6 +11,7 @@ import transferenceController from "../../controller/transferenceController"
 import useNotificationStore from "../../store/notificationStore"
 import useMonth from "../../store/monthStore"
 import Skeleton from "../Skeleton"
+import ButtonChangeMode from "./ButtonChangeMode"
 
 const ExpensesBox = () => {
   const { monthDate } = useMonth()
@@ -106,6 +107,7 @@ const ExpensesBox = () => {
   return (
     <div className={className}>
       <div className={titleClassName}>
+        <ButtonChangeMode />
         <h2>Despesas</h2>
         <Button
           size="fit"
