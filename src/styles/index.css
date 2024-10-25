@@ -54,9 +54,9 @@ html, body, #root {
     @apply w-2 h-2;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-400 rounded;
+    @apply bg-gray-400 dark:bg-gray-700 rounded;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-600;
+    @apply bg-primary dark:bg-primary-900;
   }
 }

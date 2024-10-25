@@ -54,7 +54,7 @@ const Calendar = () => {
         <ButtonChangeMode />
       </div>
 
-      <header className="w-full flex bg-primary dark:bg-primary-800 rounded-md">
+      <header className="w-full flex text-white bg-primary dark:bg-primary-800 rounded-md">
         {week.map(item => (
           <div key={item} className="flex flex-1 justify-center items-center h-10">
             <label className="font-bold">{item}</label>

@@ -16,8 +16,8 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
   })
 
   const typesClassName = {
-    expense: "bg-danger/15 dark:bg-red-400 text-danger dark:text-red-950",
-    income: "bg-green/20 dark:bg-green-400 text-green-700 dark:text-green-950"
+    expense: "bg-red-500/80 dark:bg-red-400 text-white dark:text-red-950",
+    income: "bg-green-600/90 dark:bg-green-400 text-white dark:text-green-950"
   }
 
   const className = twMerge(
