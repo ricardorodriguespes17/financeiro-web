@@ -49,9 +49,9 @@ const Calendar = () => {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="flex items-center mb-2">
-        <ButtonChangeMode />
+      <div className="flex items-center justify-between mb-2">
         <h2>Calendário</h2>
+        <ButtonChangeMode />
       </div>
 
       <header className="w-full flex bg-primary rounded-md">

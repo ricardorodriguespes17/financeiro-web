@@ -6,18 +6,27 @@ const ButtonChangeMode = () => {
   const { mode, toggleMode } = useBoardMode()
 
   return (
-    <Button
-      size="fit"
-      className="p-4 text-xl"
-      variant="plain"
-      title={mode === "calendar"
-        ? "Mudar para o modo tabela"
-        : "Mudar para o modo calendário"
-      }
-      onClick={toggleMode}
-    >
-      {mode === "calendar" ? <FaListAlt /> : <FaCalendarAlt />}
-    </Button>
+    <div className="flex items-center gap-2">
+      <Button
+        size="fit"
+        className="px-4 text-xl"
+        variant={mode === "table" ? "solid" : "plain"}
+        title="Mudar para o modo tabela"
+        onClick={toggleMode}
+      >
+        <FaListAlt />
+      </Button>
+
+      <Button
+        size="fit"
+        className="px-4 text-xl"
+        variant={mode === "calendar" ? "solid" : "plain"}
+        title="Mudar para o modo calendário"
+        onClick={toggleMode}
+      >
+        <FaCalendarAlt />
+      </Button>
+    </div>
   )
 }
 

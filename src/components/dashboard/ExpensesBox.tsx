@@ -37,6 +37,7 @@ const ExpensesBox = () => {
           <Skeleton className="w-[150px] h10" />
           <Skeleton className="w10 h10" />
         </div>
+        <Skeleton className="w10 h10" />
 
         <div className={dataTableClass}>
           <DataTable<TransferenceType>
@@ -51,17 +52,19 @@ const ExpensesBox = () => {
 
   return (
     <div className={className}>
-      <div className={titleClassName}>
+      <div className="flex items-center justify-between">
+        <div className={titleClassName}>
+          <h2>Despesas</h2>
+          <Button
+            size="fit"
+            variant="plain"
+            className="text-3xl aspect-square rounded-full"
+            onClick={openTransference}
+          >
+            <BiPlus />
+          </Button>
+        </div>
         <ButtonChangeMode />
-        <h2>Despesas</h2>
-        <Button
-          size="fit"
-          variant="plain"
-          className="text-3xl aspect-square rounded-full"
-          onClick={openTransference}
-        >
-          <BiPlus />
-        </Button>
       </div>
 
       <div className={dataTableClass}>
