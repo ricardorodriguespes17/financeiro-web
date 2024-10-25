@@ -84,7 +84,7 @@ const RegisterForm = () => {
       onSubmit={onSubmit}
     >
       {({ values, setFieldValue, isSubmitting, errors }) => (
-        <Form className="w-full flex flex-col gap-3">
+        <Form className="w-[400px] max-w-full flex flex-col gap-3">
           <TextInput
             label="Nome"
             autoComplete="off"
