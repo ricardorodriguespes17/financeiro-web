@@ -1,7 +1,6 @@
 import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
 import DataTable from "../ui/DataTable"
-import useBoard from "../../store/boardStore"
 import Button from "../ui/Button"
 import { TransferenceType } from "../../@types/TransferenceType"
 import { BiPlus } from "react-icons/bi"
@@ -10,9 +9,10 @@ import ButtonChangeMode from "./ButtonChangeMode"
 import { useMediaQuery } from "react-responsive"
 import useTransferenceModal from "../../store/tranferenceModalStore"
 import TransferenceTableColumns from "./TransferenceTableColumns"
+import useTransference from "../../store/transferenceStore"
 
 const ExpensesBox = () => {
-  const { expenses, isLoading } = useBoard()
+  const { expenses, isLoading } = useTransference()
   const { setCurrentTransference } = useTransferenceModal()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'

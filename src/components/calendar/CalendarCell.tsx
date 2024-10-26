@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import useBoard from "../../store/boardStore"
 import { TransferenceCreateType, TransferenceType } from "../../@types/TransferenceType"
 import { twMerge } from "tailwind-merge"
 import CalendarTag from "./CalendarTag"
 import transferenceController from "../../controller/transferenceController"
 import useMonth from "../../store/monthStore"
+import useTransference from "../../store/transferenceStore"
 
 type CalendarCellProps = {
   day: number
@@ -12,8 +12,7 @@ type CalendarCellProps = {
 
 const CalendarCell = ({ day }: CalendarCellProps) => {
   const { monthDate } = useMonth()
-  const { expenses, incomes } = useBoard()
-  const { loadTransferences } = useBoard()
+  const { expenses, incomes, loadTransferences } = useTransference()
   const [transferences, setTranfereces] = useState<TransferenceType[]>([])
   const enableDragDrop = day > 0
 

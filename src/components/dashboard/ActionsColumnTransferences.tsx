@@ -4,9 +4,9 @@ import { FaTrashAlt } from "react-icons/fa"
 import useMonth from "../../store/monthStore"
 import { TransferenceType } from "../../@types/TransferenceType"
 import transferenceController from "../../controller/transferenceController"
-import useBoard from "../../store/boardStore"
 import useTransferenceModal from "../../store/tranferenceModalStore"
 import useNotificationStore from "../../store/notificationStore"
+import useTransference from "../../store/transferenceStore"
 
 type ActionColumnProps = {
   transference: TransferenceType
@@ -14,7 +14,7 @@ type ActionColumnProps = {
 
 const ActionsColumnTransferences = ({ transference }: ActionColumnProps) => {
   const { monthDate } = useMonth()
-  const { loadTransferences } = useBoard()
+  const { loadTransferences } = useTransference()
   const { setCurrentTransference } = useTransferenceModal()
   const { setNotification } = useNotificationStore()
 
