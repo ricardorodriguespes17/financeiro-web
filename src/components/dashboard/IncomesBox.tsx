@@ -8,10 +8,10 @@ import { BiPlus } from "react-icons/bi"
 import Skeleton from "../Skeleton"
 import { useMediaQuery } from "react-responsive"
 import TransferenceTableColumns from "./TransferenceTableColumns"
-import useTransference from "../../store/transferenceStore"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const IncomesBox = () => {
-  const { getIncomes, isLoading } = useTransference()
+  const { getIncomes, isLoading } = useTransferenceActions()
   const { setCurrentTransference } = useTransferenceModal()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'

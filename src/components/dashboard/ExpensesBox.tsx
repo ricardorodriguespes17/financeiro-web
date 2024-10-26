@@ -9,10 +9,10 @@ import ButtonChangeMode from "./ButtonChangeMode"
 import { useMediaQuery } from "react-responsive"
 import useTransferenceModal from "../../store/tranferenceModalStore"
 import TransferenceTableColumns from "./TransferenceTableColumns"
-import useTransference from "../../store/transferenceStore"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const ExpensesBox = () => {
-  const { getExpenses, isLoading } = useTransference()
+  const { getExpenses, isLoading } = useTransferenceActions()
   const { setCurrentTransference } = useTransferenceModal()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'

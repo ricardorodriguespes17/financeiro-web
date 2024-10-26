@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import CardBalance from "./CardBalance"
 import Skeleton from "../Skeleton"
-import useTransference from "../../store/transferenceStore"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 type BalanceType = {
   name: string
@@ -10,7 +10,7 @@ type BalanceType = {
 }
 
 const BalancesBox = () => {
-  const { getExpenses, getIncomes } = useTransference()
+  const { getExpenses, getIncomes } = useTransferenceActions()
   const [isLoading] = useState(false)
   const [balances, setBalances] = useState<BalanceType[]>([])
 

@@ -1,7 +1,6 @@
 import { TransferenceCreateType, TransferenceType } from "../../@types/TransferenceType"
 import { twMerge } from "tailwind-merge"
 import CalendarTag from "./CalendarTag"
-import useTransference from "../../store/transferenceStore"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 type CalendarCellProps = {
@@ -9,9 +8,9 @@ type CalendarCellProps = {
 }
 
 const CalendarCell = ({ day }: CalendarCellProps) => {
-  const { transferences } = useTransference()
-  const { updateTransference } = useTransferenceActions()
+  const { updateTransference, getAllTransferences } = useTransferenceActions()
   const enableDragDrop = day > 0
+  const transferences = getAllTransferences()
 
   const className = twMerge(
     "flex flex-col items-end flex-1 min-h-24 border border-gray-200 dark:border-gray-800",
