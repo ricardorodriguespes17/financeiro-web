@@ -9,7 +9,7 @@ type TextInputProps = {
 } & InputHTMLAttributes<HTMLInputElement>
 
 const TextInput = ({ label, error, type, ...rest }: TextInputProps) => {
-  const [showPassword, setShowPassword] = useState(type !== "password")
+  const [showPassword, setShowPassword] = useState(false)
 
   const toggleShowPassword = () => {
     setShowPassword(password => !password)
@@ -27,7 +27,10 @@ const TextInput = ({ label, error, type, ...rest }: TextInputProps) => {
       <div className="relative">
         <input
           className={inputClass}
-          type={showPassword ? "text" : "password"}
+          type={type === "password"
+            ? showPassword ? "password" : "text"
+            : type
+          }
           {...rest}
         />
 
