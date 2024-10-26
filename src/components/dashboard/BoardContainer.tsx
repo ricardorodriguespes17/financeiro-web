@@ -2,12 +2,14 @@ import Calendar from "../calendar/Calendar"
 import BalancesBox from "./BalancesBox"
 import ExpensesBox from "./ExpensesBox"
 import IncomesBox from "./IncomesBox"
-import useBoard from "../../store/boardStore"
 import useBoardMode from "../../store/boardModeStore"
+import useBoardActions from "../../hooks/useBoardActions"
 
 const BoardContainer = () => {
-  const { isLoading, currentBoard } = useBoard()
+  const { isLoading, getCurrentBoard } = useBoardActions()
   const { mode } = useBoardMode()
+
+  const currentBoard = getCurrentBoard()
 
   if (!currentBoard && !isLoading) {
     return <></>

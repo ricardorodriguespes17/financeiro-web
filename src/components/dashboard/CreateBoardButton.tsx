@@ -1,22 +1,16 @@
 import { BiPlus } from "react-icons/bi"
 import Button from "../ui/Button"
-import { useState } from "react"
 import useMonth from "../../store/monthStore"
-import useBoard from "../../store/boardStore"
 import useBoardActions from "../../hooks/useBoardActions"
 
 const CreateBoardButton = () => {
   const { monthDate } = useMonth()
-  const { currentBoard } = useBoard()
-  const [createLoading, setCreateLoading] = useState(false)
-  const { createBoard } = useBoardActions()
+  const { createBoard, getCurrentBoard, isLoading } = useBoardActions()
+
+  const currentBoard = getCurrentBoard()
 
   const handleCreateBoard = async () => {
-    setCreateLoading(true)
-
     await createBoard({ name: monthDate })
-
-    setCreateLoading(false)
   }
 
   if (currentBoard) {
@@ -29,7 +23,7 @@ const CreateBoardButton = () => {
         size="fit"
         className="aspect-square text-2xl"
         onClick={handleCreateBoard}
-        loading={createLoading}
+        loading={isLoading}
       >
         <BiPlus />
       </Button>

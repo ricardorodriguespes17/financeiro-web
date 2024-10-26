@@ -8,7 +8,28 @@ import useBoardStore from "../store/boardStore"
 const useBoardActions = () => {
   const boardStore = useBoardStore()
   const { setNotification } = useNotificationStore()
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false)
+
+  const loadBoards = async () => {
+    setLoading(true)
+    try {
+      const response = await boardController.getBoards()
+      boardStore.setBoards(response.data)
+    } catch (error) {
+      const notification = readError(error)
+      setNotification(notification)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const getAllBoards = () => {
+    return boardStore.boards
+  }
+
+  const getCurrentBoard = () => {
+    return boardStore.currentBoard
+  }
 
   const createBoard = async (data: BoardCreateType) => {
     setLoading(true)
@@ -49,7 +70,15 @@ const useBoardActions = () => {
     }
   }
 
-  return { createBoard, deleteBoard, updateBoard, loading }
+  return {
+    loadBoards,
+    getAllBoards,
+    getCurrentBoard,
+    createBoard, 
+    deleteBoard, 
+    updateBoard, 
+    isLoading 
+  }
 }
 
 export default useBoardActions

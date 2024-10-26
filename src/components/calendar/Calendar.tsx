@@ -3,12 +3,12 @@ import CalendarRow from "./CalendarRow"
 import useMonth from "../../store/monthStore"
 import getDaysOfMonth from "../../utils/getDaysOfMonth"
 import { useMediaQuery } from "react-responsive"
-import useBoard from "../../store/boardStore"
 import Skeleton from "../Skeleton"
 import ButtonChangeMode from "../dashboard/ButtonChangeMode"
+import useBoardActions from "../../hooks/useBoardActions"
 
 const Calendar = () => {
-  const { isLoading } = useBoard()
+  const { isLoading } = useBoardActions()
   const { monthDate } = useMonth()
   const [monthDays, setMonthDays] = useState<number[]>([])
   const [week, setWeek] = useState<string[]>([])
