@@ -34,8 +34,6 @@ const Calendar = () => {
     }
   }, [isDesktopOrLaptop])
 
-  console.log(isLoading)
-
   if (isLoading) {
     return (
       <div className="w-full flex flex-col">
