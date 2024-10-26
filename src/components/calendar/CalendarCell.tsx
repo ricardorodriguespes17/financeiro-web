@@ -10,7 +10,7 @@ type CalendarCellProps = {
 const CalendarCell = ({ day }: CalendarCellProps) => {
   const { updateTransference, getAllTransferences } = useTransferenceActions()
   const enableDragDrop = day > 0
-  const transferences = getAllTransferences()
+  const transferences = getAllTransferences().filter(item => item.expireDay === day)
 
   const className = twMerge(
     "flex flex-col items-end flex-1 min-h-24 border border-gray-200 dark:border-gray-800",
@@ -35,7 +35,6 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
       }
 
       await updateTransference(data.id, updateData)
-      // TODO - chamar update tranference na store
     }
   }
 
