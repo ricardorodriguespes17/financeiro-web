@@ -13,12 +13,14 @@ type Action = {
   deleteBoard: (id: string) => void
   setBoards: (data: BoardType[]) => void
   setCurrentBoard: (data: BoardType | null) => void
+  setIsLoading: (value: boolean) => void
 }
 
 const useBoardStore = create<State & Action>((set, get) => ({
   boards: [],
   currentBoard: null,
   isLoading: false,
+  setIsLoading: (value) => set({isLoading: value}),
   setBoards: (data) => { set({ boards: data }) },
   setCurrentBoard: (data) => { set({ currentBoard: data }) },
   addBoard: (data) => {

@@ -1,4 +1,3 @@
-import { useState } from "react"
 import useNotificationStore from "../store/notificationStore"
 import readError from "../utils/readError"
 import { BoardCreateType, BoardUpdateType } from "../@types/BoardType"
@@ -8,14 +7,13 @@ import useBoardStore from "../store/boardStore"
 const useBoardActions = () => {
   const boardStore  = useBoardStore()
   const { setNotification } = useNotificationStore()
-  const [isLoading, setLoading] = useState(false)
 
   const loadBoards = async () => {
     if(boardStore.boards.length > 0) {
       return
     }
 
-    setLoading(true)
+    boardStore.setIsLoading(true)
     try {
       const response = await boardController.getBoards()
       boardStore.setBoards(response.data)
@@ -23,7 +21,7 @@ const useBoardActions = () => {
       const notification = readError(error)
       setNotification(notification)
     } finally {
-      setLoading(false)
+      boardStore.setIsLoading(false)
     }
   }
 
@@ -42,7 +40,7 @@ const useBoardActions = () => {
   }
 
   const createBoard = async (data: BoardCreateType) => {
-    setLoading(true)
+    boardStore.setIsLoading(true)
     try {
       const response = await boardController.createBoard(data)
       boardStore.addBoard(response.data)
@@ -51,12 +49,12 @@ const useBoardActions = () => {
       const notification = readError(error)
       setNotification(notification)
     } finally {
-      setLoading(false)
+      boardStore.setIsLoading(false)
     }
   }
 
   const updateBoard = async (id: string, data: BoardUpdateType) => {
-    setLoading(true)
+    boardStore.setIsLoading(true)
     try {
       const response = await boardController.updateBoard(id, data)
       boardStore.updateBoard(response.data)
@@ -64,12 +62,12 @@ const useBoardActions = () => {
       const notification = readError(error)
       setNotification(notification)
     } finally {
-      setLoading(false)
+      boardStore.setIsLoading(false)
     }
   }
 
   const deleteBoard = async (id: string) => {
-    setLoading(true)
+    boardStore.setIsLoading(true)
     try {
       await boardController.deleteBoard(id)
       boardStore.deleteBoard(id)
@@ -77,8 +75,12 @@ const useBoardActions = () => {
       const notification = readError(error)
       setNotification(notification)
     } finally {
-      setLoading(false)
+      boardStore.setIsLoading(false)
     }
+  }
+
+  const getIsLoading = () => {
+    return boardStore.isLoading
   }
 
   return {
@@ -89,7 +91,7 @@ const useBoardActions = () => {
     createBoard,
     deleteBoard,
     updateBoard,
-    isLoading
+    getIsLoading
   }
 }
 
