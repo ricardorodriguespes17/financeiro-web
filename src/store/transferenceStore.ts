@@ -26,11 +26,15 @@ const useTransferenceStore = create<State & Action>((set, get) => ({
   },
   getIncomes: () => {
     const transferences = get().transferences
-    return transferences.filter(item => item.type === "income")
+    return transferences
+      .filter(item => item.type === "income")
+      .sort((a, b) => a.expireDay - b.expireDay)
   },
   getExpenses: () => {
     const transferences = get().transferences
-    return transferences.filter(item => item.type === "expense")
+    return transferences
+      .filter(item => item.type === "expense")
+      .sort((a, b) => a.expireDay - b.expireDay)
   },
   setTransferences: (transferences: TransferenceType[]) => {
     set(() => ({ transferences }))
