@@ -13,13 +13,13 @@ const CreateBoardButton = () => {
   const handleCreateBoard = async () => {
     setCreateLoading(true)
 
-    await boardController.createBoard({ id: monthDate })
+    await boardController.createBoard({ name: monthDate })
     await loadBoard(monthDate)
-
+    
     setCreateLoading(false)
   }
 
-  if(boardId) {
+  if (boardId) {
     return <></>
   }
 

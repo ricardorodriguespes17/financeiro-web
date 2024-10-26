@@ -5,6 +5,7 @@ import boardController from '../controller/boardController'
 
 type State = {
   boardId: string | null
+  boardName: string | null
   initialValue: number | null
   expenses: TransferenceType[]
   incomes: TransferenceType[]
@@ -13,22 +14,31 @@ type State = {
 
 type Action = {
   loadTransferences: (boardId: string) => Promise<void>
-  loadBoard: (boardId: string) => Promise<void>
+  loadBoard: (boardName: string) => Promise<void>
 }
 
 const useBoard = create<State & Action>((set, get) => ({
   boardId: null,
+  boardName: null,
   initialValue: null,
   incomes: [],
   expenses: [],
   isLoading: false,
-  loadBoard: async (boardId) => {
+  loadBoard: async (boardName) => {
     try {
       set(() => ({ isLoading: true }))
-      const response = await boardController.getBoardById(boardId)
-      await get().loadTransferences(boardId)
-      set(() => ({ boardId, initialValue: response.data?.initialValue }))
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const response = await boardController.getBoardByName(boardName)
+      const board = response.data
+
+      if (board) {
+        await get().loadTransferences(board.id)
+        set(() => ({
+          boardId: board.id,
+          initialValue: board.initialValue,
+          boardName: board.name
+        }))
+      }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       set(() => ({ boardId: null, initialValue: null }))
     } finally {
