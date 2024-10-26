@@ -2,9 +2,17 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import Button from "../ui/Button"
 import { changeMonthDate, getMonthLabel } from "../../utils/getCurrentDate"
 import useMonth from "../../store/monthStore"
+import useBoardActions from "../../hooks/useBoardActions"
+import { useEffect } from "react"
 
 const MonthPicker = () => {
   const { monthDate, setMonthDate } = useMonth()
+  const { setCurrentBoard } = useBoardActions()
+
+  useEffect(() => {
+    setCurrentBoard(monthDate)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monthDate])
 
   const navigateMonth = (position: number) => {
     const newMonth = changeMonthDate(monthDate, position)

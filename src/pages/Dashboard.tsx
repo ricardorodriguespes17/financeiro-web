@@ -6,13 +6,20 @@ import ModalTransference from "../components/dashboard/ModalTransference"
 import BoardContainer from "../components/dashboard/BoardContainer"
 import CreateBoardButton from "../components/dashboard/CreateBoardButton"
 import useBoardMode from "../store/boardModeStore"
+import useBoardActions from "../hooks/useBoardActions"
 
 const DashboardPage = () => {
   const { mode } = useBoardMode()
+  const { loadBoards } = useBoardActions()
   const mainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if(mainRef.current) {
+    loadBoards()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (mainRef.current) {
       mainRef.current.scrollTo({ top: 0 })
     }
   }, [mode])

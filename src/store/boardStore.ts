@@ -12,6 +12,7 @@ type Action = {
   updateBoard: (data: BoardType) => void
   deleteBoard: (id: string) => void
   setBoards: (data: BoardType[]) => void
+  setCurrentBoard: (data: BoardType | null) => void
 }
 
 const useBoardStore = create<State & Action>((set, get) => ({
@@ -19,6 +20,7 @@ const useBoardStore = create<State & Action>((set, get) => ({
   currentBoard: null,
   isLoading: false,
   setBoards: (data) => { set({ boards: data }) },
+  setCurrentBoard: (data) => { set({ currentBoard: data }) },
   addBoard: (data) => {
     const boards = get().boards
     set(() => ({ boards: boards.concat(data) }))

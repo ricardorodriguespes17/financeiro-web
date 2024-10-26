@@ -4,12 +4,20 @@ import ExpensesBox from "./ExpensesBox"
 import IncomesBox from "./IncomesBox"
 import useBoardMode from "../../store/boardModeStore"
 import useBoardActions from "../../hooks/useBoardActions"
+import { useEffect } from "react"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const BoardContainer = () => {
   const { isLoading, getCurrentBoard } = useBoardActions()
+  const { loadTransferences } = useTransferenceActions()
   const { mode } = useBoardMode()
 
   const currentBoard = getCurrentBoard()
+
+  useEffect(() => {
+    loadTransferences()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentBoard])
 
   if (!currentBoard && !isLoading) {
     return <></>
