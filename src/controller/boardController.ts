@@ -15,27 +15,11 @@ class BoardController {
   }
 
   async createBoard(data: BoardCreateType) {
-    try {
-      const response = await ApiService.api.post("/boards", data)
-
-      return {
-        title: "Sucesso",
-        content: response.data.message,
-        type: "success"
-      }
-    } catch (err) {
-      const error = err as { response: { data: { message: string } } }
-
-      return {
-        title: "Erro ao criar um quadro",
-        content: error.response.data.message,
-        type: "error"
-      }
-    }
+    return await ApiService.api.post<BoardType>("/boards", data)
   }
 
   async updateBoard(boardId: string, data: BoardUpdateType) {
-    return await ApiService.api.post(`/boards/${boardId}`, data)
+    return await ApiService.api.post<BoardType>(`/boards/${boardId}`, data)
   }
 
   async deleteBoard(boardId: string) {

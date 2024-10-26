@@ -2,20 +2,20 @@ import { BiPlus } from "react-icons/bi"
 import Button from "../ui/Button"
 import { useState } from "react"
 import useMonth from "../../store/monthStore"
-import boardController from "../../controller/boardController"
 import useBoard from "../../store/boardStore"
+import useBoardActions from "../../hooks/useBoardActions"
 
 const CreateBoardButton = () => {
   const { monthDate } = useMonth()
-  const { loadBoards, currentBoard } = useBoard()
+  const { currentBoard } = useBoard()
   const [createLoading, setCreateLoading] = useState(false)
+  const { createBoard } = useBoardActions()
 
   const handleCreateBoard = async () => {
     setCreateLoading(true)
 
-    await boardController.createBoard({ name: monthDate })
-    await loadBoards()
-    
+    await createBoard({ name: monthDate })
+
     setCreateLoading(false)
   }
 
