@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react"
 import { TransferenceCreateType, TransferenceType } from "../../@types/TransferenceType"
 import { twMerge } from "tailwind-merge"
 import CalendarTag from "./CalendarTag"
-import transferenceController from "../../controller/transferenceController"
-import useMonth from "../../store/monthStore"
 import useTransference from "../../store/transferenceStore"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 type CalendarCellProps = {
   day: number
 }
 
 const CalendarCell = ({ day }: CalendarCellProps) => {
-  const { monthDate } = useMonth()
-  const { expenses, incomes, loadTransferences } = useTransference()
-  const [transferences, setTranfereces] = useState<TransferenceType[]>([])
+  const { transferences } = useTransference()
+  const { updateTransference } = useTransferenceActions()
   const enableDragDrop = day > 0
 
   const className = twMerge(
@@ -22,20 +19,13 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
     day < 1 && "bg-gray-200 dark:bg-gray-800  *:hidden"
   )
 
-  useEffect(() => {
-    setTranfereces([
-      ...expenses.filter(item => item.expireDay === day),
-      ...incomes.filter(item => item.expireDay === day)
-    ])
-  }, [day, expenses, incomes])
-
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
 
     const droppedData = event.dataTransfer.getData("application/json")
     const data = JSON.parse(droppedData) as TransferenceType
 
-    if(data.expireDay !== day) {
+    if (data.expireDay !== day) {
       const updateData: TransferenceCreateType = {
         boardId: data.boardId,
         expireDay: day,
@@ -44,9 +34,9 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
         value: data.value,
         description: data.description
       }
-  
-      await transferenceController.updateTransference(data.id, updateData)
-      await loadTransferences(monthDate)
+
+      await updateTransference(data.id, updateData)
+      // TODO - chamar update tranference na store
     }
   }
 

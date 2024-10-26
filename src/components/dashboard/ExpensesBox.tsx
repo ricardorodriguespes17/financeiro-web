@@ -12,11 +12,12 @@ import TransferenceTableColumns from "./TransferenceTableColumns"
 import useTransference from "../../store/transferenceStore"
 
 const ExpensesBox = () => {
-  const { expenses, isLoading } = useTransference()
+  const { getExpenses, isLoading } = useTransference()
   const { setCurrentTransference } = useTransferenceModal()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
+  const expenses = getExpenses()
   const total = expenses.reduce((p, c) => p + c.value, 0)
 
   const openTransference = () => {

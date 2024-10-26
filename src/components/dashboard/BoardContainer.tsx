@@ -6,10 +6,10 @@ import useBoard from "../../store/boardStore"
 import useBoardMode from "../../store/boardModeStore"
 
 const BoardContainer = () => {
-  const { boardId, isLoading } = useBoard()
+  const { isLoading, currentBoard } = useBoard()
   const { mode } = useBoardMode()
 
-  if (!boardId && !isLoading) {
+  if (!currentBoard && !isLoading) {
     return <></>
   }
 

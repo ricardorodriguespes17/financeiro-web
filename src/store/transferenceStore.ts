@@ -1,46 +1,55 @@
 import { create } from 'zustand'
 import { TransferenceType } from '../@types/TransferenceType'
-import transferenceController from '../controller/transferenceController'
 
 type State = {
-  expenses: TransferenceType[]
-  incomes: TransferenceType[]
+  transferences: TransferenceType[]
   isLoading: boolean
 }
 
 type Action = {
-  loadTransferences: (boardId: string) => Promise<void>
+  setTransferences: (transferences: TransferenceType[]) => void
+  addTransference: (data: TransferenceType) => void
+  updateTransference: (data: TransferenceType) => void
+  deleteTransference: (id: string) => void
+  getIncomes: () => TransferenceType[]
+  getExpenses: () => TransferenceType[]
 }
 
-const useTransference = create<State & Action>((set) => ({
-  incomes: [],
-  expenses: [],
+const useTransferenceStore = create<State & Action>((set, get) => ({
+  transferences: [],
   isLoading: false,
-  loadTransferences: async (boardId) => {
-    try {
-      set(() => ({ isLoading: true }))
-      const { data: transferences } = await transferenceController.getTransferences(boardId)
-      const expenses: TransferenceType[] = []
-      const incomes: TransferenceType[] = []
+  getIncomes: () => {
+    const transferences = get().transferences
+    return transferences.filter(item => item.type === "income")
+  },
+  getExpenses: () => {
+    const transferences = get().transferences
+    return transferences.filter(item => item.type === "expense")
+  },
+  setTransferences: (transferences: TransferenceType[]) => {
+    set(() => ({ transferences }))
+  },
+  addTransference: (data: TransferenceType) => {
+    const transferences = get().transferences
+    set(() => ({ transferences: transferences.concat(data) }))
+  },
+  updateTransference: (data: TransferenceType) => {
+    const transferences = get().transferences
+    set(() => ({
+      transferences: transferences.map(item => {
+        if (item.id === data.id)
+          return { ...item, ...data }
 
-      transferences
-        .sort((a, b) => a.expireDay - b.expireDay)
-        .map(item => {
-          if (item.type === "expense") {
-            expenses.push(item)
-          } else {
-            incomes.push(item)
-          }
-        })
-
-      set(() => ({ expenses, incomes }))
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      set(() => ({ expenses: [], incomes: [] }))
-    } finally {
-      set(() => ({ isLoading: false }))
-    }
+        return item
+      })
+    }))
+  },
+  deleteTransference: (id: string) => {
+    const transferences = get().transferences
+    set(() => ({
+      transferences: transferences.filter(item => item.id !== id)
+    }))
   }
 }))
 
-export default useTransference
+export default useTransferenceStore

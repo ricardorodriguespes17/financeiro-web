@@ -1,13 +1,11 @@
 import { Form, Formik, FormikHelpers } from "formik"
 import TextInput from "../ui/TextInput"
 import Button from "../ui/Button"
-import useNotificationStore from "../../store/notificationStore"
 import * as Yup from 'yup'
 import { TransferenceCreateType, TransferenceType } from "../../@types/TransferenceType"
-import transferenceController from "../../controller/transferenceController"
 import { useEffect, useState } from "react"
-import { ControllerResponseType } from "../../@types/ControllerResponseType"
 import Select from "../ui/Select"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 export type TranferenceValuesProps = {
   name: string,
@@ -51,7 +49,7 @@ const defautlValues: TranferenceValuesProps = {
 }
 
 const TransferenceForm = (props: TransferenceFormProps) => {
-  const { setNotification } = useNotificationStore()
+  const { createTransference, updateTransference } = useTransferenceActions()
   const [initialValues, setInitialValues] = useState<TranferenceValuesProps>(defautlValues)
 
   useEffect(() => {
@@ -83,28 +81,17 @@ const TransferenceForm = (props: TransferenceFormProps) => {
 
     helpers.setSubmitting(true)
 
-    let response: ControllerResponseType
-
     if (props.transference?.id) {
-      response = await transferenceController.updateTransference(
+      updateTransference(
         props.transference.id, transferenceData
       )
     } else {
-      response = await transferenceController.createTransference(transferenceData)
+      createTransference(transferenceData)
     }
 
     helpers.setSubmitting(true)
 
-    setNotification({
-      title: response.title,
-      content: response.content,
-      type: response.type
-    })
-
-    if (response.type === "success") {
-      onReset(values, helpers)
-      props.onSubmit()
-    }
+    onReset(values, helpers)
   }
 
   const onReset = (_values: TranferenceValuesProps, { setValues }: FormikHelpers<TranferenceValuesProps>) => {
