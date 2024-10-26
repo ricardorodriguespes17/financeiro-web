@@ -30,7 +30,7 @@ const BalancesBox = () => {
       ]
     )
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isLoading])
 
   const className = "flex flex-col gap-2"
   const balancesClassName = "flex flex-1 gap-8 flex-wrap"
