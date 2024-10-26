@@ -2,7 +2,6 @@ import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
 import DataTable from "../ui/DataTable"
 import Button from "../ui/Button"
-import useTransferenceModal from "../../store/tranferenceModalStore"
 import { TransferenceType } from "../../@types/TransferenceType"
 import { BiPlus } from "react-icons/bi"
 import Skeleton from "../Skeleton"
@@ -11,8 +10,7 @@ import TransferenceTableColumns from "./TransferenceTableColumns"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const IncomesBox = () => {
-  const { getIncomes, isLoading } = useTransferenceActions()
-  const { setCurrentTransference } = useTransferenceModal()
+  const { getIncomes, isLoading, setCurrentTransference } = useTransferenceActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })

@@ -3,10 +3,12 @@ import { TransferenceType } from '../@types/TransferenceType'
 
 type State = {
   transferences: TransferenceType[]
+  currentTransference: Partial<TransferenceType> | null
   isLoading: boolean
 }
 
 type Action = {
+  setCurrentTransference: (data: Partial<TransferenceType> | null) => void
   setTransferences: (transferences: TransferenceType[]) => void
   addTransference: (data: TransferenceType) => void
   updateTransference: (data: TransferenceType) => void
@@ -17,7 +19,11 @@ type Action = {
 
 const useTransferenceStore = create<State & Action>((set, get) => ({
   transferences: [],
+  currentTransference: null,
   isLoading: false,
+  setCurrentTransference: (data) => {
+    set(() => ({ currentTransference: data }))
+  },
   getIncomes: () => {
     const transferences = get().transferences
     return transferences.filter(item => item.type === "income")

@@ -92,6 +92,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     helpers.setSubmitting(true)
 
     onReset(values, helpers)
+    onClose()
   }
 
   const onReset = (_values: TranferenceValuesProps, { setValues }: FormikHelpers<TranferenceValuesProps>) => {

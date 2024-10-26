@@ -1,9 +1,13 @@
-import useTransferenceModal from "../../store/tranferenceModalStore"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 import TransferenceForm from "../forms/TransferenceForm"
 import Modal from "../ui/Modal"
 
 const ModalTransference = () => {
-  const { currentTransference, setCurrentTransference } = useTransferenceModal()
+  const { 
+    getCurrentTransference, 
+    setCurrentTransference,
+   } = useTransferenceActions()
+  const currentTransference = getCurrentTransference()
 
   const onSubmit = () => {
     onClose()

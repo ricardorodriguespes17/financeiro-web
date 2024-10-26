@@ -1,15 +1,15 @@
 import { twMerge } from "tailwind-merge"
 import { TransferenceType } from "../../@types/TransferenceType"
-import useTransferenceModal from "../../store/tranferenceModalStore"
 import { useState } from "react"
 import { useMediaQuery } from "react-responsive"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 type CalendarTagProps = {
   data: TransferenceType
 }
 
 const CalendarTag = ({ data }: CalendarTagProps) => {
-  const { setCurrentTransference } = useTransferenceModal()
+  const { setCurrentTransference } = useTransferenceActions()
   const [isDragging, setIsDragging] = useState(false)
   const isDesktop = useMediaQuery({
     query: '(min-width: 1000px)'

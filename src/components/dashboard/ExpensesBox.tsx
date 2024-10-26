@@ -7,13 +7,12 @@ import { BiPlus } from "react-icons/bi"
 import Skeleton from "../Skeleton"
 import ButtonChangeMode from "./ButtonChangeMode"
 import { useMediaQuery } from "react-responsive"
-import useTransferenceModal from "../../store/tranferenceModalStore"
 import TransferenceTableColumns from "./TransferenceTableColumns"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const ExpensesBox = () => {
   const { getExpenses, isLoading } = useTransferenceActions()
-  const { setCurrentTransference } = useTransferenceModal()
+  const { setCurrentTransference } = useTransferenceActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })

@@ -27,7 +27,8 @@ const BalancesBox = () => {
         { name: "Saldo final", value: finalBalance, color: finalBalance >= 0 ? "green" : "red" },
       ]
     )
-  }, [getExpenses, getIncomes])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const className = "flex flex-col gap-2"
   const balancesClassName = "flex flex-1 gap-8 flex-wrap"

@@ -2,7 +2,6 @@ import { IoMdEye } from "react-icons/io"
 import Button from "../ui/Button"
 import { FaTrashAlt } from "react-icons/fa"
 import { TransferenceType } from "../../@types/TransferenceType"
-import useTransferenceModal from "../../store/tranferenceModalStore"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 type ActionColumnProps = {
@@ -10,7 +9,7 @@ type ActionColumnProps = {
 }
 
 const ActionsColumnTransferences = ({ transference }: ActionColumnProps) => {
-  const { setCurrentTransference } = useTransferenceModal()
+  const { setCurrentTransference } = useTransferenceActions()
   const {deleteTransference} = useTransferenceActions()
 
   const openTransference = () => {

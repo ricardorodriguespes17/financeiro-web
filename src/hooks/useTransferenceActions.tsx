@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { TransferenceCreateType } from "../@types/TransferenceType"
+import { TransferenceCreateType, TransferenceType } from "../@types/TransferenceType"
 import useNotificationStore from "../store/notificationStore"
 import useTransferenceStore from "../store/transferenceStore"
 import transferenceController from "../controller/transferenceController"
@@ -15,7 +15,7 @@ const useTransferenceActions = () => {
   const loadTransferences = async () => {
     const boardId = boardStore.getCurrentBoard()?.id
 
-    if(!boardId) {
+    if (!boardId) {
       return
     }
 
@@ -28,6 +28,21 @@ const useTransferenceActions = () => {
       setNotification(notification)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const getCurrentTransference = () => {
+    return transferenceStore.currentTransference
+  }
+
+  const setCurrentTransference = (data: Partial<TransferenceType> | null) => {
+    if (data !== null) {
+      transferenceStore.setCurrentTransference({
+        ...data,
+        boardId: boardStore.getCurrentBoard()?.id
+      })
+    } else {
+      transferenceStore.setCurrentTransference(null)
     }
   }
 
@@ -85,6 +100,8 @@ const useTransferenceActions = () => {
   return {
     loadTransferences,
     getAllTransferences,
+    getCurrentTransference,
+    setCurrentTransference,
     getExpenses,
     getIncomes,
     createTransference,
