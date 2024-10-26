@@ -4,12 +4,12 @@ import TransferenceForm from "../forms/TransferenceForm"
 import Modal from "../ui/Modal"
 
 const ModalTransference = () => {
-  const { loadBoard, boardId } = useBoard()
+  const { loadBoards } = useBoard()
   const { currentTransference, setCurrentTransference } = useTransferenceModal()
 
   const onSubmit = () => {
     onClose()
-    if (boardId) loadBoard(boardId)
+    loadBoards()
   }
 
   const onClose = () => {

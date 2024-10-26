@@ -9,11 +9,9 @@ import Skeleton from "../Skeleton"
 import ButtonChangeMode from "./ButtonChangeMode"
 import { useMediaQuery } from "react-responsive"
 import useTransferenceModal from "../../store/tranferenceModalStore"
-import useMonth from "../../store/monthStore"
 import TransferenceTableColumns from "./TransferenceTableColumns"
 
 const ExpensesBox = () => {
-  const { monthDate } = useMonth()
   const { expenses, isLoading } = useBoard()
   const { setCurrentTransference } = useTransferenceModal()
   const isDesktopOrLaptop = useMediaQuery({
@@ -22,7 +20,7 @@ const ExpensesBox = () => {
   const total = expenses.reduce((p, c) => p + c.value, 0)
 
   const openTransference = () => {
-    setCurrentTransference({ type: "income", boardId: monthDate })
+    setCurrentTransference({ type: "expense" })
   }
 
   const columns = TransferenceTableColumns

@@ -19,7 +19,7 @@ const ActionsColumnTransferences = ({ transference }: ActionColumnProps) => {
   const { setNotification } = useNotificationStore()
 
   const openTransference = () => {
-    setCurrentTransference(transference || { type: "expense", boardId: monthDate })
+    setCurrentTransference(transference || { type: "expense" })
   }
 
   const deleteTransference = async () => {

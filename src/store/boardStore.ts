@@ -2,45 +2,39 @@ import { create } from 'zustand'
 import { TransferenceType } from '../@types/TransferenceType'
 import transferenceController from '../controller/transferenceController'
 import boardController from '../controller/boardController'
+import { BoardType } from '../@types/BoardType'
 
 type State = {
-  boardId: string | null
-  boardName: string | null
-  initialValue: number | null
   expenses: TransferenceType[]
   incomes: TransferenceType[]
   isLoading: boolean
+  boards: BoardType[]
+  currentBoard: BoardType | null
 }
 
 type Action = {
   loadTransferences: (boardId: string) => Promise<void>
-  loadBoard: (boardName: string) => Promise<void>
+  loadBoards: () => Promise<void>
 }
 
 const useBoard = create<State & Action>((set, get) => ({
-  boardId: null,
-  boardName: null,
-  initialValue: null,
+  boards: [],
+  currentBoard: null,
   incomes: [],
   expenses: [],
   isLoading: false,
-  loadBoard: async (boardName) => {
+  loadBoards: async () => {
+    if(get().boards.length > 0) {
+      return
+    }
+
     try {
       set(() => ({ isLoading: true }))
-      const response = await boardController.getBoardByName(boardName)
-      const board = response.data
-
-      if (board) {
-        await get().loadTransferences(board.id)
-        set(() => ({
-          boardId: board.id,
-          initialValue: board.initialValue,
-          boardName: board.name
-        }))
-      }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const response = await boardController.getBoards()
+      set({ boards: response.data })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      set(() => ({ boardId: null, initialValue: null }))
+      set(() => ({ boards: [] }))
     } finally {
       set(() => ({ isLoading: false }))
     }

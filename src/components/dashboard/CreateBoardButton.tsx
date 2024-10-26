@@ -7,19 +7,19 @@ import useBoard from "../../store/boardStore"
 
 const CreateBoardButton = () => {
   const { monthDate } = useMonth()
-  const { loadBoard, boardId } = useBoard()
+  const { loadBoards, currentBoard } = useBoard()
   const [createLoading, setCreateLoading] = useState(false)
 
   const handleCreateBoard = async () => {
     setCreateLoading(true)
 
     await boardController.createBoard({ name: monthDate })
-    await loadBoard(monthDate)
+    await loadBoards()
     
     setCreateLoading(false)
   }
 
-  if (boardId) {
+  if (currentBoard) {
     return <></>
   }
 

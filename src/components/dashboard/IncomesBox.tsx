@@ -6,13 +6,11 @@ import Button from "../ui/Button"
 import useTransferenceModal from "../../store/tranferenceModalStore"
 import { TransferenceType } from "../../@types/TransferenceType"
 import { BiPlus } from "react-icons/bi"
-import useMonth from "../../store/monthStore"
 import Skeleton from "../Skeleton"
 import { useMediaQuery } from "react-responsive"
 import TransferenceTableColumns from "./TransferenceTableColumns"
 
 const IncomesBox = () => {
-  const { monthDate } = useMonth()
   const { incomes, isLoading } = useBoard()
   const { setCurrentTransference } = useTransferenceModal()
   const isDesktopOrLaptop = useMediaQuery({
@@ -21,7 +19,7 @@ const IncomesBox = () => {
   const total = incomes.reduce((p, c) => p + c.value, 0)
 
   const openTransference = () => {
-    setCurrentTransference({ type: "income", boardId: monthDate })
+    setCurrentTransference({ type: "income" })
   }
 
   const columns = TransferenceTableColumns

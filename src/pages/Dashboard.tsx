@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react"
 import Header from "../components/ui/Header"
 import SideBar from "../components/SideBar"
 import MonthPicker from "../components/dashboard/MonthPicker"
-import useMonth from "../store/monthStore"
 import useBoard from "../store/boardStore"
 import ModalTransference from "../components/dashboard/ModalTransference"
 import BoardContainer from "../components/dashboard/BoardContainer"
@@ -10,14 +9,13 @@ import CreateBoardButton from "../components/dashboard/CreateBoardButton"
 import useBoardMode from "../store/boardModeStore"
 
 const DashboardPage = () => {
-  const { monthDate } = useMonth()
-  const { loadBoard } = useBoard()
+  const { loadBoards } = useBoard()
   const { mode } = useBoardMode()
   const mainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    loadBoard(monthDate)
-  }, [loadBoard, monthDate])
+    loadBoards()
+  }, [loadBoards])
 
   useEffect(() => {
     if(mainRef.current) {
