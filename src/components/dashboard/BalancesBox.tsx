@@ -10,16 +10,15 @@ type BalanceType = {
 }
 
 const BalancesBox = () => {
-  const { getIsLoading } = useTransferenceActions()
-  const { getExpenses, getIncomes } = useTransferenceActions()
+  const { getExpenses, getIncomes, getIsLoading } = useTransferenceActions()
   const [balances, setBalances] = useState<BalanceType[]>([])
   const expenses = getExpenses()
   const incomes = getIncomes()
   const isLoading = getIsLoading()
 
   useEffect(() => {
-    const totalExpensesValue = getExpenses().reduce((p, c) => p + c.value, 0)
-    const totalIncomesValue = getIncomes().reduce((p, c) => p + c.value, 0)
+    const totalExpensesValue = expenses.reduce((p, c) => p + c.value, 0)
+    const totalIncomesValue = incomes.reduce((p, c) => p + c.value, 0)
     const finalBalance = totalIncomesValue - totalExpensesValue
 
     setBalances(
@@ -30,8 +29,8 @@ const BalancesBox = () => {
         { name: "Saldo final", value: finalBalance, color: finalBalance >= 0 ? "green" : "red" },
       ]
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [incomes, expenses])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const className = "flex flex-col gap-2"
   const balancesClassName = "flex flex-1 gap-8 flex-wrap"
