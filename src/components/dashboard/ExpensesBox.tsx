@@ -9,15 +9,17 @@ import ButtonChangeMode from "./ButtonChangeMode"
 import { useMediaQuery } from "react-responsive"
 import TransferenceTableColumns from "./TransferenceTableColumns"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
+import useBoardActions from "../../hooks/useBoardActions"
 
 const ExpensesBox = () => {
-  const { getExpenses, isLoading } = useTransferenceActions()
-  const { setCurrentTransference } = useTransferenceActions()
+  const { getExpenses, setCurrentTransference, getIsLoading } = useTransferenceActions()
+  const { isLoading: isLoadingBoard } = useBoardActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
   const expenses = getExpenses()
   const total = expenses.reduce((p, c) => p + c.value, 0)
+  const isLoading = getIsLoading()
 
   const openTransference = () => {
     setCurrentTransference({ type: "expense" })
@@ -28,7 +30,7 @@ const ExpensesBox = () => {
   const titleClassName = "flex items-center gap-2"
   const dataTableClass = "flex flex-col flex-1"
 
-  if (isLoading) {
+  if (isLoading || isLoadingBoard) {
     return (
       <div className={className}>
         <div className={titleClassName}>

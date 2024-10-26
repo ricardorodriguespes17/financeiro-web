@@ -28,7 +28,7 @@ const TextInput = ({ label, error, type, ...rest }: TextInputProps) => {
         <input
           className={inputClass}
           type={type === "password"
-            ? showPassword ? "password" : "text"
+            ? showPassword ? "text" : "password"
             : type
           }
           {...rest}

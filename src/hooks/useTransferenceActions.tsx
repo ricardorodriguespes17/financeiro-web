@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { TransferenceCreateType, TransferenceType } from "../@types/TransferenceType"
 import useNotificationStore from "../store/notificationStore"
 import useTransferenceStore from "../store/transferenceStore"
@@ -10,7 +9,6 @@ const useTransferenceActions = () => {
   const transferenceStore = useTransferenceStore()
   const boardStore = useBoardActions()
   const { setNotification } = useNotificationStore()
-  const [isLoading, setLoading] = useState(false)
 
   const loadTransferences = async () => {
     const boardId = boardStore.getCurrentBoard()?.id
@@ -19,7 +17,7 @@ const useTransferenceActions = () => {
       return
     }
 
-    setLoading(true)
+    transferenceStore.setLoading(true)
     try {
       const response = await transferenceController.getTransferences(boardId)
       transferenceStore.setTransferences(response.data)
@@ -27,7 +25,7 @@ const useTransferenceActions = () => {
       const notification = readError(error)
       setNotification(notification)
     } finally {
-      setLoading(false)
+      transferenceStore.setLoading(false)
     }
   }
 
@@ -59,7 +57,7 @@ const useTransferenceActions = () => {
   }
 
   const createTransference = async (data: TransferenceCreateType) => {
-    setLoading(true)
+    transferenceStore.setLoading(true)
     try {
       const response = await transferenceController.createTransference(data)
       transferenceStore.addTransference(response.data)
@@ -67,12 +65,12 @@ const useTransferenceActions = () => {
       const notification = readError(error)
       setNotification(notification)
     } finally {
-      setLoading(false)
+      transferenceStore.setLoading(false)
     }
   }
 
   const updateTransference = async (id: string, data: TransferenceCreateType) => {
-    setLoading(true)
+    transferenceStore.setLoading(true)
     try {
       const response = await transferenceController.updateTransference(id, data)
       transferenceStore.updateTransference(response.data)
@@ -80,12 +78,12 @@ const useTransferenceActions = () => {
       const notification = readError(error)
       setNotification(notification)
     } finally {
-      setLoading(false)
+      transferenceStore.setLoading(false)
     }
   }
 
   const deleteTransference = async (id: string) => {
-    setLoading(true)
+    transferenceStore.setLoading(true)
     try {
       await transferenceController.deleteTransference(id)
       transferenceStore.deleteTransference(id)
@@ -93,8 +91,12 @@ const useTransferenceActions = () => {
       const notification = readError(error)
       setNotification(notification)
     } finally {
-      setLoading(false)
+      transferenceStore.setLoading(false)
     }
+  }
+
+  const getIsLoading = () => {
+    return transferenceStore.isLoading
   }
 
   return {
@@ -107,7 +109,7 @@ const useTransferenceActions = () => {
     createTransference,
     deleteTransference,
     updateTransference,
-    isLoading
+    getIsLoading
   }
 }
 

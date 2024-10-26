@@ -46,6 +46,7 @@ const useBoardActions = () => {
     try {
       const response = await boardController.createBoard(data)
       boardStore.addBoard(response.data)
+      boardStore.setCurrentBoard(response.data)
     } catch (error) {
       const notification = readError(error)
       setNotification(notification)

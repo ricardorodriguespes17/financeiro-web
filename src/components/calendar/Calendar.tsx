@@ -5,16 +5,17 @@ import getDaysOfMonth from "../../utils/getDaysOfMonth"
 import { useMediaQuery } from "react-responsive"
 import Skeleton from "../Skeleton"
 import ButtonChangeMode from "../dashboard/ButtonChangeMode"
-import useBoardActions from "../../hooks/useBoardActions"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const Calendar = () => {
-  const { isLoading } = useBoardActions()
+  const { getIsLoading } = useTransferenceActions()
   const { monthDate } = useMonth()
   const [monthDays, setMonthDays] = useState<number[]>([])
   const [week, setWeek] = useState<string[]>([])
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
+  const isLoading = getIsLoading()
 
   useEffect(() => {
     const monthDays = getDaysOfMonth(monthDate)
@@ -32,6 +33,8 @@ const Calendar = () => {
       ])
     }
   }, [isDesktopOrLaptop])
+
+  console.log(isLoading)
 
   if (isLoading) {
     return (

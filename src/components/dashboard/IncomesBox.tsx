@@ -10,12 +10,13 @@ import TransferenceTableColumns from "./TransferenceTableColumns"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const IncomesBox = () => {
-  const { getIncomes, isLoading, setCurrentTransference } = useTransferenceActions()
+  const { getIncomes, setCurrentTransference, getIsLoading } = useTransferenceActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
   const incomes = getIncomes()
   const total = incomes.reduce((p, c) => p + c.value, 0)
+  const isLoading = getIsLoading()
 
   const openTransference = () => {
     setCurrentTransference({ type: "income" })

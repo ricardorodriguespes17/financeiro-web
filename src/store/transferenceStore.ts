@@ -15,6 +15,7 @@ type Action = {
   deleteTransference: (id: string) => void
   getIncomes: () => TransferenceType[]
   getExpenses: () => TransferenceType[]
+  setLoading: (value: boolean) => void
 }
 
 const useTransferenceStore = create<State & Action>((set, get) => ({
@@ -59,7 +60,8 @@ const useTransferenceStore = create<State & Action>((set, get) => ({
     set(() => ({
       transferences: transferences.filter(item => item.id !== id)
     }))
-  }
+  },
+  setLoading: (value) => set({ isLoading: value })
 }))
 
 export default useTransferenceStore
