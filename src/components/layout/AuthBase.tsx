@@ -16,7 +16,7 @@ const AuthBaseLayout = ({ title, children }: AuthBaseLayoutProps) => {
         <div className="w-[40%]">
           <PresentationAnimation />
         </div>
-        <strong className="mx-10 text-center text-gray-700 text-[90%]">
+        <strong className="mx-10 text-center text-gray-700 dark:text-gray-400 text-[90%]">
           Organize suas finanças de forma simples e eficiente. Gerencie seus
           gastos, saldos e renda em um só lugar.
         </strong>
