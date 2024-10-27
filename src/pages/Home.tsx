@@ -17,7 +17,7 @@ const HomePage = () => {
 
       <main className={twMerge(
         "flex-1 w-full flex flex-col lg:flex-row",
-        "bg-gradient-to-t from-primary-900 to-white dark:to-black"
+        "bg-gradient-to-t from-primary-200 dark:from-primary-900 to-white dark:to-black"
       )}>
         <div className="flex flex-col flex-1 justify-center px-4 md:pl-10">
           <h1 className="w-[600px] max-w-full text-6xl mb-4 dark:text-primary-300">
