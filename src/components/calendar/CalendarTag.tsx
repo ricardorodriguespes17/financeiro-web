@@ -27,7 +27,8 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
     isDragging ? "invisible" : "visible",
   )
 
-  const handleOpen = () => {
+  const handleOpen = (event: React.MouseEvent) => {
+    event.stopPropagation()
     setCurrentTransference(data)
   }
 
