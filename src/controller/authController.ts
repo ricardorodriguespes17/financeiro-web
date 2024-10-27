@@ -1,55 +1,14 @@
 import { ControllerResponseType } from "../@types/ControllerResponseType"
 import { CreateUserAccount, LoginType } from "../@types/UserType"
 import ApiService from "../services/ApiService"
-import useAuthStore from "../store/authStore"
 
 class AuthController {
-  async login(data: LoginType): Promise<ControllerResponseType> {
-    const { setTokens } = useAuthStore.getState()
-
-    try {
-      const response = await ApiService.api.post("/auth/login", data)
-
-      setTokens({
-        accessToken: response.data.accessToken || null,
-        refreshToken: response.data.refreshToken || null
-      })
-
-      return {
-        title: "Sucesso",
-        content: "Login realizado com sucesso!",
-        type: "success",
-      }
-    } catch (err) {
-      const error = err as { response: { data: { message: string } } }
-
-      return {
-        title: "Erro ao fazer login",
-        content: error.response.data.message,
-        type: "error",
-      }
-    }
+  async login(data: LoginType) {
+    return await ApiService.api.post("/auth/login", data)
   }
 
-  async logout() {
-    const { setTokens, refreshToken } = useAuthStore.getState()
-
-    try {
-      await ApiService.api.post("/auth/logout", { refreshToken })
-    } catch (err) {
-      const error = err as { response: { data: { message: string } } }
-
-      return {
-        title: "Erro ao fazer logout",
-        content: error.response.data.message,
-        type: "error",
-      }
-    } finally {
-      setTokens({
-        accessToken: null,
-        refreshToken: null
-      })
-    }
+  async logout(refreshToken: string | null) {
+    return await ApiService.api.post("/auth/logout", { refreshToken })
   }
 
   async createAccount(data: CreateUserAccount): Promise<ControllerResponseType> {
@@ -72,23 +31,8 @@ class AuthController {
     }
   }
 
-  async refreshToken(data: { refreshToken: string }) {
-    const { setTokens, refreshToken } = useAuthStore.getState()
-
-    try {
-      const response = await ApiService.api.post("/auth/refresh", data)
-      const accessToken = response.data.accessToken as string
-
-      setTokens({
-        accessToken,
-        refreshToken
-      })
-
-      return { accessToken }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      return { accessToken: null }
-    }
+  async refreshToken(refreshToken: string) {
+    return await ApiService.api.post("/auth/refresh", { refreshToken })
   }
 }
 

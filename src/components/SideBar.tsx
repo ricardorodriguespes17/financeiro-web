@@ -3,21 +3,18 @@ import Button from "./ui/Button"
 import { IoMdCalendar } from "react-icons/io"
 import { IoPower } from "react-icons/io5"
 import { twMerge } from "tailwind-merge"
-import { useNavigate } from "react-router-dom"
 import useMenuStore from "../store/menuStore"
-import useAuthStore from "../store/authStore"
 import useTheme from "../store/themeStore"
 import { FaMoon, FaRegSun } from "react-icons/fa"
+import useAuthActions from "../hooks/useAuthActions"
 
 const SideBar = () => {
-  const navigate = useNavigate()
   const { isOpened } = useMenuStore()
-  const { onLogout } = useAuthStore()
+  const { logout } = useAuthActions()
   const { toggleTheme, themeMode } = useTheme()
 
   const handleLogout = async () => {
-    onLogout()
-    navigate("/login")
+    await logout()
   }
 
   const menu = [

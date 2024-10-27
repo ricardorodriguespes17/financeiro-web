@@ -1,10 +1,9 @@
+import { useNavigate } from "react-router-dom"
 import { Form, Formik, FormikHelpers } from "formik"
 import TextInput from "../ui/TextInput"
 import Button from "../ui/Button"
-import { useNavigate } from "react-router-dom"
+import useAuthActions from "../../hooks/useAuthActions"
 import * as Yup from 'yup'
-import authController from "../../controller/authController"
-import useNotificationStore from "../../store/notificationStore"
 
 type FormProps = {
   email: string
@@ -25,25 +24,17 @@ const initialValues: FormProps = {
 
 const LoginForm = () => {
   const navigate = useNavigate()
-  const { setNotification } = useNotificationStore()
+  const { login } = useAuthActions()
 
   const onSubmit = async (values: FormProps, { setSubmitting }: FormikHelpers<FormProps>) => {
     setSubmitting(true)
 
-    const response = await authController.login({
+    await login({
       email: values.email.trim(),
       password: values.password.trim()
     })
 
     setSubmitting(false)
-
-    setNotification({
-      title: response.title,
-      content: response.content,
-      type: response.type
-    })
-
-    if (response.type === "success") navigate("/dashboard")
   }
 
   const goToRegister = () => {

@@ -9,10 +9,6 @@ const useBoardActions = () => {
   const { setNotification } = useNotificationStore()
 
   const loadBoards = async () => {
-    if(boardStore.boards.length > 0) {
-      return
-    }
-
     boardStore.setIsLoading(true)
     try {
       const response = await boardController.getBoards()

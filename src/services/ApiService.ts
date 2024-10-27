@@ -32,7 +32,8 @@ class ApiService {
             this.isRefreshing = true
 
             try {
-              const { accessToken } = await authController.refreshToken({ refreshToken })
+              const response = await authController.refreshToken(refreshToken)
+              const accessToken = response.data.accessToken
 
               this.setAuthHeader(accessToken)
 
@@ -42,7 +43,7 @@ class ApiService {
               this.failedRequestsQueue.forEach((req) => req.reject(refreshError as AxiosError))
               this.failedRequestsQueue = []
 
-              await authController.logout()
+              await authController.logout(refreshToken)
             } finally {
               this.isRefreshing = false
             }
@@ -60,7 +61,7 @@ class ApiService {
             })
           })
         } else {
-          await authController.logout()
+          await authController.logout(null)
         }
       }
 

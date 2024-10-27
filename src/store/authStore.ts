@@ -1,6 +1,5 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
-import authController from "../controller/authController"
 
 type State = {
   accessToken: string | null
@@ -9,7 +8,6 @@ type State = {
 
 type Actions = {
   setTokens: (tokens: State) => void
-  onLogout: () => Promise<void>
 }
 
 const useAuthStore = create<State & Actions>()(
@@ -17,9 +15,6 @@ const useAuthStore = create<State & Actions>()(
     (set) => ({
       accessToken: null,
       refreshToken: null,
-      onLogout: async () => {
-        await authController.logout()
-      },
       setTokens: (tokens) => {
         set(tokens)
       },
