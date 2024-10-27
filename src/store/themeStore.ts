@@ -18,10 +18,6 @@ const useTheme = create<State & Actions>()(
       toggleTheme: () => {
         const newMode = get().themeMode === "dark" ? "light" : "dark"
         set({ themeMode: newMode })
-
-        const root = window.document.documentElement
-        if(newMode === "dark") root.classList.add("dark")
-        else root.classList.remove("dark")
       },
     }),
     {
