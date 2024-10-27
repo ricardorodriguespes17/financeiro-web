@@ -8,7 +8,7 @@ import { useEffect } from "react"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const BoardContainer = () => {
-  const { isLoading, getCurrentBoard } = useBoardActions()
+  const { getIsLoading, getCurrentBoard } = useBoardActions()
   const { loadTransferences } = useTransferenceActions()
   const { mode } = useBoardMode()
 
@@ -19,7 +19,7 @@ const BoardContainer = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBoard])
 
-  if (!currentBoard && !isLoading) {
+  if (!currentBoard && !getIsLoading()) {
     return <></>
   }
 

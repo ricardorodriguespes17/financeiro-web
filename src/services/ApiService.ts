@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from "axios"
+import axios, { AxiosError } from "axios"
 import authController from "../controller/authController"
 import useAuthStore from "../store/authStore"
 
@@ -9,74 +9,73 @@ type FailedRequestType = {
   reject: (err: AxiosError) => void
 }
 
-class ApiService {
-  public api: AxiosInstance
-  private isRefreshing: boolean = false
-  private failedRequestsQueue: FailedRequestType[] = []
+const api = axios.create({ baseURL })
+let isRefreshing: boolean = false
+let failedRequestsQueue: FailedRequestType[] = []
 
-  constructor() {
-    this.api = axios.create({ baseURL })
-  }
+const configInterceptor = () => {
+  api.interceptors.response.use((response) => {
+    return response
+  }, async (error) => {
+    const originalRequest = error.config
 
-  public configInterceptor() {
-    this.api.interceptors.response.use((response) => {
-      return response
-    }, async (error) => {
-      const originalRequest = error.config
+    if (error.response.status === 401 && !originalRequest._retry) {
+      if (error.response.data.message) {
+        const { refreshToken } = useAuthStore.getState()
+        if (!isRefreshing && refreshToken) {
+          originalRequest._retry = true
+          isRefreshing = true
 
-      if (error.response.status === 401 && !originalRequest._retry) {
-        if (error.response.data.message) {
-          const { refreshToken } = useAuthStore.getState()
-          if (!this.isRefreshing && refreshToken) {
-            originalRequest._retry = true
-            this.isRefreshing = true
+          try {
+            const response = await authController.refreshToken(refreshToken)
+            const accessToken = response.data.accessToken
 
-            try {
-              const response = await authController.refreshToken(refreshToken)
-              const accessToken = response.data.accessToken
+            setAuthHeader(accessToken)
 
-              this.setAuthHeader(accessToken)
+            failedRequestsQueue.forEach((req) => req.resolve(accessToken))
+            failedRequestsQueue = []
+          } catch (refreshError) {
+            failedRequestsQueue.forEach((req) => req.reject(refreshError as AxiosError))
+            failedRequestsQueue = []
 
-              this.failedRequestsQueue.forEach((req) => req.resolve(accessToken))
-              this.failedRequestsQueue = []
-            } catch (refreshError) {
-              this.failedRequestsQueue.forEach((req) => req.reject(refreshError as AxiosError))
-              this.failedRequestsQueue = []
-
-              await authController.logout(refreshToken)
-            } finally {
-              this.isRefreshing = false
-            }
+            await authController.logout(refreshToken)
+          } finally {
+            isRefreshing = false
           }
-
-          return new Promise((resolve, reject) => {
-            this.failedRequestsQueue.push({
-              resolve: (accessToken: string | null) => {
-                originalRequest.headers["Authorization"] = accessToken
-                resolve(this.api(originalRequest))
-              },
-              reject: (err: AxiosError) => {
-                reject(err)
-              },
-            })
-          })
-        } else {
-          await authController.logout(null)
         }
+
+        return new Promise((resolve, reject) => {
+          failedRequestsQueue.push({
+            resolve: (accessToken: string | null) => {
+              originalRequest.headers["Authorization"] = accessToken
+              resolve(api(originalRequest))
+            },
+            reject: (err: AxiosError) => {
+              reject(err)
+            },
+          })
+        })
+      } else {
+        await authController.logout(null)
       }
-
-      return Promise.reject(error)
     }
-    )
+
+    return Promise.reject(error)
   }
+  )
+}
 
-  public setAuthHeader(accessToken: string | null) {
-    if (accessToken) {
-      this.api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
-    } else {
-      delete this.api.defaults.headers.common["Authorization"]
-    }
+configInterceptor()
+
+const setAuthHeader = (accessToken: string | null) => {
+  if (accessToken) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
+  } else {
+    delete api.defaults.headers.common["Authorization"]
   }
 }
 
-export default new ApiService()
+export default {
+  setAuthHeader,
+  api
+}

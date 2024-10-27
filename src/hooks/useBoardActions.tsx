@@ -3,16 +3,25 @@ import readError from "../utils/readError"
 import { BoardCreateType, BoardUpdateType } from "../@types/BoardType"
 import boardController from "../controller/boardController"
 import useBoardStore from "../store/boardStore"
+import useMonth from "../store/monthStore"
+import { useEffect } from "react"
 
 const useBoardActions = () => {
-  const boardStore  = useBoardStore()
+  const boardStore = useBoardStore()
   const { setNotification } = useNotificationStore()
+  const { monthDate } = useMonth()
+
+  useEffect(() => {
+    setCurrentBoard()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monthDate, boardStore.boards])
 
   const loadBoards = async () => {
     boardStore.setIsLoading(true)
     try {
       const response = await boardController.getBoards()
       boardStore.setBoards(response.data)
+      setCurrentBoard()
     } catch (error) {
       const notification = readError(error)
       setNotification(notification)
@@ -29,8 +38,8 @@ const useBoardActions = () => {
     return boardStore.currentBoard
   }
 
-  const setCurrentBoard = (name: string) => {
-    const board = getAllBoards().find(item => item.name === name) || null
+  const setCurrentBoard = () => {
+    const board = getAllBoards().find(item => item.name === monthDate) || null
 
     return boardStore.setCurrentBoard(board)
   }
