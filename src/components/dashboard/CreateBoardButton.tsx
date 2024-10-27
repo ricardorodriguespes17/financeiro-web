@@ -5,7 +5,8 @@ import useBoardActions from "../../hooks/useBoardActions"
 
 const CreateBoardButton = () => {
   const { monthDate } = useMonth()
-  const { createBoard, getCurrentBoard, isLoading } = useBoardActions()
+  const { createBoard, getCurrentBoard, getIsLoading } = useBoardActions()
+  const isLoading = getIsLoading()
 
   const currentBoard = getCurrentBoard()
 
