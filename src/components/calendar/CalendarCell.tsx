@@ -8,14 +8,14 @@ type CalendarCellProps = {
 }
 
 const CalendarCell = ({ day }: CalendarCellProps) => {
-  const { updateTransference, getAllTransferences } = useTransferenceActions()
+  const { updateTransference, getAllTransferences, setCurrentTransference } = useTransferenceActions()
   const enableDragDrop = day > 0
   const transferences = getAllTransferences().filter(item => item.expireDay === day)
 
   const className = twMerge(
     "flex flex-col items-end flex-1 min-h-24 border border-gray-200 dark:border-gray-800",
-    "overflow-hidden p-1 gap-1",
-    day < 1 && "bg-gray-200 dark:bg-gray-800  *:hidden"
+    "overflow-hidden p-1 gap-1 cursor-pointer",
+    day < 1 && "bg-gray-200 dark:bg-gray-800 cursor-auto  *:hidden"
   )
 
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
@@ -42,11 +42,18 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
     event.preventDefault()
   }
 
+  const handleClick = () => {
+    if(day > 0) {
+      setCurrentTransference({ expireDay: day })
+    }
+  }
+
   return (
     <div
       className={className}
       onDrop={enableDragDrop ? handleDrop : undefined}
       onDragOver={enableDragDrop ? handleDragOver : undefined}
+      onClick={handleClick}
     >
       <label className="mb-1">{day}</label>
 
