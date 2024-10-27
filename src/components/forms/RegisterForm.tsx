@@ -3,9 +3,8 @@ import TextInput from "../ui/TextInput"
 import Button from "../ui/Button"
 import { useNavigate } from "react-router-dom"
 import { CreateUserAccount } from "../../@types/UserType"
-import authController from "../../controller/authController"
-import useNotificationStore from "../../store/notificationStore"
 import * as Yup from 'yup'
+import useUserActions from "../../hooks/useUserActions"
 
 export type RegisterFormProps = {
   name: string
@@ -43,7 +42,7 @@ const initialValues: RegisterFormProps = {
 
 const RegisterForm = () => {
   const navigate = useNavigate()
-  const { setNotification } = useNotificationStore()
+  const { createUser } = useUserActions()
 
   const onSubmit = async (values: RegisterFormProps, { setSubmitting }: FormikHelpers<RegisterFormProps>) => {
     if (values.confirmPassword !== values.password) {
@@ -59,17 +58,13 @@ const RegisterForm = () => {
 
     setSubmitting(true)
 
-    const response = await authController.createAccount(userData)
+    const success = await createUser(userData)
 
     setSubmitting(true)
 
-    setNotification({
-      title: response.title,
-      content: response.content,
-      type: response.type
-    })
-
-    if (response.type === "success") goToLogin()
+    if(success) {
+      goToLogin()
+    }
   }
 
   const goToLogin = () => {
