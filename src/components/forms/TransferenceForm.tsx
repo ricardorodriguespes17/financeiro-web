@@ -82,11 +82,11 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     helpers.setSubmitting(true)
 
     if (props.transference?.id) {
-      updateTransference(
+      await updateTransference(
         props.transference.id, transferenceData
       )
     } else {
-      createTransference(transferenceData)
+      await createTransference(transferenceData)
     }
 
     helpers.setSubmitting(true)
