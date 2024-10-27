@@ -61,7 +61,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
         boardId: data.boardId || "",
         description: data.description || "",
         expireDay: String(data.expireDay || ""),
-        type: data.type || "",
+        type: data.type || "expense",
         value: String(data.value || "")
       })
     } else {
@@ -82,11 +82,9 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     helpers.setSubmitting(true)
 
     if (props.transference?.id) {
-      await updateTransference(
-        props.transference.id, transferenceData
-      )
+      updateTransference(props.transference.id, transferenceData)
     } else {
-      await createTransference(transferenceData)
+      createTransference(transferenceData)
     }
 
     helpers.setSubmitting(true)
@@ -130,7 +128,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
             onChange={(event) => setFieldValue("description", event.target.value)}
           />
 
-          <div className="w-full flex gap-4">
+          <div className="w-full flex gap-4 flex-col md:flex-row">
             <TextInput
               label="Valor"
               type="number"
@@ -148,17 +146,6 @@ const TransferenceForm = (props: TransferenceFormProps) => {
               error={errors.expireDay}
               onChange={(event) => setFieldValue("expireDay", event.target.value)}
             />
-          </div>
-
-          <div className="flex w-full gap-4">
-            <TextInput
-              label="Quadro"
-              autoComplete="off"
-              value={values.boardId}
-              disabled
-              error={errors.boardId}
-              onChange={(event) => setFieldValue("boardId", event.target.value)}
-            />
 
             <Select
               label="Tipo"
@@ -173,7 +160,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
             />
           </div>
 
-          <div className="flex w-full gap-4">
+          <div className="flex w-full gap-4 flex-col md:flex-row md:mt-4">
             <Button
               type="reset"
               variant="plain"

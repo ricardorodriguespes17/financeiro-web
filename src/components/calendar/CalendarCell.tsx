@@ -8,7 +8,11 @@ type CalendarCellProps = {
 }
 
 const CalendarCell = ({ day }: CalendarCellProps) => {
-  const { updateTransference, getAllTransferences, setCurrentTransference } = useTransferenceActions()
+  const {
+    updateTransference,
+    getAllTransferences,
+    setCurrentTransference,
+  } = useTransferenceActions()
   const enableDragDrop = day > 0
   const transferences = getAllTransferences().filter(item => item.expireDay === day)
 
@@ -34,7 +38,7 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
         description: data.description
       }
 
-      await updateTransference(data.id, updateData, true)
+      await updateTransference(data.id, updateData)
     }
   }
 
@@ -43,7 +47,7 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
   }
 
   const handleClick = () => {
-    if(day > 0) {
+    if (day > 0) {
       setCurrentTransference({ expireDay: day })
     }
   }

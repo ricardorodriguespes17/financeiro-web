@@ -8,9 +8,11 @@ import Skeleton from "../Skeleton"
 import { useMediaQuery } from "react-responsive"
 import TransferenceTableColumns from "./TransferenceTableColumns"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
+import useBoardActions from "../../hooks/useBoardActions"
 
 const IncomesBox = () => {
-  const { getIncomes, setCurrentTransference, getIsLoading } = useTransferenceActions()
+  const { getIncomes, setCurrentTransference } = useTransferenceActions()
+  const { getIsLoading } = useBoardActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })

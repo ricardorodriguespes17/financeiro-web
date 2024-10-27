@@ -5,10 +5,10 @@ import getDaysOfMonth from "../../utils/getDaysOfMonth"
 import { useMediaQuery } from "react-responsive"
 import Skeleton from "../Skeleton"
 import ButtonChangeMode from "../dashboard/ButtonChangeMode"
-import useTransferenceActions from "../../hooks/useTransferenceActions"
+import useBoardActions from "../../hooks/useBoardActions"
 
 const Calendar = () => {
-  const { getIsLoading } = useTransferenceActions()
+  const { getIsLoading } = useBoardActions()
   const { monthDate } = useMonth()
   const [monthDays, setMonthDays] = useState<number[]>([])
   const [week, setWeek] = useState<string[]>([])

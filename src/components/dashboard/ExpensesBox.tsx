@@ -12,8 +12,8 @@ import useTransferenceActions from "../../hooks/useTransferenceActions"
 import useBoardActions from "../../hooks/useBoardActions"
 
 const ExpensesBox = () => {
-  const { getExpenses, setCurrentTransference, getIsLoading } = useTransferenceActions()
-  const { isLoading: isLoadingBoard } = useBoardActions()
+  const { getExpenses, setCurrentTransference } = useTransferenceActions()
+  const { getIsLoading } = useBoardActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
@@ -30,7 +30,7 @@ const ExpensesBox = () => {
   const titleClassName = "flex items-center gap-2"
   const dataTableClass = "flex flex-col flex-1"
 
-  if (isLoading || isLoadingBoard) {
+  if (isLoading) {
     return (
       <div className={className}>
         <div className={titleClassName}>

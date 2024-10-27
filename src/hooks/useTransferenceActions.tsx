@@ -69,12 +69,8 @@ const useTransferenceActions = () => {
     }
   }
 
-  const updateTransference = async (
-    id: string,
-    data: TransferenceCreateType, preventLoading?: boolean
-  ) => {
-    if (!preventLoading) transferenceStore.setLoading(true)
-
+  const updateTransference = async (id: string, data: TransferenceCreateType) => {
+    transferenceStore.setLoading(true)
     try {
       const response = await transferenceController.updateTransference(id, data)
       transferenceStore.updateTransference(response.data)

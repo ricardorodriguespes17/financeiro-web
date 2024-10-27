@@ -9,11 +9,14 @@ type ActionColumnProps = {
 }
 
 const ActionsColumnTransferences = ({ transference }: ActionColumnProps) => {
-  const { setCurrentTransference } = useTransferenceActions()
+  const { setCurrentTransference, getIsLoading } = useTransferenceActions()
   const {deleteTransference} = useTransferenceActions()
+  const isLoading = getIsLoading()
 
   const openTransference = () => {
-    setCurrentTransference(transference || { type: "expense" })
+    if(!isLoading) {
+      setCurrentTransference(transference || { type: "expense" })
+    }
   }
 
   const handleDelete = async () => {

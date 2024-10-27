@@ -9,11 +9,12 @@ type CalendarTagProps = {
 }
 
 const CalendarTag = ({ data }: CalendarTagProps) => {
-  const { setCurrentTransference } = useTransferenceActions()
+  const { setCurrentTransference, getIsLoading } = useTransferenceActions()
   const [isDragging, setIsDragging] = useState(false)
   const isDesktop = useMediaQuery({
     query: '(min-width: 1000px)'
   })
+  const isLoading = getIsLoading()
 
   const typesClassName = {
     expense: "bg-red-500/80 dark:bg-red-400 text-white dark:text-red-950",
@@ -28,8 +29,10 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
   )
 
   const handleOpen = (event: React.MouseEvent) => {
-    event.stopPropagation()
-    setCurrentTransference(data)
+    if (!isLoading) {
+      event.stopPropagation()
+      setCurrentTransference(data)
+    }
   }
 
   const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
@@ -44,7 +47,7 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
   return (
     <div
       className={className}
-      draggable={isDesktop}
+      draggable={isDesktop && !isLoading}
       onClick={handleOpen}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
