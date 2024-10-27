@@ -9,6 +9,7 @@ type State = {
 
 type Actions = {
   toggleTheme: () => void
+  resetTheme: () => void
 }
 
 const useTheme = create<State & Actions>()(
@@ -18,6 +19,9 @@ const useTheme = create<State & Actions>()(
       toggleTheme: () => {
         const newMode = get().themeMode === "dark" ? "light" : "dark"
         set({ themeMode: newMode })
+      },
+      resetTheme: () => {
+        set({ themeMode: "light" })
       },
     }),
     {

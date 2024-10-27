@@ -1,11 +1,13 @@
 import authController from "../controller/authController"
 import useAuthStore from "../store/authStore"
 import useNotificationStore from "../store/notificationStore"
+import useTheme from "../store/themeStore"
 import readError from "../utils/readError"
 
 const useAuthActions = () => {
   const { setTokens, refreshToken } = useAuthStore()
   const { setNotification } = useNotificationStore()
+  const { resetTheme } = useTheme()
 
   const login = async (data: { email: string, password: string }) => {
     try {
@@ -29,6 +31,7 @@ const useAuthActions = () => {
       accessToken: null,
       refreshToken: null
     })
+    resetTheme()
   }
 
   const onRefreshToken = async () => {
