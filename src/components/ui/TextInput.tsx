@@ -16,7 +16,7 @@ const TextInput = ({ label, error, type, ...rest }: TextInputProps) => {
   }
 
   const inputClass = twMerge(
-    "w-full h-10 px-4 dark:bg-gray-900 bg-white dark:bg-black",
+    "w-full h-10 px-4 dark:bg-gray-900 bg-white outline-none",
     "border border-gray-300 dark:border-gray-700 rounded-md",
     "drop-shadow-sm focus:drop-shadow-md focus:border-primary"
   )

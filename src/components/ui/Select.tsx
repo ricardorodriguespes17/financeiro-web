@@ -14,8 +14,8 @@ type OptionProps = {
 
 const Select = ({ label, error, options, ...rest }: SelectProps) => {
   const className = twMerge(
-    "w-full h-10 px-4 dark:bg-gray-900",
-    "border border-gray-300 rounded-md focus:border-primary",
+    "w-full h-10 px-4 dark:bg-gray-900 outline-none",
+    "border border-gray-300 dark:border-gray-700 rounded-md focus:border-primary",
     "drop-shadow-sm focus:drop-shadow-md"
   )
 
