@@ -1,19 +1,21 @@
 import { CreateUserAccount, UpdateUserType } from "../@types/UserType"
 import userController from "../controller/userController"
 import useNotificationStore from "../store/notificationStore"
+import useUserStore from "../store/userStore"
 import readError from "../utils/readError"
 
 const useUserActions = () => {
   const { setNotification } = useNotificationStore()
+  const { setUser } = useUserStore()
 
-  const getUserById = async (userId: string) => {
+  const getUserData = async () => {
     try {
-      const response = await userController.getUserById(userId)
-      return response.data
+      const response = await userController.getUserData()
+      setUser(response.data)
     } catch (err) {
       const notification = readError(err)
       setNotification(notification)
-      return null
+      setUser(null)
     }
   }
 
@@ -28,17 +30,20 @@ const useUserActions = () => {
     }
   }
 
-  const updateUser = async (id: string, data: UpdateUserType) => {
+  const updateUser = async (data: UpdateUserType) => {
     try {
-      await userController.updateUser(id, data)
+      const response = await userController.updateUser(data)
+      setUser(response.data)
+      return true
     } catch (err) {
       const notification = readError(err)
       setNotification(notification)
+      return false
     }
   }
 
   return {
-    getUserById,
+    getUserData,
     createUser,
     updateUser
   }

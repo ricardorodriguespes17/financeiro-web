@@ -2,16 +2,16 @@ import { CreateUserAccount, UpdateUserType, UserType } from "../@types/UserType"
 import ApiService from "../services/ApiService"
 
 class UserController {
-  async getUserById(userId: string) {
-    return await  ApiService.api.get<UserType | null>(`/users/${userId}`)
+  async getUserData() {
+    return await  ApiService.api.get<UserType>(`/users/profile`)
   }
 
   async createUser(data: CreateUserAccount) {
     return await ApiService.api.post("/users", data)
   }
 
-  async updateUser(userId: string, data: UpdateUserType) {
-    return await  ApiService.api.post(`/users/${userId}`, data)
+  async updateUser(data: UpdateUserType) {
+    return await  ApiService.api.put<UserType>(`/users`, data)
   }
 }
 

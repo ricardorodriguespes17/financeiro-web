@@ -5,7 +5,7 @@ export type UserType = {
   birthdate: string
 }
 
-export type UpdateUserType = Omit<UserType, "id">
+export type UpdateUserType = Omit<CreateUserAccount, "password">
 
 export type CreateUserAccount = {
   name: string
