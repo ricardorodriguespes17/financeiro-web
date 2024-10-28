@@ -1,47 +1,24 @@
-import { useEffect, useRef } from "react"
-import Header from "../components/ui/Header"
-import SideBar from "../components/SideBar"
+import { useEffect } from "react"
 import MonthPicker from "../components/dashboard/MonthPicker"
-import ModalTransference from "../components/dashboard/ModalTransference"
 import BoardContainer from "../components/dashboard/BoardContainer"
 import CreateBoardButton from "../components/dashboard/CreateBoardButton"
-import useBoardMode from "../store/boardModeStore"
 import useBoardActions from "../hooks/useBoardActions"
+import MainBase from "../components/layout/MainBase"
 
 const DashboardPage = () => {
-  const { mode } = useBoardMode()
   const { loadBoards } = useBoardActions()
-  const mainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     loadBoards()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    if (mainRef.current) {
-      mainRef.current.scrollTo({ top: 0 })
-    }
-  }, [mode])
-
   return (
-    <div className="flex h-full">
-      <aside>
-        <SideBar />
-      </aside>
-
-      <div className="flex flex-col flex-1 h-full">
-        <Header showMenuButton />
-
-        <main ref={mainRef} className="w-full h-full flex-col gap-8 flex px-4 py-8 md:px-8 shadow-inner overflow-auto">
-          <MonthPicker />
-          <BoardContainer />
-          <CreateBoardButton />
-        </main>
-      </div>
-
-      <ModalTransference />
-    </div>
+    <MainBase>
+      <MonthPicker />
+      <BoardContainer />
+      <CreateBoardButton />
+    </MainBase>
   )
 }
 
