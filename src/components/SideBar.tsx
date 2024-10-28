@@ -1,11 +1,10 @@
 import { LuLayoutDashboard } from "react-icons/lu"
 import Button from "./ui/Button"
-import { IoMdCalendar } from "react-icons/io"
 import { IoPower } from "react-icons/io5"
 import { twMerge } from "tailwind-merge"
 import useMenuStore from "../store/menuStore"
 import useTheme from "../store/themeStore"
-import { FaMoon, FaRegSun } from "react-icons/fa"
+import { FaMoon, FaRegSun, FaUser } from "react-icons/fa"
 import useAuthActions from "../hooks/useAuthActions"
 
 const SideBar = () => {
@@ -19,7 +18,7 @@ const SideBar = () => {
 
   const menu = [
     { label: "Dashboard", href: "/dashboard", Icon: LuLayoutDashboard, selected: true },
-    { label: "Quadros", href: "/dashboard", Icon: IoMdCalendar },
+    { label: "Perfil", href: "/profile", Icon: FaUser },
     "separator",
     { label: "Tema", onClick: toggleTheme, Icon: themeMode === "dark" ? FaRegSun : FaMoon },
     { label: "Sair", onClick: handleLogout, Icon: IoPower }
