@@ -1,34 +1,43 @@
+import { useMediaQuery } from "react-responsive"
+import useBoardActions from "../../hooks/useBoardActions"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
+import TransferenceTableColumns from "./TransferenceTableColumns"
+import Skeleton from "../Skeleton"
+import DataTable from "../ui/DataTable"
+import { TransferenceType } from "../../@types/TransferenceType"
+import Button from "../ui/Button"
+import { BiPlus } from "react-icons/bi"
+import ButtonChangeMode from "./ButtonChangeMode"
 import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
-import DataTable from "../ui/DataTable"
-import Button from "../ui/Button"
-import { TransferenceType } from "../../@types/TransferenceType"
-import { BiPlus } from "react-icons/bi"
-import Skeleton from "../Skeleton"
-import ButtonChangeMode from "./ButtonChangeMode"
-import { useMediaQuery } from "react-responsive"
-import TransferenceTableColumns from "./TransferenceTableColumns"
-import useTransferenceActions from "../../hooks/useTransferenceActions"
-import useBoardActions from "../../hooks/useBoardActions"
 
-const ExpensesBox = () => {
-  const { getExpenses, setCurrentTransference } = useTransferenceActions()
+type TransferenceTableProps = {
+  type: "expense" | "income"
+}
+
+const TransferenceTable = ({ type }: TransferenceTableProps) => {
+  const {
+    getExpenses,
+    getIncomes,
+    setCurrentTransference
+  } = useTransferenceActions()
   const { getIsLoading } = useBoardActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
-  const expenses = getExpenses()
-  const total = expenses.reduce((p, c) => p + c.value, 0)
+  const transferences = type === "expense" ? getExpenses() : getIncomes()
+  const total = transferences.reduce((p, c) => p + c.value, 0)
   const isLoading = getIsLoading()
-
-  const openTransference = () => {
-    setCurrentTransference({ type: "expense" })
-  }
-
   const columns = TransferenceTableColumns
   const className = "flex flex-col gap-2"
   const titleClassName = "flex items-center gap-2"
   const dataTableClass = "flex flex-col flex-1"
+  const title = type === "expense" ? "Despesas" : "Receitas"
+
+  const openTransference = () => {
+    setCurrentTransference({ type })
+  }
+
 
   if (isLoading) {
     return (
@@ -41,7 +50,7 @@ const ExpensesBox = () => {
 
         <div className={dataTableClass}>
           <DataTable<TransferenceType>
-            data={expenses}
+            data={[]}
             columns={columns}
             isLoading={isLoading}
           />
@@ -54,7 +63,7 @@ const ExpensesBox = () => {
     <div className={className}>
       <div className="flex items-center justify-between">
         <div className={titleClassName}>
-          <h2>Despesas</h2>
+          <h2>{title}</h2>
           <Button
             size="fit"
             variant="plain"
@@ -69,7 +78,7 @@ const ExpensesBox = () => {
 
       <div className={dataTableClass}>
         <DataTable<TransferenceType>
-          data={expenses}
+          data={transferences}
           columns={columns
             .filter(item => item.title !== "Descrição" || isDesktopOrLaptop)
           }
@@ -87,4 +96,4 @@ const ExpensesBox = () => {
   )
 }
 
-export default ExpensesBox
+export default TransferenceTable
