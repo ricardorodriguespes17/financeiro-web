@@ -34,6 +34,8 @@ const configInterceptor = () => {
 
             failedRequestsQueue.forEach((req) => req.resolve(accessToken))
             failedRequestsQueue = []
+
+            return await api(originalRequest)
           } catch (refreshError) {
             failedRequestsQueue.forEach((req) => req.reject(refreshError as AxiosError))
             failedRequestsQueue = []
