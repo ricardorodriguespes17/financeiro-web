@@ -5,6 +5,7 @@ import useBoardActions from "../../hooks/useBoardActions"
 import { useEffect } from "react"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 import TransferenceTable from "./TransferenceTable"
+import ModalTransference from "./ModalTransference"
 
 const BoardContainer = () => {
   const { getIsLoading, getCurrentBoard } = useBoardActions()
@@ -24,6 +25,7 @@ const BoardContainer = () => {
 
   return (
     <>
+      <ModalTransference />
       <BalancesBox />
 
       {mode === "calendar" && <Calendar />}
