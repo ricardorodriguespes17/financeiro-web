@@ -18,12 +18,12 @@ const MainBase = ({ children }: MainBaseProps) => {
   }, [mode])
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full w-screen">
       <aside>
         <SideBar />
       </aside>
 
-      <div className="flex flex-col flex-1 h-full">
+      <div className="flex flex-col max-w-full h-full">
         <Header showMenuButton />
 
         <main ref={mainRef} className="w-full h-full flex-col gap-8 flex px-4 py-8 md:px-8 shadow-inner overflow-auto">
