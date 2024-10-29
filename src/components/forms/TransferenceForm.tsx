@@ -14,6 +14,7 @@ export type TranferenceValuesProps = {
   type: string,
   value: string,
   description: string
+  isPaid: boolean
 }
 
 const valdationSchema = Yup.object().shape({
@@ -45,7 +46,8 @@ const defautlValues: TranferenceValuesProps = {
   expireDay: "",
   type: "expense",
   value: "",
-  description: ""
+  description: "",
+  isPaid: false,
 }
 
 const TransferenceForm = (props: TransferenceFormProps) => {
@@ -62,7 +64,8 @@ const TransferenceForm = (props: TransferenceFormProps) => {
         description: data.description || "",
         expireDay: String(data.expireDay || ""),
         type: data.type || "expense",
-        value: String(data.value || "")
+        value: String(data.value || ""),
+        isPaid: data.isPaid || false
       })
     } else {
       setInitialValues(defautlValues)
@@ -76,7 +79,8 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       expireDay: parseInt(values.expireDay),
       type: values.type as "expense" | "income",
       value: parseFloat(values.value),
-      boardId: values.boardId
+      boardId: values.boardId,
+      isPaid: values.isPaid
     }
 
     helpers.setSubmitting(true)
