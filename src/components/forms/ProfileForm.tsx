@@ -2,9 +2,9 @@ import { Form, Formik, FormikHelpers } from "formik"
 import TextInput from "../ui/TextInput"
 import Button from "../ui/Button"
 import * as Yup from "yup"
-import { useNavigate } from "react-router-dom"
 import useUserActions from "../../hooks/useUserActions"
 import { UpdateUserType } from "../../@types/UserType"
+import { useEffect } from "react"
 
 export type ProfileFormProps = {
   name: string
@@ -24,15 +24,22 @@ const valdationSchema = Yup.object().shape({
     .required('A data de nascimento é obrigatória'),
 })
 
-const initialValues: ProfileFormProps = {
-  name: "",
-  email: "",
-  birthdate: "",
-}
+
 
 const ProfileForm = () => {
-  const navigate = useNavigate()
-  const { updateUser } = useUserActions()
+  const { updateUser, getUser, getUserData, isLoading } = useUserActions()
+  const user = getUser()
+
+  useEffect(() => {
+    getUserData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const initialValues: ProfileFormProps = {
+    name: user?.name || "",
+    email: user?.email || "",
+    birthdate: user?.birthdate || "",
+  }
 
   const onSubmit = async (
     values: ProfileFormProps,
@@ -46,21 +53,14 @@ const ProfileForm = () => {
 
     setSubmitting(true)
 
-    const success = await updateUser(userData)
+    await updateUser(userData)
 
     setSubmitting(true)
-
-    if (success) {
-      goToLogin()
-    }
-  }
-
-  const goToLogin = () => {
-    navigate("/login")
   }
 
   return (
     <Formik<ProfileFormProps>
+      enableReinitialize
       initialValues={initialValues}
       validationSchema={valdationSchema}
       validateOnChange={false}
@@ -94,7 +94,7 @@ const ProfileForm = () => {
             onChange={(event) => setFieldValue("birthdate", event.target.value)}
           />
 
-          <Button type="submit" loading={isSubmitting}>
+          <Button type="submit" loading={isSubmitting || isLoading}>
             Salvar
           </Button>
         </Form>

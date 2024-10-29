@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { CreateUserAccount, UpdateUserType } from "../@types/UserType"
 import userController from "../controller/userController"
 import useNotificationStore from "../store/notificationStore"
@@ -6,9 +7,15 @@ import readError from "../utils/readError"
 
 const useUserActions = () => {
   const { setNotification } = useNotificationStore()
-  const { setUser } = useUserStore()
+  const { setUser, user } = useUserStore()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getUser = () => {
+    return user
+  }
 
   const getUserData = async () => {
+    setIsLoading(true)
     try {
       const response = await userController.getUserData()
       setUser(response.data)
@@ -16,6 +23,8 @@ const useUserActions = () => {
       const notification = readError(err)
       setNotification(notification)
       setUser(null)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -31,6 +40,7 @@ const useUserActions = () => {
   }
 
   const updateUser = async (data: UpdateUserType) => {
+    setIsLoading(true)
     try {
       const response = await userController.updateUser(data)
       setUser(response.data)
@@ -39,13 +49,17 @@ const useUserActions = () => {
       const notification = readError(err)
       setNotification(notification)
       return false
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return {
+    getUser,
     getUserData,
     createUser,
-    updateUser
+    updateUser,
+    isLoading
   }
 }
 
