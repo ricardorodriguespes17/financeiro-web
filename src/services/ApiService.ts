@@ -23,8 +23,9 @@ const configInterceptor = () => {
     if (error.response.status === 401 && !originalRequest._retry) {
       const { refreshToken, accessToken } = useAuthStore.getState()
 
-      if(error.response.data.message === "Token não enviado") {
+      if (error.response.data.message === "Token não enviado") {
         setAuthHeader(accessToken)
+        originalRequest.headers["Authorization"] = accessToken
         return await api(originalRequest)
       }
 
@@ -37,6 +38,7 @@ const configInterceptor = () => {
           const accessToken = response.data.accessToken
 
           setAuthHeader(accessToken)
+          originalRequest.headers["Authorization"] = accessToken
 
           failedRequestsQueue.forEach((req) => req.resolve(accessToken))
           failedRequestsQueue = []
@@ -77,6 +79,7 @@ const configInterceptor = () => {
 configInterceptor()
 
 const setAuthHeader = (accessToken: string | null) => {
+  console.log(accessToken)
   if (accessToken) {
     api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
   } else {
