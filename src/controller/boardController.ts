@@ -19,11 +19,11 @@ class BoardController {
   }
 
   async updateBoard(boardId: string, data: BoardUpdateType) {
-    return await ApiService.api.post<BoardType>(`/boards/${boardId}`, data)
+    return await ApiService.api.put<BoardType>(`/boards/${boardId}`, data)
   }
 
   async deleteBoard(boardId: string) {
-    return await ApiService.api.post(`/boards/${boardId}`)
+    return await ApiService.api.delete(`/boards/${boardId}`)
   }
 }
 
