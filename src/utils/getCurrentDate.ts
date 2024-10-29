@@ -28,7 +28,7 @@ export const getMonthYearNumber = (monthDate: string): { month: number, year: nu
   const month = parseInt(monthString)
   const year = parseInt(yearString)
 
-  if(isNaN(month) || month > 11 || month < 0 || isNaN(year)) {
+  if(isNaN(month) || month > 12 || month < 1 || isNaN(year)) {
     return null
   }
 
