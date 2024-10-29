@@ -10,6 +10,7 @@ import { BiPlus } from "react-icons/bi"
 import ButtonChangeMode from "./ButtonChangeMode"
 import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
+import { calculateSubTotal, calculateTotal } from "../../utils/calculateTotal"
 
 type TransferenceTableProps = {
   type: "expense" | "income"
@@ -26,7 +27,8 @@ const TransferenceTable = ({ type }: TransferenceTableProps) => {
     query: '(min-width: 768px)'
   })
   const transferences = type === "expense" ? getExpenses() : getIncomes()
-  const total = transferences.reduce((p, c) => p + c.value, 0)
+  const total = calculateTotal(transferences)
+  const subTotal = calculateSubTotal(transferences)
   const isLoading = getIsLoading()
   const columns = TransferenceTableColumns
   const className = "flex flex-col gap-2"
@@ -86,10 +88,13 @@ const TransferenceTable = ({ type }: TransferenceTableProps) => {
         />
 
         <div className={twMerge(
-          "flex items-center w-full rounded-md text-xl px-3 py-2 font-bold",
+          "flex items-center w-full gap-8 rounded-md text-xl px-3 py-2 font-bold",
           "bg-white dark:bg-gray-900 text-primary-800 dark:text-primary"
         )}>
-          Total: {formatCurrency(total)}
+          <label>Total: {formatCurrency(total)}</label>
+          {total !== subTotal && (
+            <label>Subtotal: {formatCurrency(subTotal)}</label>
+          )}
         </div>
       </div>
     </div>

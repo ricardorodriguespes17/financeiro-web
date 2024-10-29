@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import CardBalance from "./CardBalance"
 import Skeleton from "../Skeleton"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
+import { calculateSubTotal } from "../../utils/calculateTotal"
 
 type BalanceType = {
   name: string
@@ -17,8 +18,8 @@ const BalancesBox = () => {
   const isLoading = getIsLoading()
 
   useEffect(() => {
-    const totalExpensesValue = expenses.reduce((p, c) => p + c.value, 0)
-    const totalIncomesValue = incomes.reduce((p, c) => p + c.value, 0)
+    const totalExpensesValue = calculateSubTotal(expenses)
+    const totalIncomesValue = calculateSubTotal(incomes)
     const finalBalance = totalIncomesValue - totalExpensesValue
 
     setBalances(

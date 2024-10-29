@@ -38,7 +38,7 @@ const TransferenceTableColumns: ColumnType<TransferenceType>[] = [
     size: "full",
     render: (row) => {
       return (
-        <label>{row.description}</label>
+        <label>{row.description || "-"}</label>
       )
     }
   },
