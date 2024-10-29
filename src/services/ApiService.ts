@@ -79,7 +79,6 @@ const configInterceptor = () => {
 configInterceptor()
 
 const setAuthHeader = (accessToken: string | null) => {
-  console.log(accessToken)
   if (accessToken) {
     api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
   } else {
