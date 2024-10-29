@@ -15,7 +15,7 @@ const Modal = (props: ModalProps) => {
   const { children, isOpen = false, onClose, title, subtitle } = props
 
   const className = twMerge(
-    "fixed top-0 left-0 w-screen h-screen bg-black/60 items-center justify-center",
+    "fixed top-0 left-0 w-screen h-screen bg-black/60 items-center justify-center z-10",
     isOpen ? "flex" : "hidden"
   )
 
