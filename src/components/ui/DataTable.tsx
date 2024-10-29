@@ -46,7 +46,7 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
       )}>
         {columns.map(({ title, position = "left", size = "normal" }, index) => {
           const className = twMerge(
-            "w-[150px] flex items-center uppercase",
+            "w-[80px] md:w-[150px] flex items-center uppercase text-sm md:text-base",
             size === "full" && "flex-1",
             position === "left"
               ? "justify-start"
@@ -73,7 +73,7 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
           >
             {columns.map(({ render, position = "left", size = "normal" }, index) => {
               const className = twMerge(
-                "w-[150px] flex items-center",
+                "w-[80px] md:w-[150px] flex items-center text-sm md:text-base",
                 size === "full" && "flex-1",
                 position === "left"
                   ? "justify-start"

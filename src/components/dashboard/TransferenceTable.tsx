@@ -80,7 +80,7 @@ const TransferenceTable = ({ type }: TransferenceTableProps) => {
         <DataTable<TransferenceType>
           data={transferences}
           columns={columns
-            .filter(item => item.title !== "Descrição" || isDesktopOrLaptop)
+            .filter(item => !["Descrição", "Vencimento"].includes(item.title) || isDesktopOrLaptop)
           }
           isLoading={isLoading}
         />
