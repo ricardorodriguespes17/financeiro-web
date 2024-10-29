@@ -5,6 +5,7 @@ export type TransferenceType = {
   expireDay: number
   description?: string
   type: "expense" | "income"
+  isPaid: boolean
   boardId: string
 }
 

@@ -11,6 +11,7 @@ type DataTableProps<T> = {
 export type ColumnType<T> = {
   title: string
   position?: "left" | "right" | "center"
+  size?: "fit" | "normal" | "full"
   render: (row: T) => React.ReactNode
 }
 
@@ -18,7 +19,7 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
   const {
     data,
     columns,
-    isLoading
+    isLoading,
   } = props
 
   const rowClassName = "w-full py-2 px-4 flex items-center gap-4"
@@ -43,9 +44,10 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
         rowClassName,
         "bg-primary-600 dark:bg-primary-800 text-white rounded-md"
       )}>
-        {columns.map(({ title, position = "left" }, index) => {
+        {columns.map(({ title, position = "left", size = "normal" }, index) => {
           const className = twMerge(
-            "flex-1 flex items-center uppercase",
+            "w-[150px] flex items-center uppercase",
+            size === "full" && "flex-1",
             position === "left"
               ? "justify-start"
               : position === "center" ? "justify-center" : "justify-end",
@@ -64,14 +66,15 @@ const DataTable = <T,>(props: DataTableProps<T>) => {
           <div
             key={index}
             className={twMerge(
-              rowClassName, 
+              rowClassName,
               "odd:bg-gray-50 dark:odd:bg-gray-900 duration-200",
               "hover:bg-primary-100 dark:hover:bg-primary-900"
             )}
           >
-            {columns.map(({ render, position = "left" }, index) => {
+            {columns.map(({ render, position = "left", size = "normal" }, index) => {
               const className = twMerge(
-                "flex-1 flex items-center",
+                "w-[150px] flex items-center",
+                size === "full" && "flex-1",
                 position === "left"
                   ? "justify-start"
                   : position === "center" ? "justify-center" : "justify-end",
