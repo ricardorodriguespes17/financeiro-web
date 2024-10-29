@@ -26,6 +26,12 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
     "hover:opacity-80 transition-all shadow overflow-hidden",
     typesClassName[data.type],
     isDragging ? "invisible" : "visible",
+    data.isPaid && "opacity-80"
+  )
+
+  const labelClassName = twMerge(
+    "text-xs md:text-sm lg:text-base cursor-pointer",
+    data.isPaid && "line-through"
   )
 
   const handleOpen = (event: React.MouseEvent) => {
@@ -52,7 +58,7 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <label className="text-xs md:text-sm lg:text-base cursor-pointer">
+      <label className={labelClassName}>
         {data.name}
       </label>
     </div>

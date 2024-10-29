@@ -35,7 +35,8 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
         name: data.name,
         type: data.type,
         value: data.value,
-        description: data.description
+        description: data.description,
+        isPaid: data.isPaid
       }
 
       await updateTransference(data.id, updateData)
