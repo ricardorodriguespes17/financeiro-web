@@ -9,12 +9,16 @@ type State = {
 
 type Actions = {
   toggleMode: () => void
+  setMode: (mode: ModeType) => void
 }
 
 const useBoardMode = create<State & Actions>()(
   persist(
     (set, get) => ({
       mode: "table",
+      setMode: (mode: ModeType) => {
+        set({ mode })
+      },
       toggleMode: () => {
         set({
           mode: get().mode === "calendar" ? "table" : "calendar"

@@ -75,7 +75,9 @@ const TransferenceTable = ({ type }: TransferenceTableProps) => {
             <BiPlus />
           </Button>
         </div>
-        <ButtonChangeMode />
+        {type === "expense" && (
+          <ButtonChangeMode />
+        )}
       </div>
 
       <div className={dataTableClass}>
