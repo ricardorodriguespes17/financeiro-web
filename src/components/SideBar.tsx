@@ -5,7 +5,7 @@ import useMenuStore from "../store/menuStore"
 import useTheme from "../store/themeStore"
 import { FaMoon, FaRegSun } from "react-icons/fa"
 import useAuthActions from "../hooks/useAuthActions"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import menus from "../menu"
 
@@ -24,10 +24,10 @@ const SideBar = () => {
     await logout()
   }
 
-  const [submMenu] = useState([
+  const submMenu = [
     { label: "Tema", onClick: toggleTheme, Icon: themeMode === "dark" ? FaRegSun : FaMoon },
     { label: "Sair", onClick: handleLogout, Icon: IoPower }
-  ])
+  ]
 
   const className = twMerge(
     "h-full bg-white dark:bg-black flex flex-col items-center gap-3 pt-4",
