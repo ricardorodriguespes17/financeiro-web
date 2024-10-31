@@ -57,41 +57,45 @@ const SideBar = () => {
         Menu
       </h2>
 
-      {menus.map(item => {
-        return (
-          <Button
-            key={item.href}
-            href={item.href}
-            variant={pathname === item.href ? "solid" : "plain"}
-            size={isOpened ? "full" : "fit"}
-            className={buttonClassName}
-          >
-            <item.Icon size={24} className="min-w-6" />
-            <label className={labelClassName}>
-              {item.label}
-            </label>
-          </Button>
-        )
-      })}
+      <div className="flex flex-col w-full gap-3">
+        {menus.map(item => {
+          return (
+            <Button
+              key={item.href}
+              href={item.href}
+              variant={pathname === item.href ? "solid" : "plain"}
+              size={isOpened ? "full" : "fit"}
+              className={buttonClassName}
+            >
+              <item.Icon size={24} className="min-w-6" />
+              <label className={labelClassName}>
+                {item.label}
+              </label>
+            </Button>
+          )
+        })}
+      </div>
 
       <hr className="border-separate border-primary/30 w-full" />
 
-      {submMenu.map((item, index) => {
-        return (
-          <Button
-            key={index}
-            onClick={item.onClick}
-            variant="plain"
-            size={isOpened ? "full" : "fit"}
-            className={buttonClassName}
-          >
-            <item.Icon size={24} className="min-w-6" />
-            <label className={labelClassName}>
-              {item.label}
-            </label>
-          </Button>
-        )
-      })}
+      <div className="flex flex-1 justify-end flex-col w-full gap-3">
+        {submMenu.map((item, index) => {
+          return (
+            <Button
+              key={index}
+              onClick={item.onClick}
+              variant="plain"
+              size={isOpened ? "full" : "fit"}
+              className={buttonClassName}
+            >
+              <item.Icon size={24} className="min-w-6" />
+              <label className={labelClassName}>
+                {item.label}
+              </label>
+            </Button>
+          )
+        })}
+      </div>
     </div>
   )
 }
