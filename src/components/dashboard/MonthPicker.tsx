@@ -21,14 +21,22 @@ const MonthPicker = () => {
         onClick={() => navigateMonth(-1)}
       >
         <IoIosArrowBack size={28} />
+        <label className="hidden sm:block">
+          Anterior
+        </label>
       </Button>
+
       <h2 className="text-center">{getMonthLabel(monthDate)}</h2>
+
       <Button
         size="fit"
         variant="plain"
         className="md:px-4"
         onClick={() => navigateMonth(1)}
       >
+        <label className="hidden sm:block">
+          Próximo
+        </label>
         <IoIosArrowForward size={28} />
       </Button>
     </div>
