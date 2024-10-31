@@ -32,7 +32,7 @@ const ProfileForm = () => {
 
   useEffect(() => {
     getUserData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const initialValues: ProfileFormProps = {
@@ -67,36 +67,39 @@ const ProfileForm = () => {
       onSubmit={onSubmit}
     >
       {({ values, setFieldValue, isSubmitting, errors }) => (
-        <Form className="w-[400px] max-w-full flex flex-col gap-3">
-          <TextInput
-            label="Nome"
-            autoComplete="off"
-            value={values.name}
-            error={errors.name}
-            onChange={(event) => setFieldValue("name", event.target.value)}
-          />
+        <Form className="w-full flex justify-center">
+          <div className="w-[400px] max-w-full flex flex-col gap-3">
+            <TextInput
+              label="Nome"
+              autoComplete="off"
+              value={values.name}
+              error={errors.name}
+              onChange={(event) => setFieldValue("name", event.target.value)}
+            />
 
-          <TextInput
-            label="Email"
-            type="email"
-            autoComplete="off"
-            value={values.email}
-            error={errors.email}
-            onChange={(event) => setFieldValue("email", event.target.value)}
-          />
+            <TextInput
+              label="Email"
+              type="email"
+              autoComplete="off"
+              value={values.email}
+              error={errors.email}
+              onChange={(event) => setFieldValue("email", event.target.value)}
+            />
 
-          <TextInput
-            label="Data de nascimento"
-            type="date"
-            autoComplete="off"
-            value={values.birthdate}
-            error={errors.birthdate}
-            onChange={(event) => setFieldValue("birthdate", event.target.value)}
-          />
+            <TextInput
+              label="Data de nascimento"
+              type="date"
+              autoComplete="off"
+              value={values.birthdate}
+              error={errors.birthdate}
+              onChange={(event) => setFieldValue("birthdate", event.target.value)}
+            />
 
-          <Button type="submit" loading={isSubmitting || isLoading}>
-            Salvar
-          </Button>
+            <Button type="submit" loading={isSubmitting || isLoading}>
+              Salvar
+            </Button>
+          </div>
+
         </Form>
       )}
     </Formik>
