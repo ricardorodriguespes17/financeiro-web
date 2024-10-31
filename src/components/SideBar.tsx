@@ -5,7 +5,7 @@ import useMenuStore from "../store/menuStore"
 import useTheme from "../store/themeStore"
 import { FaMoon, FaRegSun } from "react-icons/fa"
 import useAuthActions from "../hooks/useAuthActions"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import menus from "../menu"
 
@@ -24,10 +24,10 @@ const SideBar = () => {
     await logout()
   }
 
-  const [submMenu] = useState([
+  const submMenu = [
     { label: "Tema", onClick: toggleTheme, Icon: themeMode === "dark" ? FaRegSun : FaMoon },
     { label: "Sair", onClick: handleLogout, Icon: IoPower }
-  ])
+  ]
 
   const className = twMerge(
     "h-full bg-white dark:bg-black flex flex-col items-center gap-3 pt-4",
@@ -57,41 +57,45 @@ const SideBar = () => {
         Menu
       </h2>
 
-      {menus.map(item => {
-        return (
-          <Button
-            key={item.href}
-            href={item.href}
-            variant={pathname === item.href ? "solid" : "plain"}
-            size={isOpened ? "full" : "fit"}
-            className={buttonClassName}
-          >
-            <item.Icon size={24} className="min-w-6" />
-            <label className={labelClassName}>
-              {item.label}
-            </label>
-          </Button>
-        )
-      })}
+      <div className="flex flex-col w-full gap-3">
+        {menus.map(item => {
+          return (
+            <Button
+              key={item.href}
+              href={item.href}
+              variant={pathname === item.href ? "solid" : "plain"}
+              size={isOpened ? "full" : "fit"}
+              className={buttonClassName}
+            >
+              <item.Icon size={24} className="min-w-6" />
+              <label className={labelClassName}>
+                {item.label}
+              </label>
+            </Button>
+          )
+        })}
+      </div>
 
       <hr className="border-separate border-primary/30 w-full" />
 
-      {submMenu.map((item, index) => {
-        return (
-          <Button
-            key={index}
-            onClick={item.onClick}
-            variant="plain"
-            size={isOpened ? "full" : "fit"}
-            className={buttonClassName}
-          >
-            <item.Icon size={24} className="min-w-6" />
-            <label className={labelClassName}>
-              {item.label}
-            </label>
-          </Button>
-        )
-      })}
+      <div className="flex flex-1 justify-end flex-col w-full gap-3">
+        {submMenu.map((item, index) => {
+          return (
+            <Button
+              key={index}
+              onClick={item.onClick}
+              variant="plain"
+              size={isOpened ? "full" : "fit"}
+              className={buttonClassName}
+            >
+              <item.Icon size={24} className="min-w-6" />
+              <label className={labelClassName}>
+                {item.label}
+              </label>
+            </Button>
+          )
+        })}
+      </div>
     </div>
   )
 }

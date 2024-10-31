@@ -57,7 +57,7 @@ const BoardsContainer = () => {
           <div
             key={item.id}
             className={twMerge(
-              "bg-white flex flex-col gap-2 p-4",
+              "bg-white dark:bg-gray-900 flex flex-col gap-2 p-4",
               boardClassName
             )}
           >

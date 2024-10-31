@@ -38,6 +38,7 @@ const CheckBoxPayment = ({ transference }: CheckBoxPaymentProps) => {
     <div className="inline-flex items-center">
       <label className="flex items-center cursor-pointer relative">
         <input
+          readOnly
           checked={transference.isPaid}
           type="checkbox"
           disabled={isLoading}
