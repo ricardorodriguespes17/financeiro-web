@@ -1,5 +1,4 @@
 import { useMediaQuery } from "react-responsive"
-import useBoardActions from "../../hooks/useBoardActions"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 import TransferenceTableColumns from "./TransferenceTableColumns"
 import Skeleton from "../Skeleton"
@@ -11,6 +10,7 @@ import ButtonChangeMode from "./ButtonChangeMode"
 import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
 import { calculateSubTotal, calculateTotal } from "../../utils/calculateTotal"
+import { useState } from "react"
 
 type TransferenceTableProps = {
   type: "expense" | "income"
@@ -22,14 +22,13 @@ const TransferenceTable = ({ type }: TransferenceTableProps) => {
     getIncomes,
     setCurrentTransference
   } = useTransferenceActions()
-  const { getIsLoading } = useBoardActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
   const transferences = type === "expense" ? getExpenses() : getIncomes()
   const total = calculateTotal(transferences)
   const subTotal = calculateSubTotal(transferences)
-  const isLoading = getIsLoading()
+  const [isLoading] = useState(false)
   const columns = TransferenceTableColumns
   const className = "flex flex-col gap-2"
   const titleClassName = "flex items-center gap-2"

@@ -3,31 +3,10 @@ import useNotificationStore from "../store/notificationStore"
 import useTransferenceStore from "../store/transferenceStore"
 import transferenceController from "../controller/transferenceController"
 import readError from "../utils/readError"
-import useBoardActions from "./useBoardActions"
 
 const useTransferenceActions = () => {
   const transferenceStore = useTransferenceStore()
-  const boardStore = useBoardActions()
   const { setNotification } = useNotificationStore()
-
-  const loadTransferences = async () => {
-    const boardId = boardStore.getCurrentBoard()?.id
-
-    if (!boardId) {
-      return
-    }
-
-    transferenceStore.setLoading(true)
-    try {
-      const response = await transferenceController.getTransferences(boardId)
-      transferenceStore.setTransferences(response.data)
-    } catch (error) {
-      const notification = readError(error)
-      setNotification(notification)
-    } finally {
-      transferenceStore.setLoading(false)
-    }
-  }
 
   const getCurrentTransference = () => {
     return transferenceStore.currentTransference
@@ -35,10 +14,7 @@ const useTransferenceActions = () => {
 
   const setCurrentTransference = (data: Partial<TransferenceType> | null) => {
     if (data !== null) {
-      transferenceStore.setCurrentTransference({
-        ...data,
-        boardId: boardStore.getCurrentBoard()?.id
-      })
+      transferenceStore.setCurrentTransference(data)
     } else {
       transferenceStore.setCurrentTransference(null)
     }
@@ -100,7 +76,6 @@ const useTransferenceActions = () => {
   }
 
   return {
-    loadTransferences,
     getAllTransferences,
     getCurrentTransference,
     setCurrentTransference,
