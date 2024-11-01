@@ -1,12 +1,15 @@
 export type TransferenceType = {
-  id: string
   name: string
+  id: string
   value: number
   expireDay: number
   description?: string
-  type: "expense" | "income"
   isPaid: boolean
-  boardId: string
+  type: "expense" | "income"
+  month: string
+  category?: string
+  recurrenceLimit?: number
+  userId: string
 }
 
 export type TransferenceCreateType = Omit<TransferenceType, "id">
