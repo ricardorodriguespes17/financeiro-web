@@ -1,7 +1,6 @@
 import { RouteProps } from "react-router-dom"
 import DashboardPage from "../pages/Dashboard"
 import ProfilePage from "../pages/Profile"
-import BoardsPage from "../pages/Boards"
 
 const privateRoutes: RouteProps[] = [
   {
@@ -12,10 +11,6 @@ const privateRoutes: RouteProps[] = [
     path: "/profile",
     Component: ProfilePage
   },
-  {
-    path: "/boards",
-    Component: BoardsPage
-  }
 ]
 
 export default privateRoutes
