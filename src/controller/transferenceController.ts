@@ -2,8 +2,8 @@ import { TransferenceCreateType, TransferenceType } from "../@types/Transference
 import ApiService from "../services/ApiService"
 
 class TransferenceController {
-  async getTransferences(boardId: string) {
-    return await ApiService.api.get<TransferenceType[]>(`/transferences/${boardId}`)
+  async getTransferences(month: string) {
+    return await ApiService.api.get<TransferenceType[]>(`/transferences/${month}`)
   }
 
   async createTransference(data: TransferenceCreateType) {
