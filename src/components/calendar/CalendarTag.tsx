@@ -9,12 +9,11 @@ type CalendarTagProps = {
 }
 
 const CalendarTag = ({ data }: CalendarTagProps) => {
-  const { setCurrentTransference, getIsLoading } = useTransferenceActions()
+  const { setCurrentTransference, isLoading } = useTransferenceActions()
   const [isDragging, setIsDragging] = useState(false)
   const isDesktop = useMediaQuery({
     query: '(min-width: 1000px)'
   })
-  const isLoading = getIsLoading()
 
   const typesClassName = {
     expense: "bg-red-500/80 dark:bg-red-400 text-white dark:text-red-950",

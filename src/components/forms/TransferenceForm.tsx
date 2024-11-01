@@ -6,15 +6,16 @@ import { TransferenceCreateType, TransferenceType } from "../../@types/Transfere
 import { useEffect, useState } from "react"
 import Select from "../ui/Select"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
+import useUserActions from "../../hooks/useUserActions"
 
 export type TranferenceValuesProps = {
   name: string,
-  boardId: string,
   expireDay: string,
   type: string,
   value: string,
   description: string
   isPaid: boolean
+  month: string,
 }
 
 const valdationSchema = Yup.object().shape({
@@ -42,16 +43,17 @@ type TransferenceFormProps = {
 
 const defautlValues: TranferenceValuesProps = {
   name: "",
-  boardId: "",
   expireDay: "",
   type: "expense",
   value: "",
   description: "",
   isPaid: false,
+  month: "",
 }
 
 const TransferenceForm = (props: TransferenceFormProps) => {
   const { createTransference, updateTransference } = useTransferenceActions()
+  const { getUser } = useUserActions()
   const [initialValues, setInitialValues] = useState<TranferenceValuesProps>(defautlValues)
 
   useEffect(() => {
@@ -60,7 +62,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     if (data) {
       setInitialValues({
         name: data.name || "",
-        boardId: data.boardId || "",
+        month: data.month || "",
         description: data.description || "",
         expireDay: String(data.expireDay || ""),
         type: data.type || "expense",
@@ -73,14 +75,19 @@ const TransferenceForm = (props: TransferenceFormProps) => {
   }, [props.transference])
 
   const onSubmit = async (values: TranferenceValuesProps, helpers: FormikHelpers<TranferenceValuesProps>) => {
+    const userId = getUser()?.id
+
+    if(!userId) return
+
     const transferenceData: TransferenceCreateType = {
       name: values.name.trim(),
       description: values.description.trim(),
       expireDay: parseInt(values.expireDay),
       type: values.type as "expense" | "income",
       value: parseFloat(values.value),
-      boardId: values.boardId,
-      isPaid: values.isPaid
+      month: values.month,
+      isPaid: values.isPaid,
+      userId
     }
 
     helpers.setSubmitting(true)

@@ -11,11 +11,10 @@ type BalanceType = {
 }
 
 const BalancesBox = () => {
-  const { getExpenses, getIncomes, getIsLoading } = useTransferenceActions()
+  const { getExpenses, getIncomes, isLoading } = useTransferenceActions()
   const [balances, setBalances] = useState<BalanceType[]>([])
   const expenses = getExpenses()
   const incomes = getIncomes()
-  const isLoading = getIsLoading()
 
   useEffect(() => {
     const totalExpensesValue = calculateSubTotal(expenses)

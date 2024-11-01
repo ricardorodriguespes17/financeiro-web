@@ -1,90 +1,98 @@
-import { TransferenceCreateType, TransferenceType } from "../@types/TransferenceType"
+/* eslint-disable react-hooks/exhaustive-deps */
+import { TransferenceCreateType } from "../@types/TransferenceType"
 import useNotificationStore from "../store/notificationStore"
 import useTransferenceStore from "../store/transferenceStore"
 import transferenceController from "../controller/transferenceController"
 import readError from "../utils/readError"
+import { useCallback, useMemo } from "react"
 
 const useTransferenceActions = () => {
-  const transferenceStore = useTransferenceStore()
+  const {
+    transferences,
+    currentTransference,
+    setCurrentTransference,
+    getExpenses,
+    getIncomes,
+    isLoading,
+    setLoading,
+    addTransference,
+    deleteTransference: delTransference,
+    updateTransference: update,
+    setTransferences
+  } = useTransferenceStore()
   const { setNotification } = useNotificationStore()
 
-  const getCurrentTransference = () => {
-    return transferenceStore.currentTransference
-  }
+  const loadTransferences = useCallback(
+    async () => {
+      setLoading(true)
+      try {
+        const response = await transferenceController.getTransferences("2024-11")
+        setTransferences(response.data)
+      } catch (error) {
+        setNotification(readError(error))
+      } finally {
+        setLoading(false)
+      }
+    }, []
+  )
 
-  const setCurrentTransference = (data: Partial<TransferenceType> | null) => {
-    if (data !== null) {
-      transferenceStore.setCurrentTransference(data)
-    } else {
-      transferenceStore.setCurrentTransference(null)
-    }
-  }
+  const createTransference = useCallback(
+    async (data: TransferenceCreateType) => {
+      setLoading(true)
+      try {
+        const response = await transferenceController.createTransference(data)
+        addTransference(response.data)
+      } catch (error) {
+        setNotification(readError(error))
+      } finally {
+        setLoading(false)
+      }
+    }, []
+  )
 
-  const getAllTransferences = () => {
-    return transferenceStore.transferences
-  }
+  const updateTransference = useCallback(
+    async (id: string, data: TransferenceCreateType) => {
+      setLoading(true)
+      try {
+        const response = await transferenceController.updateTransference(id, data)
+        update(response.data)
+      } catch (error) {
+        setNotification(readError(error))
+      } finally {
+        setLoading(false)
+      }
+    }, []
+  )
 
-  const getExpenses = () => {
-    return transferenceStore.getExpenses()
-  }
+  const deleteTransference = useCallback(
+    async (id: string) => {
+      setLoading(true)
+      try {
+        await transferenceController.deleteTransference(id)
+        delTransference(id)
+      } catch (error) {
+        setNotification(readError(error))
+      } finally {
+        setLoading(false)
+      }
+    }, []
+  )
 
-  const getIncomes = () => {
-    return transferenceStore.getIncomes()
-  }
-
-  const createTransference = async (data: TransferenceCreateType) => {
-    transferenceStore.setLoading(true)
-    try {
-      const response = await transferenceController.createTransference(data)
-      transferenceStore.addTransference(response.data)
-    } catch (error) {
-      const notification = readError(error)
-      setNotification(notification)
-    } finally {
-      transferenceStore.setLoading(false)
-    }
-  }
-
-  const updateTransference = async (id: string, data: TransferenceCreateType) => {
-    transferenceStore.setLoading(true)
-    try {
-      const response = await transferenceController.updateTransference(id, data)
-      transferenceStore.updateTransference(response.data)
-    } catch (error) {
-      const notification = readError(error)
-      setNotification(notification)
-    } finally {
-      transferenceStore.setLoading(false)
-    }
-  }
-
-  const deleteTransference = async (id: string) => {
-    transferenceStore.setLoading(true)
-    try {
-      await transferenceController.deleteTransference(id)
-      transferenceStore.deleteTransference(id)
-    } catch (error) {
-      const notification = readError(error)
-      setNotification(notification)
-    } finally {
-      transferenceStore.setLoading(false)
-    }
-  }
-
-  const getIsLoading = () => {
-    return transferenceStore.isLoading
-  }
+  const memoizedTransferences = useMemo(() => transferences, [transferences]);
+  const memoizedCurrentTransference = useMemo(() => currentTransference, [currentTransference]);
+  const memoizedIsLoading = useMemo(() => isLoading, [isLoading]);
 
   return {
-    getAllTransferences,
-    getCurrentTransference,
+    loadTransferences,
+    transferences: memoizedTransferences,
+    currentTransference: memoizedCurrentTransference,
     setCurrentTransference,
     getExpenses,
     getIncomes,
     createTransference,
     deleteTransference,
     updateTransference,
-    getIsLoading
+    isLoading: memoizedIsLoading,
   }
 }
 

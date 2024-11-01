@@ -3,9 +3,19 @@ import BalancesBox from "./BalancesBox"
 import useBoardMode from "../../store/boardModeStore"
 import TransferenceTable from "./TransferenceTable"
 import ModalTransference from "./ModalTransference"
+import useMonth from "../../store/monthStore"
+import { useEffect } from "react"
+import useTransferenceActions from "../../hooks/useTransferenceActions"
 
 const BoardContainer = () => {
   const { mode } = useBoardMode()
+  const { monthDate } = useMonth()
+  const { loadTransferences } = useTransferenceActions()
+
+  useEffect(() => {
+    loadTransferences()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monthDate])
 
   return (
     <>

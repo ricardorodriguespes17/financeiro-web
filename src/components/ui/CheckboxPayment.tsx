@@ -8,8 +8,7 @@ type CheckBoxPaymentProps = {
 }
 
 const CheckBoxPayment = ({ transference }: CheckBoxPaymentProps) => {
-  const { updateTransference, getIsLoading } = useTransferenceActions()
-  const isLoading = getIsLoading()
+  const { updateTransference, isLoading } = useTransferenceActions()
 
   const toggleIsPaid = async () => {
     const transferenceData = {

@@ -4,10 +4,9 @@ import Modal from "../ui/Modal"
 
 const ModalTransference = () => {
   const { 
-    getCurrentTransference, 
+    currentTransference, 
     setCurrentTransference,
    } = useTransferenceActions()
-  const currentTransference = getCurrentTransference()
 
   const onSubmit = () => {
     onClose()
