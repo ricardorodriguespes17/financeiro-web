@@ -29,12 +29,14 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
     const data = JSON.parse(droppedData) as TransferenceType
 
     if (data.expireDay !== day) {
+      const { id, ...rest} = data
+
       const updateData: TransferenceCreateType = {
-        ...data,
+        ...rest,
         expireDay: day,
       }
 
-      await updateTransference(data.id, updateData)
+      await updateTransference(id, updateData)
     }
   }
 
