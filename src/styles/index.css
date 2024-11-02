@@ -67,6 +67,15 @@ body,
     -webkit-text-fill-color: #fff;
   }
 
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    @apply appearance-none;
+  }
+
+  input[type="number"] {
+    @apply appearance-none;
+  }
+
   ::-webkit-scrollbar {
     @apply w-2 h-2;
   }

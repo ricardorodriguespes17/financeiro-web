@@ -6,16 +6,18 @@ import { TransferenceCreateType, TransferenceType } from "../../@types/Transfere
 import { useEffect, useState } from "react"
 import Select from "../ui/Select"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
-import useUserActions from "../../hooks/useUserActions"
+import useMonth from "../../store/monthStore"
 
 export type TranferenceValuesProps = {
-  name: string,
-  expireDay: string,
-  type: string,
-  value: string,
+  name: string
+  expireDay: string
+  type: string
+  value: string
   description: string
   isPaid: boolean
-  month: string,
+  month: string
+  category?: string
+  recurrenceLimit: string
 }
 
 const valdationSchema = Yup.object().shape({
@@ -31,8 +33,11 @@ const valdationSchema = Yup.object().shape({
   type: Yup.string()
     .oneOf(['income', 'expense'], 'O tipo inválido')
     .required('Tipo é obrigatório'),
-  boardId: Yup.string()
-    .required('O quadro é obrigatório'),
+  month: Yup.string()
+    .required('O mês é obrigatório'),
+  category: Yup.string(),
+  recurrenceLimit: Yup.string()
+    .required('A recorrência é obrigatória'),
 })
 
 type TransferenceFormProps = {
@@ -49,11 +54,13 @@ const defautlValues: TranferenceValuesProps = {
   description: "",
   isPaid: false,
   month: "",
+  category: "",
+  recurrenceLimit: ""
 }
 
 const TransferenceForm = (props: TransferenceFormProps) => {
   const { createTransference, updateTransference } = useTransferenceActions()
-  const { getUser } = useUserActions()
+  const { monthDate } = useMonth()
   const [initialValues, setInitialValues] = useState<TranferenceValuesProps>(defautlValues)
 
   useEffect(() => {
@@ -62,23 +69,21 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     if (data) {
       setInitialValues({
         name: data.name || "",
-        month: data.month || "",
+        month: monthDate,
         description: data.description || "",
         expireDay: String(data.expireDay || ""),
         type: data.type || "expense",
-        value: String(data.value || ""),
-        isPaid: data.isPaid || false
+        value: data.value ? data.value.toFixed(2) : "",
+        isPaid: data.isPaid || false,
+        category: data.category || "",
+        recurrenceLimit: String(data.recurrenceLimit || "")
       })
     } else {
       setInitialValues(defautlValues)
     }
-  }, [props.transference])
+  }, [props.transference, monthDate])
 
   const onSubmit = async (values: TranferenceValuesProps, helpers: FormikHelpers<TranferenceValuesProps>) => {
-    const userId = getUser()?.id
-
-    if(!userId) return
-
     const transferenceData: TransferenceCreateType = {
       name: values.name.trim(),
       description: values.description.trim(),
@@ -87,7 +92,9 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       value: parseFloat(values.value),
       month: values.month,
       isPaid: values.isPaid,
-      userId
+      recurrenceLimit: values.recurrenceLimit
+        ? parseInt(values.recurrenceLimit)
+        : undefined,
     }
 
     helpers.setSubmitting(true)
@@ -98,7 +105,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       createTransference(transferenceData)
     }
 
-    helpers.setSubmitting(true)
+    helpers.setSubmitting(false)
 
     onReset(values, helpers)
     onClose()
@@ -143,19 +150,11 @@ const TransferenceForm = (props: TransferenceFormProps) => {
             <TextInput
               label="Valor"
               type="number"
+              min={0}
               autoComplete="off"
               value={values.value}
               error={errors.value}
               onChange={(event) => setFieldValue("value", event.target.value)}
-            />
-
-            <TextInput
-              label="Vencimento"
-              type="number"
-              autoComplete="off"
-              value={values.expireDay}
-              error={errors.expireDay}
-              onChange={(event) => setFieldValue("expireDay", event.target.value)}
             />
 
             <Select
@@ -168,6 +167,29 @@ const TransferenceForm = (props: TransferenceFormProps) => {
                 { label: "Receita", value: "income" },
               ]}
               onChange={(event) => setFieldValue("type", event.target.value)}
+            />
+          </div>
+
+          <div className="w-full flex gap-4 flex-col md:flex-row">
+            <TextInput
+              label="Vencimento"
+              type="number"
+              min={0}
+              max={31}
+              autoComplete="off"
+              value={values.expireDay}
+              error={errors.expireDay}
+              onChange={(event) => setFieldValue("expireDay", event.target.value)}
+            />
+
+            <TextInput
+              label="Parcelas (opcional)"
+              type="number"
+              min={0}
+              autoComplete="off"
+              value={values.recurrenceLimit}
+              error={errors.recurrenceLimit}
+              onChange={(event) => setFieldValue("recurrenceLimit", event.target.value)}
             />
           </div>
 

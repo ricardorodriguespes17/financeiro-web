@@ -12,4 +12,4 @@ export type TransferenceType = {
   userId: string
 }
 
-export type TransferenceCreateType = Omit<TransferenceType, "id">
+export type TransferenceCreateType = Omit<Omit<TransferenceType, "id">, "userId">
