@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import Select from "../ui/Select"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 import useMonth from "../../store/monthStore"
+import switchRecurrenceByMethod from "../../utils/switchRecurrenceByMethod"
 
 export type TranferenceValuesProps = {
   name: string
@@ -18,6 +19,7 @@ export type TranferenceValuesProps = {
   month: string
   category?: string
   recurrenceLimit: string
+  method: string
 }
 
 const valdationSchema = Yup.object().shape({
@@ -54,7 +56,8 @@ const defautlValues: TranferenceValuesProps = {
   isPaid: false,
   month: "",
   category: "",
-  recurrenceLimit: ""
+  recurrenceLimit: "1",
+  method: "unique"
 }
 
 const TransferenceForm = (props: TransferenceFormProps) => {
@@ -68,14 +71,19 @@ const TransferenceForm = (props: TransferenceFormProps) => {
     if (data) {
       setInitialValues({
         name: data.name || "",
-        month: monthDate,
+        month: data.month || monthDate,
         description: data.description || "",
         expireDay: String(data.expireDay || ""),
         type: data.type || "expense",
         value: data.value ? data.value.toFixed(2) : "",
         isPaid: data.isPaid || false,
         category: data.category || "",
-        recurrenceLimit: String(data.recurrenceLimit || "")
+        recurrenceLimit: String(data.recurrenceLimit || ""),
+        method: data.recurrenceLimit
+          ? data.recurrenceLimit === 1
+            ? "unique"
+            : "parceled"
+          : "recurrent"
       })
     } else {
       setInitialValues(defautlValues)
@@ -91,9 +99,8 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       value: parseFloat(values.value),
       month: values.month,
       isPaid: values.isPaid,
-      recurrenceLimit: values.recurrenceLimit
-        ? parseInt(values.recurrenceLimit)
-        : undefined,
+      category: values.category || null,
+      recurrenceLimit: switchRecurrenceByMethod(values.method, parseInt(values.recurrenceLimit))
     }
 
     helpers.setSubmitting(true)
@@ -156,6 +163,17 @@ const TransferenceForm = (props: TransferenceFormProps) => {
               onChange={(event) => setFieldValue("value", event.target.value)}
             />
 
+            <TextInput
+              label="Vencimento"
+              type="number"
+              min={0}
+              max={31}
+              autoComplete="off"
+              value={values.expireDay}
+              error={errors.expireDay}
+              onChange={(event) => setFieldValue("expireDay", event.target.value)}
+            />
+
             <Select
               label="Tipo"
               autoComplete="off"
@@ -169,20 +187,22 @@ const TransferenceForm = (props: TransferenceFormProps) => {
             />
           </div>
 
-          <div className="w-full flex gap-4 flex-col md:flex-row">
-            <TextInput
-              label="Vencimento"
-              type="number"
-              min={0}
-              max={31}
-              autoComplete="off"
-              value={values.expireDay}
-              error={errors.expireDay}
-              onChange={(event) => setFieldValue("expireDay", event.target.value)}
-            />
+          <Select
+            label="Forma"
+            autoComplete="off"
+            value={values.method}
+            error={errors.method}
+            options={[
+              { label: "Pagamento único", value: "unique" },
+              { label: "Pagamento recorrente", value: "recurrent" },
+              { label: "Pagamento parcelado", value: "parceled" },
+            ]}
+            onChange={(event) => setFieldValue("type", event.target.value)}
+          />
 
+          {values.method === "parceled" && (
             <TextInput
-              label="Parcelas (opcional)"
+              label="Parcelas"
               type="number"
               min={0}
               autoComplete="off"
@@ -190,7 +210,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
               error={errors.recurrenceLimit}
               onChange={(event) => setFieldValue("recurrenceLimit", event.target.value)}
             />
-          </div>
+          )}
 
           <div className="flex w-full gap-4 flex-col md:flex-row md:mt-4">
             <Button

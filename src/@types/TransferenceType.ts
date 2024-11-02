@@ -7,8 +7,8 @@ export type TransferenceType = {
   isPaid: boolean
   type: "expense" | "income"
   month: string
-  category?: string
-  recurrenceLimit?: number
+  category: string | null
+  recurrenceLimit: number | null
   userId: string
 }
 
