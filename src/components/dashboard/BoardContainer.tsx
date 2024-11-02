@@ -13,7 +13,7 @@ const BoardContainer = () => {
   const { loadTransferences } = useTransferenceActions()
 
   useEffect(() => {
-    loadTransferences()
+    loadTransferences(monthDate)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [monthDate])
 

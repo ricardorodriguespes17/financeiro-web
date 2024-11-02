@@ -23,10 +23,10 @@ const useTransferenceActions = () => {
   const { setNotification } = useNotificationStore()
 
   const loadTransferences = useCallback(
-    async () => {
+    async (month: string) => {
       setLoading(true)
       try {
-        const response = await transferenceController.getTransferences("2024-11")
+        const response = await transferenceController.getTransferences(month)
         setTransferences(response.data)
       } catch (error) {
         setNotification(readError(error))
