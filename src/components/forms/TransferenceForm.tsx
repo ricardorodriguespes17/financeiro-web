@@ -37,7 +37,6 @@ const valdationSchema = Yup.object().shape({
     .required('O mês é obrigatório'),
   category: Yup.string(),
   recurrenceLimit: Yup.string()
-    .required('A recorrência é obrigatória'),
 })
 
 type TransferenceFormProps = {

@@ -39,7 +39,6 @@ const TransferenceTable = ({ type }: TransferenceTableProps) => {
     setCurrentTransference({ type })
   }
 
-
   if (isLoading) {
     return (
       <div className={className}>

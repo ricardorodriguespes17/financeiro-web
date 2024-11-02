@@ -19,7 +19,7 @@ const TransferenceTableColumns: ColumnType<TransferenceType>[] = [
     position: "center",
     render: (row) => {
       return (
-        <label>{formatCurrency(row.value)}</label>
+        <label>{formatCurrency(row.value / (row.recurrenceLimit || 1))}</label>
       )
     }
   },
