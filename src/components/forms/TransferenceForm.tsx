@@ -197,7 +197,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
               { label: "Pagamento recorrente", value: "recurrent" },
               { label: "Pagamento parcelado", value: "parceled" },
             ]}
-            onChange={(event) => setFieldValue("type", event.target.value)}
+            onChange={(event) => setFieldValue("method", event.target.value)}
           />
 
           {values.method === "parceled" && (
