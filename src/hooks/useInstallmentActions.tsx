@@ -25,7 +25,7 @@ const useInstallmentActions = () => {
       } finally {
         setLoading(false)
       }
-    }, []
+    }, [monthDate]
   )
 
   const deleteInstallment = useCallback(

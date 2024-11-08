@@ -82,15 +82,15 @@ const useTransferenceActions = () => {
 
   const memoizedTransferences = useMemo(() =>
     transferences.sort((a, b) => {
-      const isPaidA = a.installments.find(item => item.dueMonth === monthDate)
-      const isPaidB = b.installments.find(item => item.dueMonth === monthDate)
-
-      if(isPaidA === isPaidB) {
-        return a.expireDay - b.expireDay
-      }
+      const isPaidA = !!a.installments.find(item => item.dueMonth === monthDate)
+      const isPaidB = !!b.installments.find(item => item.dueMonth === monthDate)
 
       if(isPaidA && !isPaidB) {
         return 1
+      }
+
+      if(isPaidA === isPaidB) {
+        return a.expireDay - b.expireDay
       }
       
       return -1
