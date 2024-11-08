@@ -6,10 +6,10 @@ export const calculateTotal = (transferences: TransferenceType[]): number => {
   return total
 }
 
-export const calculateSubTotal = (transferences: TransferenceType[]): number => {
-  const total = transferences.reduce((p, c) => {
-    if (!c.isPaid) {
-      return p + c.value / (c.recurrenceLimit || 1)
+export const calculateSubTotal = (transferences: TransferenceType[], monthDate: string): number => {
+  const total = transferences.reduce((p, item) => {
+    if (!item.installments.find(i => i.dueMonth === monthDate)) {
+      return p + item.value / (item.recurrenceLimit || 1)
     }
 
     return p

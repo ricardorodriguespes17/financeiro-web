@@ -29,7 +29,7 @@ const TransferenceTable = ({ type }: TransferenceTableProps) => {
   const { monthDate } = useMonth()
   const transferences = type === "expense" ? getExpenses() : getIncomes()
   const total = calculateTotal(transferences)
-  const subTotal = calculateSubTotal(transferences)
+  const subTotal = calculateSubTotal(transferences, monthDate)
   const [isLoading] = useState(false)
   const columns = makeTransferenceTableColumns(monthDate)
   const className = "flex flex-col gap-2"

@@ -3,6 +3,7 @@ import CardBalance from "./CardBalance"
 import Skeleton from "../Skeleton"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 import { calculateSubTotal } from "../../utils/calculateTotal"
+import useMonth from "../../store/monthStore"
 
 type BalanceType = {
   name: string
@@ -11,14 +12,16 @@ type BalanceType = {
 }
 
 const BalancesBox = () => {
-  const { getExpenses, getIncomes, isLoading } = useTransferenceActions()
+  const { isLoading, transferences } = useTransferenceActions()
+  const { monthDate } = useMonth()
   const [balances, setBalances] = useState<BalanceType[]>([])
-  const expenses = getExpenses()
-  const incomes = getIncomes()
 
   useEffect(() => {
-    const totalExpensesValue = calculateSubTotal(expenses)
-    const totalIncomesValue = calculateSubTotal(incomes)
+    const expenses = transferences.filter(item => item.type === "expense")
+    const incomes = transferences.filter(item => item.type === "income")
+
+    const totalExpensesValue = calculateSubTotal(expenses, monthDate)
+    const totalIncomesValue = calculateSubTotal(incomes, monthDate)
     const finalBalance = totalIncomesValue - totalExpensesValue
 
     setBalances(
@@ -29,8 +32,8 @@ const BalancesBox = () => {
         { name: "Saldo final", value: finalBalance, color: finalBalance >= 0 ? "green" : "red" },
       ]
     )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transferences])
 
   const className = "flex flex-col gap-2"
   const balancesClassName = "flex flex-1 gap-8 flex-wrap"
