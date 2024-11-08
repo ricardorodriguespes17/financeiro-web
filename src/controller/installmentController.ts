@@ -2,12 +2,12 @@ import { InstallmentCreateType, InstallmentType } from "../@types/InstallmentTyp
 import ApiService from "../services/ApiService"
 
 class InstallmentController {
-  async createTransference(data: InstallmentCreateType) {
+  async createInstallment(data: InstallmentCreateType) {
     return await ApiService.api.post<InstallmentType>("/transferences/installment", data)
   }
 
-  async deleteTransference(transferenceId: string) {
-    return await ApiService.api.delete(`/transferences/installment/${transferenceId}`)
+  async deleteInstallment(installmentId: string) {
+    return await ApiService.api.delete(`/transferences/installment/${installmentId}`)
   }
 }
 
