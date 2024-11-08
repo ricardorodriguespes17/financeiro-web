@@ -97,7 +97,6 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       month: values.month,
       category: values.category || null,
       recurrenceLimit: switchRecurrenceByMethod(values.method, parseInt(values.recurrenceLimit)),
-      installments: []
     }
 
     helpers.setSubmitting(true)

@@ -14,4 +14,4 @@ export type TransferenceType = {
   installments: InstallmentType[]
 }
 
-export type TransferenceCreateType = Omit<Omit<TransferenceType, "id">, "userId">
+export type TransferenceCreateType = Omit<Omit<Omit<TransferenceType, "id">, "userId">, "installments">
