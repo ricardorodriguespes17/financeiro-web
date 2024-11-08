@@ -19,15 +19,14 @@ type TransferenceTableProps = {
 
 const TransferenceTable = ({ type }: TransferenceTableProps) => {
   const {
-    getExpenses,
-    getIncomes,
+    transferences: allTransferences,
     setCurrentTransference
   } = useTransferenceActions()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
   const { monthDate } = useMonth()
-  const transferences = type === "expense" ? getExpenses() : getIncomes()
+  const transferences = allTransferences.filter(item => item.type === type)
   const total = calculateTotal(transferences)
   const subTotal = calculateSubTotal(transferences, monthDate)
   const [isLoading] = useState(false)
