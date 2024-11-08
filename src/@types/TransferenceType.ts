@@ -1,3 +1,5 @@
+import { InstallmentType } from "./InstallmentType"
+
 export type TransferenceType = {
   name: string
   id: string
@@ -10,6 +12,7 @@ export type TransferenceType = {
   category: string | null
   recurrenceLimit: number | null
   userId: string
+  installments: InstallmentType[]
 }
 
 export type TransferenceCreateType = Omit<Omit<TransferenceType, "id">, "userId">
