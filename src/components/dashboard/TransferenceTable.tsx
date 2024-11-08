@@ -1,6 +1,5 @@
 import { useMediaQuery } from "react-responsive"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
-import TransferenceTableColumns from "./TransferenceTableColumns"
 import Skeleton from "../Skeleton"
 import DataTable from "../ui/DataTable"
 import { TransferenceType } from "../../@types/TransferenceType"
@@ -11,6 +10,8 @@ import { twMerge } from "tailwind-merge"
 import formatCurrency from "../../utils/formatCurrency"
 import { calculateSubTotal, calculateTotal } from "../../utils/calculateTotal"
 import { useState } from "react"
+import useMonth from "../../store/monthStore"
+import makeTransferenceTableColumns from "./TransferenceTableColumns"
 
 type TransferenceTableProps = {
   type: "expense" | "income"
@@ -25,11 +26,12 @@ const TransferenceTable = ({ type }: TransferenceTableProps) => {
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 768px)'
   })
+  const { monthDate } = useMonth()
   const transferences = type === "expense" ? getExpenses() : getIncomes()
   const total = calculateTotal(transferences)
   const subTotal = calculateSubTotal(transferences)
   const [isLoading] = useState(false)
-  const columns = TransferenceTableColumns
+  const columns = makeTransferenceTableColumns(monthDate)
   const className = "flex flex-col gap-2"
   const titleClassName = "flex items-center gap-2"
   const dataTableClass = "flex flex-col flex-1"

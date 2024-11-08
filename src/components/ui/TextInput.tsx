@@ -31,6 +31,7 @@ const TextInput = ({ label, error, type, ...rest }: TextInputProps) => {
             ? showPassword ? "text" : "password"
             : type
           }
+          step="any"
           {...rest}
         />
 
