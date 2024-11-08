@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import useNotificationStore from "../store/notificationStore"
-import transferenceController from "../controller/transferenceController"
 import readError from "../utils/readError"
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import useTransferenceStore from "../store/transferenceStore"
 import installmentController from "../controller/installmentController"
 import { InstallmentCreateType, InstallmentType } from "../@types/InstallmentType"
 
 const useInstallmentActions = () => {
-  const { setLoading, setTransferences, transferences } = useTransferenceStore()
+  const { setLoading, setTransferences, transferences, isLoading } = useTransferenceStore()
   const { setNotification } = useNotificationStore()
 
   const createInstallment = useCallback(
@@ -29,7 +28,7 @@ const useInstallmentActions = () => {
     async (id: string) => {
       setLoading(true)
       try {
-        await transferenceController.deleteTransference(id)
+        await installmentController.deleteInstallment(id)
         removeTransferenceInstallment(id)
       } catch (error) {
         setNotification(readError(error))
@@ -65,9 +64,12 @@ const useInstallmentActions = () => {
     )
   }
 
+  const memoizedIsLoading = useMemo(() => isLoading, [isLoading])
+
   return {
     createInstallment,
     deleteInstallment,
+    isLoading: memoizedIsLoading
   }
 }
 

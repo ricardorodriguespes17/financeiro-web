@@ -1,23 +1,36 @@
 import { twMerge } from "tailwind-merge"
 import { TransferenceType } from "../../@types/TransferenceType"
-import useTransferenceActions from "../../hooks/useTransferenceActions"
 import { CgCheck } from "react-icons/cg"
+import useInstallmentActions from "../../hooks/useInstallmentActions"
+import useMonth from "../../store/monthStore"
+import { useEffect, useState } from "react"
+import { InstallmentType } from "../../@types/InstallmentType"
 
 type CheckBoxPaymentProps = {
   transference: TransferenceType
 }
 
 const CheckBoxPayment = ({ transference }: CheckBoxPaymentProps) => {
-  const { updateTransference, isLoading } = useTransferenceActions()
+  const { monthDate } = useMonth()
+  const { createInstallment, deleteInstallment, isLoading } = useInstallmentActions()
+  const [installmentData, setInstallmentData] = useState<InstallmentType>()
+
+  useEffect(() => {
+    setInstallmentData(transference.installments.find(item => item.dueMonth === monthDate))
+  }, [monthDate, transference.installments])
 
   const toggleIsPaid = async () => {
-    const transferenceData = {
-      ...transference,
-      id: undefined,
-      isPaid: !transference.isPaid
-    }
+    const installmentData = transference.installments.find(item => item.dueMonth === monthDate)
 
-    await updateTransference(transference.id, transferenceData)
+    if (installmentData) {
+      await deleteInstallment(installmentData.id)
+    } else {
+      await createInstallment({
+        amount: transference.value,
+        dueMonth: monthDate,
+        transferenceId: transference.id
+      })
+    }
   }
 
   const className = twMerge(
@@ -38,7 +51,7 @@ const CheckBoxPayment = ({ transference }: CheckBoxPaymentProps) => {
       <label className="flex items-center cursor-pointer relative">
         <input
           readOnly
-          checked={transference.isPaid}
+          checked={!!installmentData}
           type="checkbox"
           disabled={isLoading}
           className={className}

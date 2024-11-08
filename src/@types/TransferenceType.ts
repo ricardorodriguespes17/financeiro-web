@@ -6,7 +6,6 @@ export type TransferenceType = {
   value: number
   expireDay: number
   description?: string
-  isPaid: boolean
   type: "expense" | "income"
   month: string
   category: string | null
