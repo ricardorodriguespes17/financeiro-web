@@ -15,7 +15,6 @@ export type TranferenceValuesProps = {
   type: string
   value: string
   description: string
-  isPaid: boolean
   month: string
   category?: string
   recurrenceLimit: string
@@ -53,7 +52,6 @@ const defautlValues: TranferenceValuesProps = {
   type: "expense",
   value: "",
   description: "",
-  isPaid: false,
   month: "",
   category: "",
   recurrenceLimit: "1",
@@ -76,7 +74,6 @@ const TransferenceForm = (props: TransferenceFormProps) => {
         expireDay: String(data.expireDay || ""),
         type: data.type || "expense",
         value: data.value ? data.value.toFixed(2) : "",
-        isPaid: data.isPaid || false,
         category: data.category || "",
         recurrenceLimit: String(data.recurrenceLimit || ""),
         method: data.recurrenceLimit
@@ -98,9 +95,9 @@ const TransferenceForm = (props: TransferenceFormProps) => {
       type: values.type as "expense" | "income",
       value: parseFloat(values.value),
       month: values.month,
-      isPaid: values.isPaid,
       category: values.category || null,
-      recurrenceLimit: switchRecurrenceByMethod(values.method, parseInt(values.recurrenceLimit))
+      recurrenceLimit: switchRecurrenceByMethod(values.method, parseInt(values.recurrenceLimit)),
+      installments: []
     }
 
     helpers.setSubmitting(true)

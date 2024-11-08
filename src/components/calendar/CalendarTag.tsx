@@ -3,17 +3,21 @@ import { TransferenceType } from "../../@types/TransferenceType"
 import { useState } from "react"
 import { useMediaQuery } from "react-responsive"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
+import useMonth from "../../store/monthStore"
 
 type CalendarTagProps = {
   data: TransferenceType
 }
 
 const CalendarTag = ({ data }: CalendarTagProps) => {
+  const { monthDate } = useMonth()
   const { setCurrentTransference, isLoading } = useTransferenceActions()
   const [isDragging, setIsDragging] = useState(false)
   const isDesktop = useMediaQuery({
     query: '(min-width: 1000px)'
   })
+
+  const isPaid = data.installments.find(item => item.dueMonth === monthDate)
 
   const typesClassName = {
     expense: "bg-red-500/80 dark:bg-red-400 text-white dark:text-red-950",
@@ -25,12 +29,12 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
     "hover:opacity-80 transition-all shadow overflow-hidden",
     typesClassName[data.type],
     isDragging ? "invisible" : "visible",
-    data.isPaid && "opacity-80"
+    isPaid && "opacity-80"
   )
 
   const labelClassName = twMerge(
     "text-xs md:text-sm lg:text-base cursor-pointer",
-    data.isPaid && "line-through"
+    isPaid && "line-through"
   )
 
   const handleOpen = (event: React.MouseEvent) => {
