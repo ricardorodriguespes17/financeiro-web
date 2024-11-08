@@ -4,18 +4,22 @@ import readError from "../utils/readError"
 import { useCallback, useMemo } from "react"
 import useTransferenceStore from "../store/transferenceStore"
 import installmentController from "../controller/installmentController"
-import { InstallmentCreateType, InstallmentType } from "../@types/InstallmentType"
+import { InstallmentCreateType } from "../@types/InstallmentType"
+import useTransferenceActions from "./useTransferenceActions"
+import useMonth from "../store/monthStore"
 
 const useInstallmentActions = () => {
-  const { setLoading, setTransferences, transferences, isLoading } = useTransferenceStore()
+  const { setLoading, isLoading } = useTransferenceStore()
+  const { loadTransferences } = useTransferenceActions()
   const { setNotification } = useNotificationStore()
+  const { monthDate } = useMonth()
 
   const createInstallment = useCallback(
     async (data: InstallmentCreateType) => {
       setLoading(true)
       try {
-        const response = await installmentController.createInstallment(data)
-        addTransferenceInstallment(response.data)
+        await installmentController.createInstallment(data)
+        loadTransferences(monthDate)
       } catch (error) {
         setNotification(readError(error))
       } finally {
@@ -29,7 +33,7 @@ const useInstallmentActions = () => {
       setLoading(true)
       try {
         await installmentController.deleteInstallment(id)
-        removeTransferenceInstallment(id)
+        loadTransferences(monthDate)
       } catch (error) {
         setNotification(readError(error))
       } finally {
@@ -37,32 +41,6 @@ const useInstallmentActions = () => {
       }
     }, []
   )
-
-  const addTransferenceInstallment = (installmentData: InstallmentType) => {
-    setTransferences(
-      transferences.map(item => {
-        if (installmentData.transferenceId === item.id) {
-          return {
-            ...item,
-            installments: item.installments.concat(installmentData)
-          }
-        }
-
-        return item
-      })
-    )
-  }
-
-  const removeTransferenceInstallment = (installmentId: string) => {
-    setTransferences(
-      transferences.map(transference => {
-        return {
-          ...transference,
-          installments: transference.installments.filter(item => item.id !== installmentId)
-        }
-      })
-    )
-  }
 
   const memoizedIsLoading = useMemo(() => isLoading, [isLoading])
 
