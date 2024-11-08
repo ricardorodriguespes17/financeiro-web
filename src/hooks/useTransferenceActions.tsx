@@ -78,9 +78,11 @@ const useTransferenceActions = () => {
     }, []
   )
 
-  const memoizedTransferences = useMemo(() => transferences, [transferences]);
-  const memoizedCurrentTransference = useMemo(() => currentTransference, [currentTransference]);
-  const memoizedIsLoading = useMemo(() => isLoading, [isLoading]);
+  const memoizedTransferences = useMemo(() =>
+    transferences.sort((a, b) => a.expireDay - b.expireDay)
+    , [transferences])
+  const memoizedCurrentTransference = useMemo(() => currentTransference, [currentTransference])
+  const memoizedIsLoading = useMemo(() => isLoading, [isLoading])
 
   return {
     loadTransferences,
