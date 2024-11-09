@@ -29,7 +29,8 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
     const data = JSON.parse(droppedData) as TransferenceType
 
     if (data.expireDay !== day) {
-      const { id, ...rest} = data
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, installments, ...rest} = data
 
       const updateData: TransferenceCreateType = {
         ...rest,
