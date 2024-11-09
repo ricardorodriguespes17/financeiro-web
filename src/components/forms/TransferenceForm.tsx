@@ -8,6 +8,7 @@ import Select from "../ui/Select"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
 import useMonth from "../../store/monthStore"
 import switchRecurrenceByMethod from "../../utils/switchRecurrenceByMethod"
+import CheckBoxPayment from "../ui/CheckboxPayment"
 
 export type TranferenceValuesProps = {
   name: string
@@ -183,18 +184,32 @@ const TransferenceForm = (props: TransferenceFormProps) => {
             />
           </div>
 
-          <Select
-            label="Forma"
-            autoComplete="off"
-            value={values.method}
-            error={errors.method}
-            options={[
-              { label: "Pagamento único", value: "unique" },
-              { label: "Pagamento recorrente", value: "recurrent" },
-              { label: "Pagamento parcelado", value: "parceled" },
-            ]}
-            onChange={(event) => setFieldValue("method", event.target.value)}
-          />
+          <div className="w-full flex gap-4">
+            <Select
+              label="Forma"
+              autoComplete="off"
+              value={values.method}
+              error={errors.method}
+              options={[
+                { label: "Pagamento único", value: "unique" },
+                { label: "Pagamento recorrente", value: "recurrent" },
+                { label: "Pagamento parcelado", value: "parceled" },
+              ]}
+              onChange={(event) => setFieldValue("method", event.target.value)}
+            />
+
+            {props.transference && (
+              <div className="flex flex-col gap-1 items-center px-4">
+                <label>Pago</label>
+
+                <CheckBoxPayment
+                  size="lg"
+                  transference={props.transference as TransferenceType}
+                  onClick={onClose}
+                />
+              </div>
+            )}
+          </div>
 
           {values.method === "parceled" && (
             <TextInput
