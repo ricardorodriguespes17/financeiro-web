@@ -5,6 +5,7 @@ import useTransferenceStore from "../store/transferenceStore"
 import transferenceController from "../controller/transferenceController"
 import readError from "../utils/readError"
 import { useCallback, useMemo } from "react"
+import useMonth from "../store/monthStore"
 
 const useTransferenceActions = () => {
   const {
@@ -21,6 +22,7 @@ const useTransferenceActions = () => {
     setTransferences
   } = useTransferenceStore()
   const { setNotification } = useNotificationStore()
+  const { monthDate } = useMonth()
 
   const loadTransferences = useCallback(
     async (month: string) => {
@@ -79,7 +81,20 @@ const useTransferenceActions = () => {
   )
 
   const memoizedTransferences = useMemo(() =>
-    transferences.sort((a, b) => a.expireDay - b.expireDay)
+    transferences.sort((a, b) => {
+      const isPaidA = !!a.installments.find(item => item.dueMonth === monthDate)
+      const isPaidB = !!b.installments.find(item => item.dueMonth === monthDate)
+
+      if(isPaidA && !isPaidB) {
+        return 1
+      }
+
+      if(isPaidA === isPaidB) {
+        return a.expireDay - b.expireDay
+      }
+      
+      return -1
+    })
     , [transferences])
   const memoizedCurrentTransference = useMemo(() => currentTransference, [currentTransference])
   const memoizedIsLoading = useMemo(() => isLoading, [isLoading])

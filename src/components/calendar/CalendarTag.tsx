@@ -29,7 +29,7 @@ const CalendarTag = ({ data }: CalendarTagProps) => {
     "hover:opacity-80 transition-all shadow overflow-hidden",
     typesClassName[data.type],
     isDragging ? "invisible" : "visible",
-    isPaid && "opacity-80"
+    isPaid && "opacity-60"
   )
 
   const labelClassName = twMerge(
