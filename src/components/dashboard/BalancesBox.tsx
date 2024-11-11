@@ -24,7 +24,7 @@ const BalancesBox = () => {
     const initialAmount = transferences.find(item => item.type === "initial")?.value || 0
     const totalExpensesValue = calculateSubTotal(expenses, monthDate)
     const totalIncomesValue = calculateSubTotal(incomes, monthDate)
-    const finalBalance = totalIncomesValue - totalExpensesValue
+    const finalBalance = initialAmount + totalIncomesValue - totalExpensesValue
 
     setBalances(
       [
