@@ -17,7 +17,8 @@ const CheckBoxPayment = ({ transference, size = "sm", onClick }: CheckBoxPayment
   const [checked, setChecked] = useState(false)
 
   useEffect(() => {
-    const installmentDataInMonth = transference.installments
+    const installmentDataInMonth = transference
+      .installments
       .find(item => item.dueMonth === monthDate)
     setChecked(!!installmentDataInMonth)
   }, [monthDate, transference.installments])
@@ -30,7 +31,7 @@ const CheckBoxPayment = ({ transference, size = "sm", onClick }: CheckBoxPayment
 
     if (installmentData) {
       await deleteInstallment(installmentData.id)
-    } else {
+    } else if (transference.id && transference.value) {
       await createInstallment({
         amount: transference.value,
         dueMonth: monthDate,

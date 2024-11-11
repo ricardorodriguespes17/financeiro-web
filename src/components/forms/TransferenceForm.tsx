@@ -198,7 +198,7 @@ const TransferenceForm = (props: TransferenceFormProps) => {
               onChange={(event) => setFieldValue("method", event.target.value)}
             />
 
-            {props.transference && (
+            {props.transference?.installments && (
               <div className="flex flex-col gap-1 items-center px-4">
                 <label>Pago</label>
 
