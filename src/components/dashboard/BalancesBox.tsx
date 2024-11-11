@@ -8,6 +8,7 @@ import useMonth from "../../store/monthStore"
 type BalanceType = {
   name: string
   value: number
+  editable?: boolean
   color: "red" | "green" | "yellow"
 }
 
@@ -20,13 +21,14 @@ const BalancesBox = () => {
     const expenses = transferences.filter(item => item.type === "expense")
     const incomes = transferences.filter(item => item.type === "income")
 
+    const initialAmount = transferences.find(item => item.type === "initial")?.value || 0
     const totalExpensesValue = calculateSubTotal(expenses, monthDate)
     const totalIncomesValue = calculateSubTotal(incomes, monthDate)
     const finalBalance = totalIncomesValue - totalExpensesValue
 
     setBalances(
       [
-        { name: "Saldo inicial", value: 0, color: "yellow" },
+        { name: "Saldo atual", value: initialAmount, color: "yellow", editable: true },
         { name: "Despesas totais", value: totalExpensesValue, color: "red" },
         { name: "Receitas totais", value: totalIncomesValue, color: "green" },
         { name: "Saldo final", value: finalBalance, color: finalBalance >= 0 ? "green" : "red" },

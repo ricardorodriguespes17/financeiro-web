@@ -8,7 +8,7 @@ type TextInputProps = {
   error?: string
 } & InputHTMLAttributes<HTMLInputElement>
 
-const TextInput = ({ label, error, type, ...rest }: TextInputProps) => {
+const TextInput = ({ label, error, type, className, ...rest }: TextInputProps) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const toggleShowPassword = () => {
@@ -18,7 +18,8 @@ const TextInput = ({ label, error, type, ...rest }: TextInputProps) => {
   const inputClass = twMerge(
     "w-full h-10 px-4 dark:bg-gray-900 bg-white outline-none",
     "border border-gray-300 dark:border-gray-700 rounded-md",
-    "drop-shadow-sm focus:drop-shadow-md focus:border-primary"
+    "drop-shadow-sm focus:drop-shadow-md focus:border-primary",
+    className
   )
 
   return (

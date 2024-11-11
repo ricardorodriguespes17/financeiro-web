@@ -6,7 +6,7 @@ export type TransferenceType = {
   value: number
   expireDay: number
   description?: string
-  type: "expense" | "income"
+  type: "expense" | "income" | "initial"
   month: string
   category: string | null
   recurrenceLimit: number | null
