@@ -14,7 +14,8 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
     setCurrentTransference,
   } = useTransferenceActions()
   const enableDragDrop = day > 0
-  const daysTransferences = transferences.filter(item => item.expireDay === day)
+  const daysTransferences = transferences
+    .filter(item => item.expireDay === day && item.type !== "initial")
 
   const className = twMerge(
     "flex flex-col items-end flex-1 min-h-24 border border-gray-200 dark:border-gray-800",
@@ -30,7 +31,7 @@ const CalendarCell = ({ day }: CalendarCellProps) => {
 
     if (data.expireDay !== day) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id, installments, ...rest} = data
+      const { id, installments, ...rest } = data
 
       const updateData: TransferenceCreateType = {
         ...rest,
