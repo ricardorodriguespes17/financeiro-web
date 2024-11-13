@@ -6,6 +6,7 @@ import ModalTransference from "./ModalTransference"
 import useMonth from "../../store/monthStore"
 import { useEffect } from "react"
 import useTransferenceActions from "../../hooks/useTransferenceActions"
+import CreditTable from "./CreditTable"
 
 const BoardContainer = () => {
   const { mode } = useBoardMode()
@@ -28,6 +29,7 @@ const BoardContainer = () => {
           <>
             <TransferenceTable type="expense" />
             <TransferenceTable type="income" />
+            <CreditTable />
           </>
         )
       }
