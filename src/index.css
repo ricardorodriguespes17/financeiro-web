@@ -7,3 +7,30 @@ main {
   padding: 1rem;
   max-width: 40rem;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 20rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+input,
+button {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+button[type='submit'] {
+  align-self: flex-start;
+}
+
+[role='alert'] {
+  color: #b00020;
+}

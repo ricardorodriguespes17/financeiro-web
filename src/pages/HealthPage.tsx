@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { apiFetch } from '../lib/api';
+import { useNavigate } from 'react-router-dom';
+import { apiFetch, setToken } from '../lib/api';
 
 interface HealthResponse {
   status: string;
@@ -11,6 +12,7 @@ type Estado =
   | { situacao: 'erro'; detalhe: string };
 
 export default function HealthPage() {
+  const navigate = useNavigate();
   const [estado, setEstado] = useState<Estado>({ situacao: 'carregando' });
 
   useEffect(() => {
@@ -27,6 +29,11 @@ export default function HealthPage() {
       });
   }, []);
 
+  function sair() {
+    setToken(null);
+    navigate('/login');
+  }
+
   return (
     <main>
       <h1>Gestor Financeiro</h1>
@@ -42,6 +49,9 @@ export default function HealthPage() {
           Falha ao consultar /health da API. Verifique se o backend está rodando. ({estado.detalhe})
         </p>
       )}
+      <button type="button" onClick={sair}>
+        Sair
+      </button>
     </main>
   );
 }

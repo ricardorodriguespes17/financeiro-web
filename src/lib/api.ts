@@ -24,5 +24,14 @@ export function apiFetch(path: string, options: RequestInit = {}): Promise<Respo
   if (token !== null) {
     headers.set('Authorization', `Bearer ${token}`);
   }
-  return fetch(`${BASE_URL}${path}`, { ...options, headers });
+  return fetch(`${BASE_URL}${path}`, { ...options, headers }).then((res) => {
+    // 401 com sessão existente significa token expirado ou inválido:
+    // limpa a sessão e volta ao login. 401 sem token (ex.: tentativa
+    // de login com credenciais erradas) fica para a tela exibir.
+    if (res.status === 401 && getToken() !== null) {
+      setToken(null);
+      window.location.assign('/login');
+    }
+    return res;
+  });
 }
